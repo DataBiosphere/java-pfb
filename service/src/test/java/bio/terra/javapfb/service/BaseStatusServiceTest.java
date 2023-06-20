@@ -1,12 +1,14 @@
-package bio.terra.javatemplate.service;
+package bio.terra.javapfb.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import bio.terra.javatemplate.config.StatusCheckConfiguration;
-import bio.terra.javatemplate.model.SystemStatus;
-import bio.terra.javatemplate.model.SystemStatusSystems;
+import bio.terra.javapfb.config.StatusCheckConfiguration;
+import bio.terra.javapfb.model.SystemStatus;
+import bio.terra.javapfb.model.SystemStatusSystems;
 import java.util.Map;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 class BaseStatusServiceTest {
@@ -17,7 +19,7 @@ class BaseStatusServiceTest {
     BaseStatusService service = new BaseStatusService(config);
     var status = new SystemStatusSystems().ok(true);
     service.registerStatusCheck("test", () -> status);
-    assertThat(service.getCurrentStatus(), is(new SystemStatus().ok(false)));
+    MatcherAssert.assertThat(service.getCurrentStatus(), Matchers.is(new SystemStatus().ok(false)));
     service.checkStatus();
     assertThat(
         service.getCurrentStatus(),

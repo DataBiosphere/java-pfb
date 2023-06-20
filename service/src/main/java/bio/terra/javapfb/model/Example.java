@@ -1,4 +1,4 @@
-package bio.terra.javatemplate.model;
+package bio.terra.javapfb.model;
 
 import java.util.Objects;
 import javax.annotation.Nullable;

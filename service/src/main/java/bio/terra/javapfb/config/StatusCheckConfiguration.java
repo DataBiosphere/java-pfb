@@ -1,8 +1,8 @@
-package bio.terra.javatemplate.config;
+package bio.terra.javapfb.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "javatemplate.status-check")
+@ConfigurationProperties(prefix = "javapfb.status-check")
 public record StatusCheckConfiguration(
     boolean enabled,
     int pollingIntervalSeconds,

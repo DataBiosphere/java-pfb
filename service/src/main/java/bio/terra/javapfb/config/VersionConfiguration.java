@@ -1,7 +1,7 @@
-package bio.terra.javatemplate.config;
+package bio.terra.javapfb.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /** Read from the git.properties file auto-generated at build time */
-@ConfigurationProperties("javatemplate.version")
+@ConfigurationProperties("javapfb.version")
 public record VersionConfiguration(String gitHash, String gitTag, String build, String github) {}

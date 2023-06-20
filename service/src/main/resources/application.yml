@@ -2,12 +2,13 @@
 # This is for deployment-specific values, which may be managed by other teams
 
 env:
-  db:
-    host: ${DATABASE_HOSTNAME:127.0.0.1}:5432
-    init: ${INIT_DB:false}
-    name: ${DATABASE_NAME:javatemplate_db}
-    password: ${DATABASE_USER_PASSWORD:dbpwd}
-    user: ${DATABASE_USER:dbuser}
+#  We shouldn't need a db for this client
+#  db:
+#    host: ${DATABASE_HOSTNAME:127.0.0.1}:5432
+#    init: ${INIT_DB:false}
+#    name: ${DATABASE_NAME:java_pfb_db}
+#    password: ${DATABASE_USER_PASSWORD:dbpwd}
+#    user: ${DATABASE_USER:dbuser}
   tracing:
     exportEnabled: ${CLOUD_TRACE_ENABLED:false}
     samplingRate: ${SAMPLING_PROBABILITY:0}
@@ -33,8 +34,8 @@ server:
 spring:
   # application name and version are used to populate the logging serviceContext
   # https://github.com/DataBiosphere/terra-common-lib/blob/480ab3daae282ddff0fef8dc329494a4422e32f1/src/main/java/bio/terra/common/logging/GoogleJsonLayout.java#L118
-  application.name: javatemplate
-  application.version: ${javatemplate.version.gitHash:unknown}
+  application.name: javapfb
+  application.version: ${javapfb.version.gitHash:unknown}
 
   datasource:
     hikari:
@@ -61,7 +62,7 @@ management:
       exposure:
         include: "*"
 
-javatemplate:
+javapfb:
   ingress:
     # Default value that's overridden by Helm.
     domainName: localhost:8080

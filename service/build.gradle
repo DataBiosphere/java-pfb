@@ -51,14 +51,14 @@ sonarqube {
     }
 }
 
-liquibase {
-    activities {
-        catalog {
-            changeLogFile 'src/main/resources/db/changelog.xml'
-            url 'jdbc:postgresql://localhost:5432/javatemplate_db'
-            username 'dbuser'
-            password 'dbpwd'
-            logLevel 'info'
-        }
-    }
-}
+//liquibase {
+//    activities {
+//        catalog {
+//            changeLogFile 'src/main/resources/db/changelog.xml'
+//            url 'jdbc:postgresql://localhost:5432/java_pfb_db'
+//            username 'dbuser'
+//            password 'dbpwd'
+//            logLevel 'info'
+//        }
+//    }
+//}
