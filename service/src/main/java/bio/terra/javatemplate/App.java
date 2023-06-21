@@ -19,14 +19,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication(
     scanBasePackages = {
-      // Scan for iam components & configs
-      "bio.terra.common.iam",
       // Scan for logging-related components & configs
       "bio.terra.common.logging",
-      // Scan for Liquibase migration components & configs
-      "bio.terra.common.migrate",
-      // Transaction management and DB retry configuration
-      "bio.terra.common.retry.transaction",
       // Scan for tracing-related components & configs
       "bio.terra.common.tracing",
       // Scan all service-specific packages beneath the current package
@@ -41,10 +35,8 @@ public class App {
     new SpringApplicationBuilder(App.class).initializers(new LoggingInitializer()).run(args);
   }
 
-  private final DataSource dataSource;
+  public App() {
 
-  public App(DataSource dataSource) {
-    this.dataSource = dataSource;
   }
 
   @Bean("objectMapper")
@@ -54,12 +46,5 @@ public class App {
         .registerModule(new Jdk8Module())
         .registerModule(new JavaTimeModule())
         .setDefaultPropertyInclusion(JsonInclude.Include.NON_ABSENT);
-  }
-
-  // This bean plus the @EnableTransactionManagement annotation above enables the use of the
-  // @Transaction annotation to control the transaction properties of the data source.
-  @Bean("transactionManager")
-  public PlatformTransactionManager getTransactionManager() {
-    return new JdbcTransactionManager(this.dataSource);
   }
 }
