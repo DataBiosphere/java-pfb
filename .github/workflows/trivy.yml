@@ -43,9 +43,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-          channel: '#jade-data-explorer'
+          channel: '#dsp-analysis-journeys-alerts'
           status: failure
           author_name: Trivy action
           fields: workflow,message
           text: 'Trivy scan failure :sadpanda:'
-          username: 'Data Explorer GitHub Action'
+          username: 'Java-PFB GitHub Action'
