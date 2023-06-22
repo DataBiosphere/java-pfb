@@ -12,28 +12,6 @@ dependencies {
 
 def artifactGroup = "${group}.javapfb"
 
-generateSwaggerCode {
-    inputFile = file('src/main/resources/api/openapi.yml')
-    language = 'spring'
-    components = ['models', 'apis']
-    jvmArgs = ['--add-opens=java.base/java.util=ALL-UNNAMED']
-    additionalProperties = [
-        modelPackage     : "${artifactGroup}.model",
-        apiPackage       : "${artifactGroup}.api",
-        dateLibrary      : 'java11',
-        java8            : true,
-        interfaceOnly    : 'true',
-        useTags          : 'true',
-        springBootVersion: dependencyManagement.managedVersions['org.springframework.boot:spring-boot']
-    ]
-}
-
-String swaggerOutputSrc = "${generateSwaggerCode.outputDir}/src/main/java"
-
-idea.module.generatedSourceDirs = [file(swaggerOutputSrc)]
-sourceSets.main.java.srcDir swaggerOutputSrc
-compileJava.dependsOn generateSwaggerCode
-
 // see https://github.com/n0mer/gradle-git-properties
 gitProperties {
     keys = []

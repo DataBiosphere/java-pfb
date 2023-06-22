@@ -50,15 +50,3 @@ sonarqube {
         property 'sonar.host.url', 'https://sonarcloud.io'
     }
 }
-
-//liquibase {
-//    activities {
-//        catalog {
-//            changeLogFile 'src/main/resources/db/changelog.xml'
-//            url 'jdbc:postgresql://localhost:5432/java_pfb_db'
-//            username 'dbuser'
-//            password 'dbpwd'
-//            logLevel 'info'
-//        }
-//    }
-//}
