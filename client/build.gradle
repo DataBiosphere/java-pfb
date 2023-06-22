@@ -5,6 +5,7 @@ plugins {
     id 'maven-publish'
     id 'io.spring.dependency-management'
     id 'com.jfrog.artifactory' version '4.18.2'
+    // required by java-library-conventions
     id 'org.hidetake.swagger.generator'
 }
 

@@ -34,7 +34,7 @@ jobs:
       - name: Upload spotbugs results
         uses: github/codeql-action/upload-sarif@main
         with:
-          sarif_file: service/build/reports/spotbugs/main.sarif
+          sarif_file: lib/build/reports/spotbugs/main.sarif
 
   jib:
     needs: [ build ]
