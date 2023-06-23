@@ -3,8 +3,12 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
     maven {
-        url 'https://broadinstitute.jfrog.io/artifactory/plugins-snapshot'
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release-local/'
+    }
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-snapshot-local/'
     }
     gradlePluginPortal()
 }
