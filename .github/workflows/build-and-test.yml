@@ -34,47 +34,7 @@ jobs:
       - name: Upload spotbugs results
         uses: github/codeql-action/upload-sarif@main
         with:
-          sarif_file: lib/build/reports/spotbugs/main.sarif
-
-  jib:
-    needs: [ build ]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
-
-      - name: Construct docker image name and tag
-        id: image-name
-        run: |
-          GITHUB_REPO=$(basename ${{ github.repository }})
-          GIT_SHORT_HASH=$(git rev-parse --short HEAD)
-          echo "name=${GITHUB_REPO}:${GIT_SHORT_HASH}" >> $GITHUB_OUTPUT
-
-      - name: Build image locally with jib
-        run: |
-          ./gradlew --build-cache :lib:jibDockerBuild \
-            --image=${{ steps.image-name.outputs.name }} \
-            -Djib.console=plain
-
-  dispatch-trivy:
-    needs: [ build ]
-    runs-on: ubuntu-latest
-
-    if: github.event_name == 'pull_request'
-
-    steps:
-      - name: Fire off Trivy action
-        uses: broadinstitute/workflow-dispatch@v1
-        with:
-          workflow: Trivy
-          token: ${{ secrets.BROADBOT_TOKEN }}
-          ref: ${{ github.event.pull_request.head.ref }}
+          sarif_file: library/build/reports/spotbugs/main.sarif
 
   source-clear:
     needs: [ build ]
