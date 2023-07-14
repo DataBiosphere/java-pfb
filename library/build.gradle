@@ -48,7 +48,7 @@ test {
     useJUnitPlatform ()
 }
 
-sonar {
+sonarqube {
     properties {
         property "sonar.projectKey", "java-pfb"
         property "sonar.projectName", "java-pfb"
