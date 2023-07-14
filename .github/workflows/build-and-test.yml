@@ -61,12 +61,12 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
       - name: Test with coverage
-        run: ./gradlew --build-cache test jacocoTestReport --info
-      - name: Build and analyze
+        run: ./gradlew --build-cache test jacocoTestReport
+      - name: SonarQube scan
+        run: ./gradlew --build-cache :library:sonarqube
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew --build-cache :library:sonarqube --info
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   notify-slack:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
