@@ -48,7 +48,7 @@ test {
     useJUnitPlatform ()
 }
 
-sonarqube {
+sonar {
     properties {
         property "sonar.projectKey", "DataBiosphere_java-pfb"
         property "sonar.projectName", "java-pfb"
