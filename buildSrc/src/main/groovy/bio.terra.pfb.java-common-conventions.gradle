@@ -5,19 +5,9 @@ plugins {
 
     id 'com.diffplug.spotless'
     id 'com.github.spotbugs'
-//    id 'org.hidetake.swagger.generator'
 }
 
 boolean isCiServer = System.getenv().containsKey("CI")
-
-//if (!isCiServer) {
-//    tasks.withType(JavaExec).configureEach {
-//        systemProperty 'spring.profiles.include', 'human-readable-logging'
-//    }
-//    tasks.withType(Test).configureEach {
-//        systemProperty 'spring.profiles.include', 'human-readable-logging'
-//    }
-//}
 
 java {
     toolchain {
@@ -41,15 +31,11 @@ repositories {
 
 dependencies {
     compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.2'
-//    implementation 'io.swagger.core.v3:swagger-annotations:2.2.0'
-//    swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.31'
-//
-//    implementation 'org.slf4j:slf4j-api'
 
     testImplementation 'org.hamcrest:hamcrest:2.2'
-//
-//    implementation 'bio.terra:terra-common-lib:0.0.75-SNAPSHOT'
-//    implementation 'bio.terra:datarepo-client:1.349.0-SNAPSHOT'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 tasks.named('test') {
@@ -62,7 +48,6 @@ group = 'bio.terra'
 spotless {
     java {
         targetExclude "${buildDir}/**"
-//        targetExclude "**/swagger-code/**"
         googleJavaFormat()
     }
 }
