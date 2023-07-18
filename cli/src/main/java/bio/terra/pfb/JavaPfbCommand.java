@@ -7,7 +7,8 @@ import picocli.CommandLine;
 @Command(name = "pfb")
 public class JavaPfbCommand implements Runnable {
   public static void main(String[] args) {
-    CommandLine.run(new JavaPfbCommand(), args);
+    int exitCode = new CommandLine(new JavaPfbCommand()).execute(args);
+    System.exit(exitCode);
   }
 
   @Override
