@@ -1,3 +1,5 @@
+package bio.terra.pfb;
+
 import static picocli.CommandLine.Command;
 
 import picocli.CommandLine;

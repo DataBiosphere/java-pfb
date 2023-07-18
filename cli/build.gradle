@@ -14,7 +14,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': "JavaPfbCommand"
+        attributes 'Main-Class': 'bio.terra.pfb.JavaPfbCommand'
     }
     archiveBaseName.set('java-pfb-cli')
     from {

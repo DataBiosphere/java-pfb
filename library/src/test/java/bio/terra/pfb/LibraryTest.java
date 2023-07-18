@@ -1,4 +1,4 @@
-package bio.terra.javapfb;
+package bio.terra.pfb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
