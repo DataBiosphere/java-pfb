@@ -4,7 +4,6 @@ plugins {
     id 'java'
     id 'org.sonarqube'
     id 'com.diffplug.spotless'
-    id 'com.github.spotbugs'
 }
 
 boolean isCiServer = System.getenv().containsKey("CI")
@@ -30,8 +29,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.2'
-
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
@@ -58,21 +55,6 @@ compileJava {
         dependsOn(spotlessCheck)
     } else {
         dependsOn(spotlessApply)
-    }
-}
-
-// Spotbugs configuration
-spotbugs {
-    reportLevel = 'high'
-    effort = 'max'
-}
-spotbugsMain {
-    reports {
-        if (isCiServer) {
-            sarif.enabled = true
-        } else {
-            html.enabled = true
-        }
     }
 }
 
