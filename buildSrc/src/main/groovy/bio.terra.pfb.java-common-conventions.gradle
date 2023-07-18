@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'jacoco'
     id 'java'
-
+    id 'org.sonarqube'
     id 'com.diffplug.spotless'
     id 'com.github.spotbugs'
 }
@@ -80,5 +80,14 @@ jacocoTestReport {
     reports {
         // sonarqube requires XML coverage output to upload coverage data
         xml.required = true
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "DataBiosphere_java-pfb"
+        property "sonar.projectName", "java-pfb"
+        property "sonar.organization", "broad-databiosphere"
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }

@@ -21,12 +21,12 @@ before runing the gradle task.
 
 ```shell
 export SONAR_TOKEN=$(vault read -field=sonar_token secret/secops/ci/sonarcloud/java-pfb)
-./gradlew sonarqube
+./gradlew sonar
 ```
 
 Unlike SourceClear, running this task produces no output unless your project has errors. To always
 generate a report, run using `--info`:
 
 ```shell
-./gradlew sonarqube --info
+./gradlew sonar --info
 ```
