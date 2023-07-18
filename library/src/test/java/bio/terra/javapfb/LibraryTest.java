@@ -1,11 +1,14 @@
 package bio.terra.javapfb;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
 import org.junit.jupiter.api.Test;
 
-public class LibraryTest {
+class LibraryTest {
 
   @Test
-  public void testHelloWorld() {
-    System.out.println("Hello World");
+  void testStubMethod() {
+    assertThat(Library.getNumber5(), equalTo(5));
   }
 }
