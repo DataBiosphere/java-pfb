@@ -4,7 +4,11 @@ import static picocli.CommandLine.Command;
 
 import picocli.CommandLine;
 
-@Command(name = "pfb")
+@Command(
+    name = "pfb",
+    mixinStandardHelpOptions = true,
+    description = "A java implementation of pyPFB",
+    version = "java-pfb 0.1.0")
 public class JavaPfbCommand implements Runnable {
   public static void main(String[] args) {
     int exitCode = new CommandLine(new JavaPfbCommand()).execute(args);
@@ -13,16 +17,11 @@ public class JavaPfbCommand implements Runnable {
 
   @Override
   public void run() {
-    System.out.println("A java implementation of pyPFB");
+    System.out.println("PFB RUN");
   }
 
   @Command(name = "hello")
   public void helloCommand() {
     System.out.println("Hello world!");
-  }
-
-  @Command(name = "--help")
-  public void helpCommand() {
-    System.out.println("Help is on its way!! In the next PR...");
   }
 }
