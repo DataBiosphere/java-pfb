@@ -1,6 +1,8 @@
-# java-pfb
+# Java-PFB
 
+A java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library that includes a CLI and a java library. 
 
+The CLI is a wrapper around the library. See the [CLI README](cli/README.md) for more information.
 
 ## Running SourceClear locally
 
