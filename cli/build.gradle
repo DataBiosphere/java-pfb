@@ -25,3 +25,12 @@ jar {
 test {
     useJUnitPlatform()
 }
+
+sonar {
+    properties {
+        property "sonar.projectKey", "DataBiosphere_java-pfb-cli"
+        property "sonar.projectName", "java-pfb-cli"
+        property "sonar.organization", "broad-databiosphere"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
