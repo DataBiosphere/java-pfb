@@ -16,7 +16,7 @@ export SRCCLR_API_TOKEN=$(vault read -field=api_token secret/secops/ci/srcclr/gr
 ./gradlew srcclr
 ```
 
-Results of the scan are uploaded to [Defect DOJO](https://defectdojo.dsp-appsec.broadinstitute.org/dashboard).
+Results of the scan are uploaded to [Veracode](https://sca.analysiscenter.veracode.com/workspaces/jppForw/projects/768265/issues). You can request an account to view results from #dsp-infosec-champions. 
 
 ## Running SonarQube locally
 
