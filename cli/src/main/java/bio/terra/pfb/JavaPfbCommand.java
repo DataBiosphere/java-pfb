@@ -8,7 +8,7 @@ import picocli.CommandLine;
     name = "pfb",
     mixinStandardHelpOptions = true,
     description = "A java implementation of pyPFB",
-    version = "java-pfb 0.1.0")
+    versionProvider = PfbVersion.class)
 public class JavaPfbCommand implements Runnable {
   public static void main(String[] args) {
     int exitCode = new CommandLine(new JavaPfbCommand()).execute(args);
