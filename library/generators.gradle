@@ -1,0 +1,10 @@
+def artifactGroup = "${group}.javapfb"
+
+// see https://github.com/n0mer/gradle-git-properties
+gitProperties {
+    keys = []
+    customProperty('javapfb.version.gitTag', { it.describe(tags: true) })
+    customProperty('javapfb.version.gitHash', { it.head().abbreviatedId })
+    customProperty('javapfb.version.github', { "https://github.com/DataBiosphere/java-pfb/tree/${it.describe(tags: true)}" })
+    customProperty('javapfb.version.build', version)
+}

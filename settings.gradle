@@ -1,0 +1,6 @@
+
+rootProject.name = 'javapfb'
+include('library', 'cli')
+
+gradle.ext.releaseVersion = '0.1.0'
+

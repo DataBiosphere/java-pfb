@@ -1,0 +1,32 @@
+plugins {
+    id 'bio.terra.pfb.java-common-conventions'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'info.picocli:picocli:4.7.4'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'bio.terra.pfb.JavaPfbCommand'
+    }
+    archiveBaseName.set('java-pfb-cli')
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "DataBiosphere_java-pfb-cli"
+        property "sonar.projectName", "java-pfb-cli"
+        property "sonar.organization", "broad-databiosphere"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}

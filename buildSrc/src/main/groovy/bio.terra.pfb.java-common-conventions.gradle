@@ -1,0 +1,75 @@
+plugins {
+    id 'idea'
+    id 'jacoco'
+    id 'java'
+    id 'org.sonarqube'
+    id 'com.diffplug.spotless'
+}
+
+boolean isCiServer = System.getenv().containsKey("CI")
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    maven {
+        // Terra proxy for maven central
+        url 'https://broadinstitute.jfrog.io/broadinstitute/maven-central/'
+    }
+    mavenCentral()
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release/'
+    }
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-snapshot-local/'
+    }
+}
+
+dependencies {
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+version = gradle.releaseVersion
+group = 'bio.terra'
+
+spotless {
+    java {
+        targetExclude "${buildDir}/**"
+        googleJavaFormat()
+    }
+}
+
+// Run spotless check when running in github actions, otherwise run spotless apply.
+compileJava {
+    if (isCiServer) {
+        dependsOn(spotlessCheck)
+    } else {
+        dependsOn(spotlessApply)
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        // sonarqube requires XML coverage output to upload coverage data
+        xml.required = true
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "DataBiosphere_java-pfb"
+        property "sonar.projectName", "java-pfb"
+        property "sonar.organization", "broad-databiosphere"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
