@@ -22,10 +22,6 @@ jar {
     }
 }
 
-test {
-    useJUnitPlatform()
-}
-
 sonar {
     properties {
         property "sonar.projectKey", "DataBiosphere_java-pfb-cli"
