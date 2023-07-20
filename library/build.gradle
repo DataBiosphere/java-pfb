@@ -12,6 +12,6 @@ repositories {
 
 apply from: 'generators.gradle'
 
-test {
-    useJUnitPlatform ()
+srcclr {
+    scope = "runtime"
 }
