@@ -3,13 +3,6 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
-    maven {
-        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release-local/'
-    }
-    maven {
-        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-snapshot-local/'
-    }
     gradlePluginPortal()
 }
 
@@ -18,8 +11,4 @@ dependencies {
     implementation 'com.srcclr.gradle:com.srcclr.gradle.gradle.plugin:3.1.12'
     implementation 'org.sonarqube:org.sonarqube.gradle.plugin:4.2.1.3168'
     implementation 'info.picocli:picocli:4.7.4'
-}
-
-test {
-    useJUnitPlatform()
 }

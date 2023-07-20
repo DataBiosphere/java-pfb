@@ -35,10 +35,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
 version = gradle.releaseVersion
 group = 'bio.terra'
 
@@ -56,6 +52,10 @@ compileJava {
     } else {
         dependsOn(spotlessApply)
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 jacocoTestReport {
