@@ -16,6 +16,8 @@ export SRCCLR_API_TOKEN=$(vault read -field=api_token secret/secops/ci/srcclr/gr
 ./gradlew srcclr
 ```
 
+Results of the scan are uploaded to [Defect DOJO](https://defectdojo.dsp-appsec.broadinstitute.org/dashboard).
+
 ## Running SonarQube locally
 
 [SonarQube](https://www.sonarqube.org) is a static analysis code that scans code for a wide
@@ -34,3 +36,5 @@ generate a report, run using `--info`:
 ```shell
 ./gradlew sonar --info
 ```
+
+We run the scans for two projects: [java-pfb](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb) and [java-pfb-cli](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb-cli). The results are uploaded to the sonarcloud dashbaord. 
