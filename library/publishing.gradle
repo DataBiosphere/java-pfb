@@ -19,7 +19,7 @@ publishing {
     publications {
         javaPfbLibrary(MavenPublication) {
             groupId = gradle.projectGroup
-            artifactId = rootProject.name
+            artifactId = rootProject.name + "-library"
             version = gradle.releaseVersion
             from components.java
         }
