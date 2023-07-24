@@ -4,6 +4,18 @@ A java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library t
 
 The CLI is a wrapper around the library. See the [CLI README](cli/README.md) for more information.
 
+## Publishing the Library
+JFrog Artifactory is used to publish libraries to a central Maven repository. The library version number is the version in settings.gradle. We use github actions to bumping version and publish to repository.
+
+**The Publishing Procedure**
+
+1) After PR is merged to develop branch: github action automatically bumped the minor version in settings.gradle then publish to lib-snapshot-local
+2) After release is created(usually a manual step): github action automatically bumped the minor version in settings.gradle then publish to lib-snapshot-release.
+3) To bump major version, we need manually update version in settings.gradle value first then create the release.
+
+## Publishing the CLI
+TODO
+
 ## Running SourceClear locally
 
 [SourceClear](https://srcclr.github.io) is a static analysis tool that scans a project's Java
