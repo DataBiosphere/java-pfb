@@ -1,8 +1,12 @@
 plugins {
-    id 'bio.terra.pfb.java-common-conventions'
+    id 'bio.terra.pfb.java-library-conventions'
+    id 'maven-publish'
+    id 'com.jfrog.artifactory' version '4.28.2'
+    id 'com.gorylenko.gradle-git-properties' version '2.3.1'
 }
 
 version 'unspecified'
+apply from: "publishing.gradle"
 
 repositories {
     mavenCentral()

@@ -27,8 +27,8 @@ jobs:
         id: tag
         run: echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
 
-      - name: Publish to Artifactory
-        run: ./gradlew --build-cache :library:artifactoryPublish
+      - name: Publish Library and CLI to Artifactory
+        run: ./gradlew --build-cache artifactoryPublish
         env:
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}

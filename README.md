@@ -4,7 +4,7 @@ A java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library t
 
 The CLI is a wrapper around the library. See the [CLI README](cli/README.md) for more information.
 
-## Publishing the Library
+## Publishing the Library and CLI
 JFrog Artifactory is used to publish libraries to a central Maven repository. The library version number is the version in settings.gradle. We use github actions to bumping version and publish to repository.
 
 **The Publishing Procedure**
@@ -17,7 +17,7 @@ JFrog Artifactory is used to publish libraries to a central Maven repository. Th
 ```shell
 export ARTIFACTORY_USERNAME=$(vault read -field=username secret/dsp/accts/artifactory/dsdejenkins)
 export ARTIFACTORY_PASSWORD=$(vault read -field=password secret/dsp/accts/artifactory/dsdejenkins)
-./gradlew :library:artifactoryPublish
+./gradlew artifactoryPublish
 ```
 
 ## Publishing the CLI
