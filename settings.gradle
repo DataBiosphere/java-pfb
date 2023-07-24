@@ -1,5 +1,5 @@
 
-rootProject.name = 'javaPfb'
+rootProject.name = 'java-pfb-library'
 include('library', 'cli')
 
 gradle.ext.projectGroup = 'bio.terra'

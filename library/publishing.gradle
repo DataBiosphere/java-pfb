@@ -17,7 +17,7 @@ gradle.taskGraph.whenReady { taskGraph ->
 // Publish jar file to a Maven module/artifact using the maven-publish plugin.
 publishing {
     publications {
-        javaPfb(MavenPublication) {
+        javaPfbLibrary(MavenPublication) {
             groupId = gradle.projectGroup
             artifactId = rootProject.name
             version = gradle.releaseVersion
@@ -36,7 +36,7 @@ artifactory {
             password = "${artifactory_password}"
         }
         defaults {
-            publications('javaPfb')
+            publications('javaPfbLibrary')
             publishArtifacts = true
             publishPom = true
         }

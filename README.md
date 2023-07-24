@@ -10,7 +10,7 @@ JFrog Artifactory is used to publish libraries to a central Maven repository. Th
 **The Publishing Procedure**
 
 1) After PR is merged to develop branch: github action automatically bumped the minor version in settings.gradle then publish to lib-snapshot-local
-2) After release is created(usually a manual step): github action automatically bumped the minor version in settings.gradle then publish to lib-snapshot-release.
+2) After release is created(usually a manual step): github action automatically bumped the minor version in settings.gradle then publish to libs-release-local.
 3) To bump major version, we need manually update version in settings.gradle value first then create the release.
 
 **Running Publish Locally**
