@@ -13,6 +13,13 @@ JFrog Artifactory is used to publish libraries to a central Maven repository. Th
 2) After release is created(usually a manual step): github action automatically bumped the minor version in settings.gradle then publish to lib-snapshot-release.
 3) To bump major version, we need manually update version in settings.gradle value first then create the release.
 
+**Running Publish Locally**
+```shell
+export ARTIFACTORY_USERNAME=$(vault read -field=username secret/dsp/accts/artifactory/dsdejenkins)
+export ARTIFACTORY_PASSWORD=$(vault read -field=password secret/dsp/accts/artifactory/dsdejenkins)
+./gradlew :library:artifactoryPublish
+```
+
 ## Publishing the CLI
 TODO
 

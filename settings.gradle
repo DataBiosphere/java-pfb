@@ -1,6 +1,6 @@
 
-rootProject.name = 'javapfb'
+rootProject.name = 'javaPfb'
 include('library', 'cli')
 
-gradle.ext.releaseVersion = '0.3.0'
-
+gradle.ext.projectGroup = 'bio.terra'
+gradle.ext.releaseVersion = '0.3.0-SNAPSHOT'

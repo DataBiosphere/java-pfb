@@ -1,5 +1,6 @@
 plugins {
     id 'groovy-gradle-plugin'
+    id 'com.jfrog.artifactory' version '4.28.2'
 }
 
 repositories {

@@ -20,7 +20,7 @@ publishing {
         javaPfb(MavenPublication) {
             groupId = gradle.projectGroup
             artifactId = rootProject.name
-            version = gradle.tclVersion
+            version = gradle.releaseVersion
             from components.java
         }
     }
