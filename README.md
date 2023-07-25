@@ -4,24 +4,10 @@ A java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library t
 
 The CLI is a wrapper around the library. See the [CLI README](cli/README.md) for more information.
 
-## Publishing the Library and CLI
-JFrog Artifactory is used to publish libraries to a central Maven repository. The library version number is the version in settings.gradle. We use github actions to bumping version and publish to repository.
 
-**The Publishing Procedure**
+## Publishing
+See [library](library/README.md) and [cli](cli/README.md) readmes for more details. 
 
-1) After PR is merged to develop branch: github action automatically bumped the minor version in settings.gradle then publish to lib-snapshot-local
-2) After release is created(usually a manual step): github action automatically bumped the minor version in settings.gradle then publish to libs-release-local.
-3) To bump major version, we need manually update version in settings.gradle value first then create the release.
-
-**Running Publish Locally**
-```shell
-export ARTIFACTORY_USERNAME=$(vault read -field=username secret/dsp/accts/artifactory/dsdejenkins)
-export ARTIFACTORY_PASSWORD=$(vault read -field=password secret/dsp/accts/artifactory/dsdejenkins)
-./gradlew artifactoryPublish
-```
-
-## Publishing the CLI
-TODO
 
 ## Running SourceClear locally
 
