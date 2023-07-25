@@ -20,11 +20,13 @@ public class JavaPfbCommand implements Runnable {
     System.out.println("PFB RUN");
   }
 
+  // Example "hello world" command
   @Command(name = "hello")
   public void helloCommand() {
     System.out.println("Hello world!");
   }
 
+  // POC usage of java-pfb-library
   @Command(name = "getNumber5")
   public void getNumber5() {
     int val = Library.getNumber5();
