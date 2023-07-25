@@ -1,5 +1,5 @@
 name: Publish Library to Artifactory
-on: create
+on: workflow_call
 
 env:
   SERVICE_NAME: ${{ github.event.repository.name }}
