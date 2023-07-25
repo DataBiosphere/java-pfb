@@ -24,4 +24,10 @@ public class JavaPfbCommand implements Runnable {
   public void helloCommand() {
     System.out.println("Hello world!");
   }
+
+  @Command(name = "getNumber5")
+  public void getNumber5() {
+    int val = Library.getNumber5();
+    System.out.println("Test pulling from pfb library - The number is " + val);
+  }
 }

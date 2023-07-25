@@ -20,7 +20,7 @@ publishing {
         javaPfbCli(MavenPublication) {
             groupId = gradle.projectGroup
             artifactId = rootProject.name + "-cli"
-            version = gradle.releaseVersion
+            version = gradle.releaseVersion + "-SNAPSHOT"
             from components.java
         }
     }

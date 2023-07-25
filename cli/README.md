@@ -3,6 +3,7 @@ Java PFB CLI
 
 ## Available Commands
 - hello
+- getNumber5
 - --version
 - --help
 

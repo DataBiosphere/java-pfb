@@ -40,4 +40,11 @@ class JavaPfbCommandTest {
     javaPfbCommand.helloCommand();
     assertThat(outContent.toString(), containsString("Hello world!"));
   }
+
+  @Test
+  void testGetNumber5() {
+    javaPfbCommand.getNumber5();
+    assertThat(
+        outContent.toString(), containsString("Test pulling from pfb library - The number is 5"));
+  }
 }
