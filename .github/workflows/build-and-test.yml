@@ -100,15 +100,15 @@ jobs:
           workflow: Tag
           token: ${{ secrets.BROADBOT_TOKEN }}
 
-  publish:
+  publish-library:
     needs: [ build, unit-tests-and-sonarqube, source-clear, dispatch-tag ]
     runs-on: ubuntu-latest
 
     if: success() && github.ref == 'refs/heads/main'
 
     steps:
-      - name: Fire off publish action
+      - name: Fire off Publish Library Action
         uses: broadinstitute/workflow-dispatch@v1
         with:
-          workflow: Publish
+          workflow: Publish Library to Artifactory
           token: ${{ secrets.BROADBOT_TOKEN }}

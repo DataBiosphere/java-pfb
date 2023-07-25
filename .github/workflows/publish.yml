@@ -1,4 +1,4 @@
-name: Publish and deploy
+name: Publish Library to Artifactory
 on: create
 
 env:
@@ -27,8 +27,8 @@ jobs:
         id: tag
         run: echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
 
-      - name: Publish Library and CLI to Artifactory
-        run: ./gradlew --build-cache artifactoryPublish
+      - name: Publish Library Artifactory
+        run: ./gradlew --build-cache :library:artifactoryPublish
         env:
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
@@ -42,7 +42,7 @@ jobs:
         with:
           channel: '#dsp-analysis-journeys-alerts'
           status: failure
-          author_name: Publish to dev
+          author_name: Publish Library to Artifactory
           fields: job
           text: 'Publish failed :sadpanda:'
           username: 'Java-PFB GitHub Action'
