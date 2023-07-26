@@ -2,9 +2,6 @@ plugins {
     id 'com.srcclr.gradle'
 
     id 'bio.terra.pfb.java-library-conventions'
-    id 'maven-publish'
-    id 'com.jfrog.artifactory' version '5.0.3'
-    id 'com.gorylenko.gradle-git-properties' version '2.3.1'
 }
 
 repositories {
