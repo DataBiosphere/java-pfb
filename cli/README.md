@@ -19,7 +19,7 @@ java -cp "cli/build/libs/java-pfb-cli.jar" bio.terra.pfb.JavaPfbCommand <command
 ```
 An alias can be created to simplify this command:
 ```shell
-pfb='java -cp "cli/build/libs/java-pfb-cli.jar" bio.terra.pfb.JavaPfbCommand'
+alias pfb='java -cp "cli/build/libs/java-pfb-cli.jar" bio.terra.pfb.JavaPfbCommand'
 ```
 Example usage of the alias:
 ```shell
