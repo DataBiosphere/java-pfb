@@ -3,4 +3,4 @@ rootProject.name = 'java-pfb'
 include('library', 'cli')
 
 gradle.ext.projectGroup = 'bio.terra'
-gradle.ext.releaseVersion = '0.3.0-SNAPSHOT'
+gradle.ext.releaseVersion = '0.4.0'
