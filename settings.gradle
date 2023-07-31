@@ -2,5 +2,5 @@
 rootProject.name = 'javapfb'
 include('library', 'cli')
 
-gradle.ext.releaseVersion = '0.2.0'
+gradle.ext.releaseVersion = '0.3.0'
 
