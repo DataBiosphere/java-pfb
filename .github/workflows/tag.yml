@@ -19,6 +19,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
           HOTFIX_BRANCHES: hotfix.*
           DEFAULT_BUMP: minor
-          RELEASE_BRANCHES: main
+          RELEASE_BRANCHES: main,sh-aj-1095-publilsh
           VERSION_FILE_PATH: settings.gradle,cli/src/main/java/bio/terra/pfb/PfbVersion.java
           VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*',^\\s*public\\s+static\\s+final\\s+String\\s+VERSION\\s*=\\s*'.*';'"
