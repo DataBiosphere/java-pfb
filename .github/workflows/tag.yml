@@ -21,4 +21,4 @@ jobs:
           DEFAULT_BUMP: minor
           RELEASE_BRANCHES: main,sh-aj-1095-publilsh
           VERSION_FILE_PATH: settings.gradle,cli/src/main/java/bio/terra/pfb/PfbVersion.java
-          VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*',CLI_VERSION\s=\s"
+          VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*',CLI_VERSION\\s=\\s"
