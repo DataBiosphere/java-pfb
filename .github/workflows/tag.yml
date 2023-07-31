@@ -1,5 +1,7 @@
 name: Tag
-on: workflow_call
+on:
+  workflow_call: {}
+  workflow_dispatch: {}
 
 jobs:
   tag-job:
@@ -11,12 +13,12 @@ jobs:
           token: ${{ secrets.BROADBOT_TOKEN }} # this allows the push to succeed later
       - name: Bump the tag to a new version
         # https://github.com/DataBiosphere/github-actions/tree/master/actions/bumper
-        uses: databiosphere/github-actions/actions/bumper@bumper-0.1.0
+        uses: databiosphere/github-actions/actions/bumper@sh-allow-multiple-version-files
         id: tag
         env:
           GITHUB_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
           HOTFIX_BRANCHES: hotfix.*
           DEFAULT_BUMP: minor
           RELEASE_BRANCHES: main
-          VERSION_FILE_PATH: settings.gradle
-          VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*'"
+          VERSION_FILE_PATH: settings.gradle,cli/src/main/java/bio/terra/pfb/PfbVersion.java
+          VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*',^\\s*public\\s+static\\s+final\\s+String\\s+VERSION\\s*=\\s*'.*';'"
