@@ -21,29 +21,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
           HOTFIX_BRANCHES: hotfix.*
           DEFAULT_BUMP: minor
-          RELEASE_BRANCHES: main,sh-aj-1095-publilsh
+          RELEASE_BRANCHES: main
           VERSION_FILE_PATH: settings.gradle
           VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*'"
-  release-job:
-    needs: [ tag-job ]
-    runs-on: "ubuntu-latest"
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ needs.tag-job.outputs.tag }}
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
-      - name: Build jar with latest tagged version
-        run: ./gradlew :cli:jar
-      - name: test
-        run: |
-          ls cli/build/libs
-      - name: Create tagged release with CLI jar
-        run: gh release create ${{ needs.tag-job.outputs.tag }} cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar --generate-notes
-        env:
-          GH_TOKEN: ${{ github.token }}

@@ -3,7 +3,9 @@ name: Build and Test
 on:
   push:
     branches: [ main ]
-    paths-ignore: [ '*.md' ]
+    paths-ignore:
+      - '*.md'
+      - 'settings.gradle' # Avoid running workflows on version bumps
   pull_request:
     branches: [ '**' ]
 

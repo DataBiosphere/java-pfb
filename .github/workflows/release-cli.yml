@@ -5,11 +5,13 @@ on:
 
 jobs:
   release-job:
-    name: "Pre Release"
+    needs: [ tag-job ]
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          ref: ${{ needs.tag-job.outputs.tag }}
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -18,25 +20,19 @@ jobs:
           cache: 'gradle'
       - name: Build jar with latest tagged version
         run: ./gradlew :cli:jar
-      - name: Create Github Release and include CLI jar
-        uses: "broadinstitute/action-automatic-releases@latest"
+      - name: Create tagged release with CLI jar
+        run: gh release create ${{ needs.tag-job.outputs.tag }} cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Notify slack on failure
+        uses: broadinstitute/action-slack@v3.8.0
+        if: failure()
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Java-PFB Library and CLI Publish"
-          files: |
-            LICENSE.txt
-            *.jar
-#      - name: Notify slack on failure
-#        uses: broadinstitute/action-slack@v3.8.0
-#        if: failure()
-#        env:
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#        with:
-#          channel: '#dsp-analysis-journeys-alerts'
-#          status: failure
-#          author_name: Publish Library to Artifactory
-#          fields: job
-#          text: 'Publish failed :sadpanda:'
-#          username: 'Java-PFB GitHub Action'
+          channel: '#dsp-analysis-journeys-alerts'
+          status: failure
+          author_name: Create Github Release with CLI Jar
+          fields: job
+          text: 'Publish failed :sadpanda:'
+          username: 'Java-PFB GitHub Action'
