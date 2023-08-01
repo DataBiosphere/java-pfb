@@ -8,16 +8,30 @@ Java PFB CLI
 - --help
 
 ## Local Run and Development
-**Suggested workflow:**
+
+### Option 1 - Run via Gradle (Suggested workflow)
 
 Run the following command to build the library and CLI jar and execute a command:
 ```shell
 ./gradlew run --args=<command>
 ```
 
-**Alternative:**
+### Option 2: Assemble distribution zip and run
+Run the following command to build the library and CLI jar:
+```shell
+./gradlew :cli:assembleDist
+```
+Unzip the distribution
+```shell
+unzip cli/build/distributions/cli-<VERSION>.zip
+```
+Run commands
+```shell
+./cli-<VERSION>/bin/cli <command>
+```
 
-First, run "jar" gradle task in cli project.
+### Option 3: Build and run jar
+Run the following command to build the library and CLI jar:
 ```shell
 ./gradlew :cli:jar
 ```
@@ -35,13 +49,23 @@ Example usage of the alias:
 pfb --version
 ```
 
-## Run from Jar Downloaded from Github Release
+# Download and run the CLI
+## Option 1 - Run from Jar Downloaded from Github Release
 1) Download Jar from latest Github release.
 2) Note the location of the downloaded jar and run the jar with the following command:
 ```shell
-java -cp "<REPLACE WITH PATH TO JAR>" bio.terra.pfb.JavaPfbCommand <command>
+java -cp "<PATH-TO-JAR>" bio.terra.pfb.JavaPfbCommand <command>
 ```
-Example path to jar: /Downloads/java-pfb-cli-0.1.0-20230724.180554-1-sources.jar
+## Option 2 - Run from Distribution Downloaded from Github Release
+1) Download Distribution zip from latest Github release.
+2) Unzip the distribution
+```shell
+unzip <PATH-TO-ZIP>/cli-<VERSION>.zip
+```
+3) Note the location of the unzipped distribution and run the CLI with the following command:
+```shell
+./cli-<VERSION>/bin/cli --version
+```
 
 ## Upgrade the CLI
 

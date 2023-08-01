@@ -1,4 +1,4 @@
-name: Create Github Release with CLI Jar
+name: Create Github Release with CLI Jar and Distribution
 on: workflow_call
 
 jobs:
@@ -17,9 +17,11 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
       - name: Build jar with latest tagged version
-        run: ./gradlew :cli:jar
+        run: |
+          ./gradlew --build-cache :cli:jar
+          ./gradlew --build-cache :cli:assembleDist
       - name: Create tagged release with CLI jar
-        run: gh release create ${{ needs.tag-job.outputs.tag }} cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar --generate-notes --verify-tag
+        run: gh release create ${{ needs.tag-job.outputs.tag }} 'cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar' 'cli/build/distributions/cli-${{ needs.tag-job.outputs.tag }}.zip' --generate-notes --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Notify slack on failure
