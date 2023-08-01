@@ -8,6 +8,15 @@ Java PFB CLI
 - --help
 
 ## Local Run and Development
+**Suggested workflow:**
+
+Run the following command to build the library and CLI jar and execute a command:
+```shell
+./gradlew run --args=<command>
+```
+
+**Alternative (more manual workflow):**
+
 First, run "jar" gradle task in cli project.
 ```shell
 ./gradlew :cli:jar
