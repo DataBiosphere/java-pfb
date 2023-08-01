@@ -24,11 +24,11 @@ First, run "jar" gradle task in cli project.
 
 Then, you can use the CLI with the following command:
 ```shell
-java -cp "cli/build/libs/java-pfb-cli.jar" bio.terra.pfb.JavaPfbCommand <command>
+java -cp "cli/build/libs/java-pfb-cli-<VERSION>.jar" bio.terra.pfb.JavaPfbCommand <command>
 ```
 An alias can be created to simplify this command:
 ```shell
-alias pfb='java -cp "cli/build/libs/java-pfb-cli.jar" bio.terra.pfb.JavaPfbCommand'
+alias pfb='java -cp "cli/build/libs/java-pfb-cli<VERSION>.jar" bio.terra.pfb.JavaPfbCommand'
 ```
 Example usage of the alias:
 ```shell

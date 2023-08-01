@@ -6,6 +6,8 @@ on:
 jobs:
   tag-job:
     runs-on: ubuntu-latest
+    outputs:
+        tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout current code
         uses: actions/checkout@v3
@@ -36,13 +38,41 @@ jobs:
           cache: 'gradle'
       - name: Build jar with latest tagged version
         run: ./gradlew :cli:jar
-      - name: Create Github Release and include CLI jar
-        uses: "broadinstitute/action-automatic-releases@v1.2.1"
+      - name: Test out another pre-made release action
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Java-PFB Library and CLI Publish"
-          files: |
-            LICENSE.txt
-            *.jar
+          files: cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar
+#      - name: Create Github Release
+#        id: release
+#        run: |
+#          upload_url=$(gh api \
+#            --method POST \
+#            -H "Accept: application/vnd.github+json" \
+#            -H "X-GitHub-Api-Version: 2022-11-28" \
+#            /repos/$OWNER/$REPO/releases \
+#            -f tag_name=$TAG \
+#           -f target_commitish='main' \
+#           -f name='${{ needs.tag-job.outputs.tag }}' \
+#           -f body='Java-PFB Library and CLI Publish' \
+#           -F draft=false \
+#           -F prerelease=false \
+#           -F generate_release_notes=true --jq '.data.upload_url')
+#          echo 'upload_url='$upload_url >> $GITHUB_ENV
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          TAG: ${{ needs.tag-job.outputs.tag }}
+#          OWNER: ${{ github.repository_owner }}
+#          REPO: ${{ github.event.repository.name }}
+#      - name: Upload CLI Jar to Github Release
+#        run: |
+#          gh api \
+#            --method POST \
+#            -H "Accept: application/vnd.github+json" \
+#            -H "X-GitHub-Api-Version: 2022-11-28" \
+#            $UPLOAD_URL \
+#            -f name=$CLI_JAR \
+#            -f label='application/java-archive'
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          CLI_JAR: cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar
+#          UPLOAD_URL: ${{ steps.release.outputs.upload_url }}
