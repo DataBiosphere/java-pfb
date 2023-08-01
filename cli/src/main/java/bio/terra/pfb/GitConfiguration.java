@@ -31,7 +31,7 @@ public class GitConfiguration {
     } finally {
       try {
         inputStream.close();
-      } catch (IOException e) {
+      } catch (IOException | NullPointerException e) {
         System.out.println(e);
       }
     }
