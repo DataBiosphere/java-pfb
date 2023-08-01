@@ -38,11 +38,7 @@ jobs:
           cache: 'gradle'
       - name: Build jar with latest tagged version
         run: ./gradlew :cli:jar
-      - name: Put workspace path in output
-        id: path
-        run: |
-          echo "root-path=${GITHUB_WORKSPACE}" >> $GITHUB_OUTPUT
       - name: Create tagged release with CLI jar
-        run: gh release create ${{ needs.tag-job.outputs.tag }} ${GITHUB_WORKSPACE}/cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar --generate-notes
+        run: gh release create ${{ needs.tag-job.outputs.tag }} cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
