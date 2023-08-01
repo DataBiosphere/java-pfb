@@ -30,8 +30,10 @@ public class GitConfiguration {
       System.out.println("Encountered exception while reading git properties: " + e);
     } finally {
       try {
-        inputStream.close();
-      } catch (IOException | NullPointerException e) {
+        if (inputStream != null) {
+          inputStream.close();
+        }
+      } catch (IOException e) {
         System.out.println(e);
       }
     }
