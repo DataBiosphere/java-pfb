@@ -11,6 +11,6 @@ class GitConfigurationTest {
   void getBuildVersion() {
     GitConfiguration gitConfiguration = new GitConfiguration();
     String version = gitConfiguration.getCliVersion();
-    assertThat(version, matchesPattern("\\d+\\.\\d+\\.\\d+(-SNAPSHOT)?"));
+    assertThat(version, matchesPattern("\\d+\\.\\d+\\.\\d"));
   }
 }
