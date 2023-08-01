@@ -42,6 +42,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar
+          tag_name: ${{ needs.tag-job.outputs.tag }}
 #      - name: Create Github Release
 #        id: release
 #        run: |
