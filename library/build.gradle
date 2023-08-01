@@ -1,11 +1,22 @@
 plugins {
     id 'com.srcclr.gradle'
-
+    id 'maven-publish'
+    id 'com.jfrog.artifactory'
     id 'bio.terra.pfb.java-library-conventions'
 }
 
 repositories {
+    maven {
+        // Terra proxy for maven central
+        url 'https://broadinstitute.jfrog.io/broadinstitute/maven-central/'
+    }
     mavenCentral()
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release/'
+    }
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release-local/'
+    }
 }
 
 apply from: 'generators.gradle'

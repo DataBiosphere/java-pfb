@@ -1,7 +1,5 @@
 name: Tag
-on:
-  workflow_call: {}
-  workflow_dispatch: {}
+on: workflow_call
 
 jobs:
   tag-job:

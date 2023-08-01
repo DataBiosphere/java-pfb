@@ -4,8 +4,6 @@ plugins {
     id 'java'
     id 'org.sonarqube'
     id 'com.diffplug.spotless'
-    id 'maven-publish'
-    id 'com.jfrog.artifactory'
     id 'com.gorylenko.gradle-git-properties'
 }
 
@@ -14,20 +12,6 @@ boolean isCiServer = System.getenv().containsKey("CI")
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
-repositories {
-    maven {
-        // Terra proxy for maven central
-        url 'https://broadinstitute.jfrog.io/broadinstitute/maven-central/'
-    }
-    mavenCentral()
-    maven {
-        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release/'
-    }
-    maven {
-        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-snapshot-local/'
     }
 }
 

@@ -7,7 +7,6 @@ application {
 }
 
 version gradle.releaseVersion
-apply from: "publishing.gradle"
 apply from: "generators.gradle"
 
 repositories {
