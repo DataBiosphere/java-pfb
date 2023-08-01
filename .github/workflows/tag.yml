@@ -38,10 +38,14 @@ jobs:
           cache: 'gradle'
       - name: Build jar with latest tagged version
         run: ./gradlew :cli:jar
+      - name: Test
+        run: |
+          echo ${GITHUB_WORKSPACE}
+          cat ${GITHUB_WORKSPACE}/cli/src/main/java/bio.terra.pfb/PfbVersion.java
       - name: Test out another pre-made release action
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ GITHUB_WORKSPACE }}/cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar
+          files: ${GITHUB_WORKSPACE}/cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar
           tag_name: ${{ needs.tag-job.outputs.tag }}
 #      - name: Create Github Release
 #        id: release
