@@ -103,3 +103,5 @@ jobs:
     needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library ]
     uses: ./.github/workflows/release-cli.yml
     if: success() && github.ref == 'refs/heads/main'
+    with:
+      tag: ${{ needs.tag.outputs.tag }}

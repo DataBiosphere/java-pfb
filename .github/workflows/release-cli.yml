@@ -1,9 +1,13 @@
 name: Create Github Release with CLI Jar and Distribution
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
 
 jobs:
   release-job:
-    needs: [ tag-job ]
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout Repo

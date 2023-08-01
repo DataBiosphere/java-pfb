@@ -1,5 +1,9 @@
 name: Tag
-on: workflow_call
+on:
+  workflow_call:
+    outputs:
+      tag:
+        value: ${{ jobs.tag-job.outputs.tag }}
 
 jobs:
   tag-job:
