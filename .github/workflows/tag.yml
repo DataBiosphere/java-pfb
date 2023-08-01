@@ -30,6 +30,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        ref: ${{ needs.tag-job.outputs.tag }}
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -40,10 +41,8 @@ jobs:
         run: ./gradlew :cli:jar
       - name: test
         run: |
-          echo "hello"
-          ls ${GITHUB_WORKSPACE}/cli/build/libs
           ls cli/build/libs
       - name: Create tagged release with CLI jar
-        run: gh release create ${{ needs.tag-job.outputs.tag }} cli/src/main/java/bio/terra/pfb/JavaPfbCommand.java --generate-notes
+        run: gh release create ${{ needs.tag-job.outputs.tag }} cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
