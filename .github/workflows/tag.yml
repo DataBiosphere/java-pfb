@@ -13,12 +13,36 @@ jobs:
           token: ${{ secrets.BROADBOT_TOKEN }} # this allows the push to succeed later
       - name: Bump the tag to a new version
         # https://github.com/DataBiosphere/github-actions/tree/master/actions/bumper
-        uses: databiosphere/github-actions/actions/bumper@sh-allow-multiple-version-files
+        uses: databiosphere/github-actions/actions/bumper@bumper-0.1.0
         id: tag
         env:
           GITHUB_TOKEN: ${{ secrets.BROADBOT_TOKEN }}
           HOTFIX_BRANCHES: hotfix.*
           DEFAULT_BUMP: minor
           RELEASE_BRANCHES: main,sh-aj-1095-publilsh
-          VERSION_FILE_PATH: settings.gradle,cli/src/main/java/bio/terra/pfb/PfbVersion.java
-          VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*',CLI_VERSION\\s=\\s"
+          VERSION_FILE_PATH: settings.gradle
+          VERSION_LINE_MATCH: "^\\s*gradle.ext.releaseVersion\\s*=\\s*'.*'"
+  release-job:
+    needs: [ tag-job ]
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Build jar with latest tagged version
+        run: ./gradlew :cli:jar
+      - name: Create Github Release and include CLI jar
+        uses: "broadinstitute/action-automatic-releases@v1.2.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Java-PFB Library and CLI Publish"
+          files: |
+            LICENSE.txt
+            *.jar
