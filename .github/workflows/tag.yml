@@ -42,11 +42,8 @@ jobs:
         id: path
         run: |
           echo "root-path=${GITHUB_WORKSPACE}" >> $GITHUB_OUTPUT
-      - name: Test out another pre-made release action
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "${{ steps.path.outputs.root-path }}/cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar"
-          tag_name: ${{ needs.tag-job.outputs.tag }}
+      - name: gh release command
+        run: gh release upload ${{ needs.tag-job.outputs.tag }} ${GITHUB_WORKSPACE}/cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar
 #      - name: Create Github Release
 #        id: release
 #        run: |
