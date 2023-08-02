@@ -2,14 +2,19 @@
 
 A java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library that includes a CLI and a java library. 
 
+
+## Getting Started
+See the [library README](library/README.md) for more details on how to reference the lbirary in your project.
+
 The CLI is a wrapper around the library. See the [CLI README](cli/README.md) for more information.
 
+## Developer Information
 
-## Publishing
+### Publishing
+
 See [library](library/README.md) and [cli](cli/README.md) readmes for more details. 
 
-
-## Running SourceClear locally
+### Running SourceClear locally
 
 [SourceClear](https://srcclr.github.io) is a static analysis tool that scans a project's Java
 dependencies for known vulnerabilities. If you get a build failure due a SourceClear error and want
@@ -23,7 +28,7 @@ export SRCCLR_API_TOKEN=$(vault read -field=api_token secret/secops/ci/srcclr/gr
 
 Results of the scan are uploaded to [Veracode](https://sca.analysiscenter.veracode.com/workspaces/jppForw/projects/768265/issues). You can request an account to view results from #dsp-infosec-champions. 
 
-## Running SonarQube locally
+### Running SonarQube locally
 
 [SonarQube](https://www.sonarqube.org) is a static analysis code that scans code for a wide
 range of issues, including maintainability and possible bugs. If you get a build failure due to

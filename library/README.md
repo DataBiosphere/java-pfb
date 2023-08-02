@@ -1,5 +1,11 @@
 Java PFB Library
 ===
+## Referencing the Library
+The library is published to a central Maven repository. To use the library, add the following to your build.gradle:
+```groovy
+implementation "bio.terra:java-pfb-library:<Tagged Version>"
+```
+You can find the latest tagged version on [Github](https://github.com/DataBiosphere/java-pfb/tags). 
 
 ## Publishing the Library
 JFrog Artifactory is used to publish libraries to a central Maven repository. The library version number is the version in settings.gradle. We use github actions to bump the version and publish to Artifactory.
