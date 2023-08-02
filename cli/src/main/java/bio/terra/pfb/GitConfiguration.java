@@ -16,7 +16,7 @@ public class GitConfiguration {
     return readGitPropertiesValue(CLI_VERSION_BUILD_PROPERTY);
   }
 
-  private String readGitPropertiesValue(String propertyName) {
+  String readGitPropertiesValue(String propertyName) {
     String result = "";
     InputStream inputStream = null;
     try {

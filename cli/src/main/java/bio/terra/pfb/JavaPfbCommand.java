@@ -11,8 +11,12 @@ import picocli.CommandLine;
     versionProvider = PfbVersion.class)
 public class JavaPfbCommand implements Runnable {
   public static void main(String[] args) {
-    int exitCode = new CommandLine(new JavaPfbCommand()).execute(args);
+    int exitCode = executeCommand(args);
     System.exit(exitCode);
+  }
+
+  static int executeCommand(String[] args) {
+    return new CommandLine(new JavaPfbCommand()).execute(args);
   }
 
   @Override
