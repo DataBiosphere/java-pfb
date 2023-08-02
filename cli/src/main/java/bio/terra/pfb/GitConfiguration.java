@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+// Read properties from cli/build/resources/main/git.properties file
+// Enables automatically pulling library version from git.properties to use as CLI version
+// Note: Generate the git.properties file by running the generateGitProperties Gradle Command
 public class GitConfiguration {
   private static final String GIT_PROPERTIES_FILE_NAME = "git.properties";
   private static final String CLI_VERSION_BUILD_PROPERTY = "javapfb.cli.version.build";
