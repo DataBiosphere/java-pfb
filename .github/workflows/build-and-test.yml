@@ -73,13 +73,13 @@ jobs:
   tag:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
     uses: ./.github/workflows/tag.yml
-    if: success() && github.ref == 'refs/heads/main'
+    if: success()
     secrets: inherit
 
   publish-library:
     needs: [ tag ]
     uses: ./.github/workflows/publish.yml
-    if: success() && github.ref == 'refs/heads/main'
+    if: success()
     secrets: inherit
     with:
       tag: ${{ needs.tag.outputs.tag }}
@@ -88,7 +88,7 @@ jobs:
     needs: [ tag ]
     uses: ./.github/workflows/release-cli.yml
     secrets: inherit
-    if: success() && github.ref == 'refs/heads/main'
+    if: success()
     with:
       tag: ${{ needs.tag.outputs.tag }}
 
