@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          ref: ${{ needs.tag-job.outputs.tag }}
+          ref: ${{ inputs.tag }}
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -25,9 +25,9 @@ jobs:
           ./gradlew --build-cache :cli:jar
           ./gradlew --build-cache :cli:assembleDist
       - name: Create tagged release with CLI jar
-        run: gh release create ${{ needs.tag-job.outputs.tag }} 'cli/build/libs/java-pfb-cli-${{ needs.tag-job.outputs.tag }}.jar' 'cli/build/distributions/cli-${{ needs.tag-job.outputs.tag }}.zip' --generate-notes --verify-tag
+        run: gh release create ${{ inputs.tag }} 'cli/build/libs/java-pfb-cli-${{ inputs.tag }}.jar' 'cli/build/distributions/cli-${{ inputs.tag }}.zip' --generate-notes --verify-tag
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Notify slack on failure
         uses: broadinstitute/action-slack@v3.8.0
         if: failure()

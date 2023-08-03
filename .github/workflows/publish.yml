@@ -1,5 +1,10 @@
 name: Publish Library to Artifactory
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
 
 env:
   SERVICE_NAME: ${{ github.event.repository.name }}
@@ -12,20 +17,17 @@ jobs:
       contents: 'read'
       id-token: 'write'
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
-
-      - name: Parse tag
-        id: tag
-        run: echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
 
       - name: Publish Library Artifactory
         run: ./gradlew --build-cache :library:artifactoryPublish

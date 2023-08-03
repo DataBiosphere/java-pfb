@@ -95,12 +95,14 @@ jobs:
     if: success() && github.ref == 'refs/heads/main'
 
   publish-library:
-    needs: [ build, unit-tests-and-sonarqube, source-clear, tag ]
+    needs: [ tag ]
     uses: ./.github/workflows/publish.yml
     if: success() && github.ref == 'refs/heads/main'
+    with:
+      tag: ${{ needs.tag.outputs.tag }}
 
   release-cli:
-    needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library ]
+    needs: [ tag ]
     uses: ./.github/workflows/release-cli.yml
     if: success() && github.ref == 'refs/heads/main'
     with:
