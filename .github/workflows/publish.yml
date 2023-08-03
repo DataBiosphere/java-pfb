@@ -29,7 +29,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
-
       - name: Publish Library Artifactory
         run: ./gradlew --build-cache :library:artifactoryPublish
         env:

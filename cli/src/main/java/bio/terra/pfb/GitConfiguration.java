@@ -1,45 +1,33 @@
 package bio.terra.pfb;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
+import picocli.CommandLine;
 
 // Read properties from cli/build/resources/main/git.properties file
 // Enables automatically pulling library version from git.properties to use as CLI version
 // Note: Generate the git.properties file by running the generateGitProperties Gradle Command
 public class GitConfiguration {
+  private final Properties properties;
   private static final String GIT_PROPERTIES_FILE_NAME = "git.properties";
   private static final String CLI_VERSION_BUILD_PROPERTY = "javapfb.cli.version.build";
 
-  public String getCliVersion() {
-    return readGitPropertiesValue(CLI_VERSION_BUILD_PROPERTY);
+  public GitConfiguration() {
+    properties = loadProperties();
   }
 
-  String readGitPropertiesValue(String propertyName) {
-    String result = "";
-    InputStream inputStream = null;
-    try {
-      Properties prop = new Properties();
-      inputStream = getClass().getClassLoader().getResourceAsStream(GIT_PROPERTIES_FILE_NAME);
-      if (inputStream != null) {
-        prop.load(inputStream);
-      } else {
-        throw new FileNotFoundException(
-            "Property file '" + GIT_PROPERTIES_FILE_NAME + "' not found in the classpath");
-      }
-      return prop.getProperty(propertyName);
-    } catch (IOException e) {
-      System.out.println("Encountered exception while reading git properties: " + e);
-    } finally {
-      try {
-        if (inputStream != null) {
-          inputStream.close();
-        }
-      } catch (IOException e) {
-        System.out.println(e);
-      }
+  Properties loadProperties() {
+    try (var inputStream =
+        getClass().getClassLoader().getResourceAsStream(GIT_PROPERTIES_FILE_NAME)) {
+      var props = new Properties();
+      props.load(inputStream);
+      return props;
+    } catch (NullPointerException | IOException e) {
+      throw new CommandLine.InitializationException("Failed to load git properties", e);
     }
-    return result;
+  }
+
+  public String getCliVersion() {
+    return properties.getProperty(CLI_VERSION_BUILD_PROPERTY);
   }
 }
