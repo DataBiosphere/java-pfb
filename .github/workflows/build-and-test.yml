@@ -73,22 +73,19 @@ jobs:
   tag:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
     uses: ./.github/workflows/tag.yml
-    if: success()
-#    if: success() && github.ref == 'refs/heads/main'
+    if: success() && github.ref == 'refs/heads/main'
 
   publish-library:
     needs: [ tag ]
     uses: ./.github/workflows/publish.yml
-    if: success()
-#    if: success() && github.ref == 'refs/heads/main'
+    if: success() && github.ref == 'refs/heads/main'
     with:
       tag: ${{ needs.tag.outputs.tag }}
 
   release-cli:
     needs: [ tag ]
     uses: ./.github/workflows/release-cli.yml
-    if: success()
-#    if: success() && github.ref == 'refs/heads/main'
+    if: success() && github.ref == 'refs/heads/main'
     with:
       tag: ${{ needs.tag.outputs.tag }}
 
