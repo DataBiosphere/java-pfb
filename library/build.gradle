@@ -24,11 +24,13 @@ dependencies {
     implementation "org.apache.avro:avro:1.11.2"
 }
 
-generateAvroJava {
-    source("library/src/main/avro")
-    outputDir = file("build/generated-src/avro")
-}
+sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
 
+generateAvroJava {
+    source("library/src/main/avro") // TODO - try putting back in resources
+    outputDir = file("build/generated-src")
+}
+compileJava.dependsOn generateAvroJava
 
 apply from: 'generators.gradle'
 apply from: "publishing.gradle"

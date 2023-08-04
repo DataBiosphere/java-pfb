@@ -12,18 +12,18 @@ import org.apache.avro.io.DatumReader;
 
 public class PfbReader {
 
-  //  public Metadata deSerializeAvroHttpRequestJSON(byte[] data) throws IOException {
-  //    DatumReader<Metadata> reader = new SpecificDatumReader<>(Metadata.class);
+  //  public Entity deSerializeAvroHttpRequestJSON(byte[] data) throws IOException {
+  //    DatumReader<Entity> reader = new SpecificDatumReader<>(Entity.class);
   //    Decoder decoder = null;
   //    try {
-  //      decoder = DecoderFactory.get().jsonDecoder(Metadata.getClassSchema(), new String(data));
+  //      decoder = DecoderFactory.get().jsonDecoder(Entity.getClassSchema(), new String(data));
   //      return reader.read(null, decoder);
   //    } catch (IOException e) {
   //      throw new IOException("Deserialization Error", e);
   //    }
   //  }
 
-  public Schema readSchema(String fileLocation) throws IOException {
+  public Schema readGenericSchema(String fileLocation) throws IOException {
     DatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
     DataFileReader<GenericRecord> dataFileReader =
         new DataFileReader<>(new File(fileLocation), datumReader);
