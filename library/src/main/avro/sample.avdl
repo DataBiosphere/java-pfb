@@ -1,3 +1,4 @@
+@namespace("bio.terra.pfb")
 protocol SimplePFB {
     enum Multiplicity {
         ONE_TO_ONE,

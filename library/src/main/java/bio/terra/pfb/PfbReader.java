@@ -6,20 +6,16 @@ import org.apache.avro.file.DataFileReader;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
+import org.apache.avro.specific.SpecificDatumReader;
 
 public class PfbReader {
 
-  // TODO -- Need to figure out how to reference "Entity" from generated models
-  //  public Entity deSerializeAvroHttpRequestJSON(byte[] data) throws IOException {
-  //    DatumReader<Entity> reader = new SpecificDatumReader<>(Entity.class);
-  //    Decoder decoder = null;
-  //    try {
-  //      decoder = DecoderFactory.get().jsonDecoder(Entity.getClassSchema(), new String(data));
-  //      return reader.read(null, decoder);
-  //    } catch (IOException e) {
-  //      throw new IOException("Deserialization Error", e);
-  //    }
-  //  }
+  public Schema readPFBSchema(String fileLocation) throws IOException {
+    DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
+    DataFileReader<Entity> dataFileReader =
+        new DataFileReader<>(new File(fileLocation), datumReader);
+    return dataFileReader.getSchema();
+  }
 
   public Schema readGenericSchema(String fileLocation) throws IOException {
     DatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
