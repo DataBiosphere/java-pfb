@@ -1,6 +1,28 @@
 package bio.terra.pfb;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.avro.Schema;
+import org.json.JSONArray;
+import org.junit.jupiter.api.Test;
+
 class PfbReaderTest {
+
+  @Test
+  void testGetPFBSchemaFromClasspathFile() throws IOException {
+    String expectedData = "Multiplicity";
+    String filePath = "src/main/resources/avro/minimal_data.avro";
+    PfbReader reader = new PfbReader();
+    Schema schema = reader.readPFBSchema(filePath);
+    List<Schema> pfbSchemaShow = new ArrayList<>();
+    pfbSchemaShow.add(schema.getField("object").schema().getField("root").schema());
+    pfbSchemaShow.add(schema.getField("object").schema().getField("data_release").schema());
+    pfbSchemaShow.add(
+        schema.getField("object").schema().getField("submitted_aligned_reads").schema());
+    JSONArray jsonArray = new JSONArray(pfbSchemaShow);
+  }
+
   //  @Test
   //  void testGetSchemaFromClasspathFile() throws IOException {
   //    String expectedData = "Multiplicity";
