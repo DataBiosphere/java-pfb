@@ -27,6 +27,11 @@ dependencies {
 }
 
 sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
+spotless {
+    java{
+        targetExclude "${buildDir}/**", "build/generated-src/**"
+    }
+}
 
 generateAvroJava {
     source("library/src/main/avro") // TODO - try putting back in resources
