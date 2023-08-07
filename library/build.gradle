@@ -22,7 +22,8 @@ repositories {
 
 dependencies {
     implementation "org.apache.avro:avro:1.11.2"
-    implementation 'org.json:json:20230618'
+    testImplementation 'org.json:json:20230618'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 }
 
 sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
