@@ -1,5 +1,6 @@
 name: Publish Library to Artifactory
 on:
+  workflow_dispatch: {}
   workflow_call:
     inputs:
       tag:
