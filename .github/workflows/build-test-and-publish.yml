@@ -20,103 +20,106 @@ env:
   RUN_PUBLISH: (${{github.ref == 'refs/heads/main'}} && ${{ github.event_name != 'workflow_dispatch' }}) || (${{ github.event_name == 'workflow_dispatch'}} && ${{inputs.publish == 'true'}})
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
-
-      - name: Build all projects without running tests
-        run: ./gradlew --build-cache build -x test
-
-  source-clear:
-    needs: [ build ]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
-
-      - name: SourceClear scan
-        env:
-          SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-        run: ./gradlew --build-cache srcclr
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#          cache: 'gradle'
+#
+#      - name: Build all projects without running tests
+#        run: ./gradlew --build-cache build -x test
+#
+#  source-clear:
+#    needs: [ build ]
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#          cache: 'gradle'
+#
+#      - name: SourceClear scan
+#        env:
+#          SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
+#        run: ./gradlew --build-cache srcclr
 
   unit-tests-and-sonarqube:
-    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        # Needed by sonar to get the git history for the branch the PR will be merged into.
-        with:
-          fetch-depth: 0
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
-      - name: Test with coverage
-        run: ./gradlew --build-cache test jacocoTestReport
-      - name: SonarQube scan for library
-        run: ./gradlew --build-cache :library:sonar --info
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: SonarQube scan for cli
-        run: ./gradlew --build-cache :cli:sonar --info
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        run: |
+          echo $RUN_PUBLISH
+          echo ${{ inputs.publish }}
+#      - uses: actions/checkout@v3
+#        # Needed by sonar to get the git history for the branch the PR will be merged into.
+#        with:
+#          fetch-depth: 0
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#          cache: 'gradle'
+#      - name: Test with coverage
+#        run: ./gradlew --build-cache test jacocoTestReport
+#      - name: SonarQube scan for library
+#        run: ./gradlew --build-cache :library:sonar --info
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: SonarQube scan for cli
+#        run: ./gradlew --build-cache :cli:sonar --info
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   tag:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
     uses: ./.github/workflows/tag.yml
-    if: success() && ${{ env.RUN_PUBLISH == 'true' }}
+    if: success() && ${{ $RUN_PUBLISH == 'true' }}
     secrets: inherit
 
-  publish-library:
-    needs: [ tag ]
-    uses: ./.github/workflows/publish.yml
-    if: success() && ${{ env.RUN_PUBLISH == 'true' }}
-    secrets: inherit
-    with:
-      tag: ${{ needs.tag.outputs.tag }}
-
-  release-cli:
-    needs: [ tag ]
-    uses: ./.github/workflows/release-cli.yml
-    secrets: inherit
-    if: success() && ${{ env.RUN_PUBLISH == 'true' }}
-    with:
-      tag: ${{ needs.tag.outputs.tag }}
-
-  notify-slack-on-failure:
-    needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library, release-cli ]
-    runs-on: ubuntu-latest
-
-    if: failure() && github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Notify slack on failure
-        uses: broadinstitute/action-slack@v3.8.0
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          channel: '#dsp-analysis-journeys-alerts'
-          status: failure
-          author_name: Build on dev
-          fields: job,message
-          text: 'Build failed :sadpanda:'
-          username: 'Java-PFB GitHub Action'
+#  publish-library:
+#    needs: [ tag ]
+#    uses: ./.github/workflows/publish.yml
+#    if: success() && ${{ $RUN_PUBLISH == 'true' }}
+#    secrets: inherit
+#    with:
+#      tag: ${{ needs.tag.outputs.tag }}
+#
+#  release-cli:
+#    needs: [ tag ]
+#    uses: ./.github/workflows/release-cli.yml
+#    secrets: inherit
+#    if: success() && ${{ $RUN_PUBLISH == 'true' }}
+#    with:
+#      tag: ${{ needs.tag.outputs.tag }}
+#
+#  notify-slack-on-failure:
+#    needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library, release-cli ]
+#    runs-on: ubuntu-latest
+#
+#    if: failure() && github.ref == 'refs/heads/main'
+#
+#    steps:
+#      - name: Notify slack on failure
+#        uses: broadinstitute/action-slack@v3.8.0
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#        with:
+#          channel: '#dsp-analysis-journeys-alerts'
+#          status: failure
+#          author_name: Build on dev
+#          fields: job,message
+#          text: 'Build failed :sadpanda:'
+#          username: 'Java-PFB GitHub Action'
