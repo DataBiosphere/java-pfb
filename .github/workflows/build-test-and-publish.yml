@@ -71,43 +71,43 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  tag:
-    needs: [ build, unit-tests-and-sonarqube, source-clear ]
-    uses: ./.github/workflows/tag.yml
-    if: success() && github.ref == 'refs/heads/main'
-    secrets: inherit
+#  tag:
+#    needs: [ build, unit-tests-and-sonarqube, source-clear ]
+#    uses: ./.github/workflows/tag.yml
+#    if: success() && github.ref == 'refs/heads/main'
+#    secrets: inherit
 
   publish-library:
-    needs: [ tag ]
+    needs: [ build, unit-tests-and-sonarqube, source-clear ]
     uses: ./.github/workflows/publish.yml
-    if: success() && github.ref == 'refs/heads/main'
+    if: success()
     secrets: inherit
     with:
-      tag: ${{ needs.tag.outputs.tag }}
+      tag: '0.2.0'
 
-  release-cli:
-    needs: [ tag ]
-    uses: ./.github/workflows/release-cli.yml
-    secrets: inherit
-    if: success() && github.ref == 'refs/heads/main'
-    with:
-      tag: ${{ needs.tag.outputs.tag }}
+#  release-cli:
+#    needs: [ tag ]
+#    uses: ./.github/workflows/release-cli.yml
+#    secrets: inherit
+#    if: success() && github.ref == 'refs/heads/main'
+#    with:
+#      tag: ${{ needs.tag.outputs.tag }}
 
-  notify-slack-on-failure:
-    needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library, release-cli ]
-    runs-on: ubuntu-latest
-
-    if: failure() && github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Notify slack on failure
-        uses: broadinstitute/action-slack@v3.8.0
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          channel: '#dsp-analysis-journeys-alerts'
-          status: failure
-          author_name: Build on dev
-          fields: job,message
-          text: 'Build failed :sadpanda:'
-          username: 'Java-PFB GitHub Action'
+#  notify-slack-on-failure:
+#    needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library, release-cli ]
+#    runs-on: ubuntu-latest
+#
+#    if: failure() && github.ref == 'refs/heads/main'
+#
+#    steps:
+#      - name: Notify slack on failure
+#        uses: broadinstitute/action-slack@v3.8.0
+#        env:
+#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#        with:
+#          channel: '#dsp-analysis-journeys-alerts'
+#          status: failure
+#          author_name: Build on dev
+#          fields: job,message
+#          text: 'Build failed :sadpanda:'
+#          username: 'Java-PFB GitHub Action'
