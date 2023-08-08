@@ -1,6 +1,10 @@
 name: Publish Library to Artifactory
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Enter a valid tag for the release'
+        required: true
   workflow_call:
     inputs:
       tag:
