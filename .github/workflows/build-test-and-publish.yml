@@ -60,6 +60,8 @@ jobs:
         run: |
           echo $RUN_PUBLISH
           echo ${{ inputs.publish }}
+          echo ${{inputs.publish == 'true'}}
+          echo $RUN_PUBLISH == 'true'
 #      - uses: actions/checkout@v3
 #        # Needed by sonar to get the git history for the branch the PR will be merged into.
 #        with:
