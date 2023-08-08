@@ -38,11 +38,11 @@ Run the following command to build the library and CLI jar:
 
 Then, you can use the CLI with the following command:
 ```shell
-java -cp "cli/build/libs/java-pfb-cli-<VERSION>.jar" bio.terra.pfb.JavaPfbCommand <command>
+java -jar "cli/build/libs/java-pfb-cli-<VERSION>.jar" <command>
 ```
 An alias can be created to simplify this command:
 ```shell
-alias pfb='java -cp "cli/build/libs/java-pfb-cli-<VERSION>.jar" bio.terra.pfb.JavaPfbCommand'
+alias pfb='java -jar "cli/build/libs/java-pfb-cli-<VERSION>.jar"'
 ```
 Example usage of the alias:
 ```shell
