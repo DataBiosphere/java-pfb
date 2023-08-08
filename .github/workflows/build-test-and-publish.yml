@@ -83,11 +83,10 @@ jobs:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  tag:
-    needs: [ build, unit-tests-and-sonarqube, source-clear ]
-    uses: ./.github/workflows/tag.yml
-    if: success() && ${{ $RUN_PUBLISH == 'true' }}
-    secrets: inherit
+#  tag:
+#    uses: ./.github/workflows/tag.yml
+#    if: success() && ${{ $RUN_PUBLISH == 'true' }}
+#    secrets: inherit
 
 #  publish-library:
 #    needs: [ tag ]
