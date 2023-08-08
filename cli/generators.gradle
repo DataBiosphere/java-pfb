@@ -1,0 +1,8 @@
+// see https://github.com/n0mer/gradle-git-properties
+gitProperties {
+    keys = []
+    customProperty('javapfb.cli.version.gitTag', { it.describe(tags: true) })
+    customProperty('javapfb.cli.version.gitHash', { it.head().abbreviatedId })
+    customProperty('javapfb.cli.version.github', { "https://github.com/DataBiosphere/java-pfb/tree/${it.describe(tags: true)}" })
+    customProperty('javapfb.cli.version.build', version)
+}

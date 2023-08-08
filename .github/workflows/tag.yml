@@ -1,9 +1,18 @@
 name: Tag
-on: workflow_dispatch
+on:
+  workflow_call:
+    outputs:
+      tag:
+        value: ${{ jobs.tag-job.outputs.tag }}
+    secrets:
+      BROADBOT_TOKEN:
+        required: true
 
 jobs:
   tag-job:
     runs-on: ubuntu-latest
+    outputs:
+        tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout current code
         uses: actions/checkout@v3

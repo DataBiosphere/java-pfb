@@ -8,11 +8,15 @@ import picocli.CommandLine;
     name = "pfb",
     mixinStandardHelpOptions = true,
     description = "A java implementation of pyPFB",
-    version = "java-pfb 0.1.0")
+    versionProvider = PfbVersion.class)
 public class JavaPfbCommand implements Runnable {
   public static void main(String[] args) {
-    int exitCode = new CommandLine(new JavaPfbCommand()).execute(args);
+    int exitCode = executeCommand(args);
     System.exit(exitCode);
+  }
+
+  static int executeCommand(String[] args) {
+    return new CommandLine(new JavaPfbCommand()).execute(args);
   }
 
   @Override
@@ -20,8 +24,16 @@ public class JavaPfbCommand implements Runnable {
     System.out.println("PFB RUN");
   }
 
+  // Example "hello world" command
   @Command(name = "hello")
   public void helloCommand() {
     System.out.println("Hello world!");
+  }
+
+  // POC usage of java-pfb-library
+  @Command(name = "getNumber5")
+  public void getNumber5() {
+    int val = Library.getNumber5();
+    System.out.println("Test pulling from pfb library - The number is " + val);
   }
 }

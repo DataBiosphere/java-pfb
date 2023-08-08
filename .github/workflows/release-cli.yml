@@ -1,0 +1,33 @@
+name: Create Github Release with CLI Jar and Distribution
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      BROADBOT_TOKEN:
+        required: true
+
+jobs:
+  release-job:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
+          token: ${{ secrets.BROADBOT_TOKEN }}
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Build jar with latest tagged version
+        run: |
+          ./gradlew --build-cache jar assembleDist
+      - name: Create tagged release with CLI jar
+        run: gh release create ${{ inputs.tag }} 'cli/build/libs/java-pfb-cli-${{ inputs.tag }}.jar' 'cli/build/distributions/cli-${{ inputs.tag }}.zip' --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ secrets.BROADBOT_TOKEN }}

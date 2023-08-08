@@ -1,0 +1,4 @@
+plugins {
+    id 'bio.terra.pfb.java-common-conventions'
+    id 'application'
+}

@@ -1,8 +1,13 @@
 plugins {
-    id 'bio.terra.pfb.java-common-conventions'
+    id 'bio.terra.pfb.java-application-conventions'
 }
 
-version 'unspecified'
+application {
+    mainClass = 'bio.terra.pfb.JavaPfbCommand'
+}
+
+version gradle.releaseVersion
+apply from: "generators.gradle"
 
 repositories {
     mavenCentral()
@@ -10,16 +15,17 @@ repositories {
 
 dependencies {
     implementation 'info.picocli:picocli:4.7.4'
+    implementation project(':library')
 }
 
 jar {
-    manifest {
-        attributes 'Main-Class': 'bio.terra.pfb.JavaPfbCommand'
-    }
+    manifest.attributes["Main-Class"] = application.mainClass
     archiveBaseName.set('java-pfb-cli')
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn(':library:jar')
 }
 
 sonar {

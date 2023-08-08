@@ -1,9 +1,11 @@
-name: Build and Test
+name: Build, Test and Publish
 
 on:
   push:
     branches: [ main ]
-    paths-ignore: [ '*.md' ]
+    paths-ignore:
+      - '*.md'
+      - 'settings.gradle' # Avoid running workflows on version bumps
   pull_request:
     branches: [ '**' ]
 
@@ -68,8 +70,30 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  notify-slack:
+  tag:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
+    uses: ./.github/workflows/tag.yml
+    if: success() && github.ref == 'refs/heads/main'
+    secrets: inherit
+
+  publish-library:
+    needs: [ tag ]
+    uses: ./.github/workflows/publish.yml
+    if: success() && github.ref == 'refs/heads/main'
+    secrets: inherit
+    with:
+      tag: ${{ needs.tag.outputs.tag }}
+
+  release-cli:
+    needs: [ tag ]
+    uses: ./.github/workflows/release-cli.yml
+    secrets: inherit
+    if: success() && github.ref == 'refs/heads/main'
+    with:
+      tag: ${{ needs.tag.outputs.tag }}
+
+  notify-slack-on-failure:
+    needs: [ build, unit-tests-and-sonarqube, source-clear, tag, publish-library, release-cli ]
     runs-on: ubuntu-latest
 
     if: failure() && github.ref == 'refs/heads/main'
@@ -86,16 +110,3 @@ jobs:
           fields: job,message
           text: 'Build failed :sadpanda:'
           username: 'Java-PFB GitHub Action'
-
-  dispatch-tag:
-    needs: [ build, unit-tests-and-sonarqube, source-clear ]
-    runs-on: ubuntu-latest
-
-    if: success() && github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Fire off tag action
-        uses: broadinstitute/workflow-dispatch@v1
-        with:
-          workflow: Tag
-          token: ${{ secrets.BROADBOT_TOKEN }}

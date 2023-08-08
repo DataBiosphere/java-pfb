@@ -1,5 +1,17 @@
-name: Publish and deploy
-on: create
+name: Publish Library to Artifactory
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      BROADBOT_TOKEN:
+        required: true
+      ARTIFACTORY_USERNAME:
+        required: true
+      ARTIFACTORY_PASSWORD:
+        required: true
 
 env:
   SERVICE_NAME: ${{ github.event.repository.name }}
@@ -12,39 +24,21 @@ jobs:
       contents: 'read'
       id-token: 'write'
     runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
     steps:
-      - name: Enable publish with AJ-1095
-        run: echo "TODO"
-#      - uses: actions/checkout@v3
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#          cache: 'gradle'
-
-#      - name: Parse tag
-#        id: tag
-#        run: echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
-#
-#      - name: Publish to Artifactory
-#        run: ./gradlew --build-cache :client:artifactoryPublish
-#        env:
-#          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-#          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-#          ARTIFACTORY_REPO_KEY: "libs-release-local"
-#
-#      - name: Notify slack on failure
-#        uses: broadinstitute/action-slack@v3.8.0
-#        if: failure()
-#        env:
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#        with:
-#          channel: '#dsp-analysis-journeys-alerts'
-#          status: failure
-#          author_name: Publish to dev
-#          fields: job
-#          text: 'Publish failed :sadpanda:'
-#          username: 'Java-PFB GitHub Action'
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
+          token: ${{ secrets.BROADBOT_TOKEN }}
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+      - name: Publish Library Artifactory
+        run: ./gradlew --build-cache :library:artifactoryPublish
+        env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+          ARTIFACTORY_REPO_KEY: "libs-release-local"

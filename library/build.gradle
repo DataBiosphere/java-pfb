@@ -1,16 +1,26 @@
 plugins {
     id 'com.srcclr.gradle'
-
-    id 'com.gorylenko.gradle-git-properties' version '2.3.1'
-
+    id 'maven-publish'
+    id 'com.jfrog.artifactory'
     id 'bio.terra.pfb.java-library-conventions'
 }
 
 repositories {
+    maven {
+        // Terra proxy for maven central
+        url 'https://broadinstitute.jfrog.io/broadinstitute/maven-central/'
+    }
     mavenCentral()
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release/'
+    }
+    maven {
+        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release-local/'
+    }
 }
 
 apply from: 'generators.gradle'
+apply from: "publishing.gradle"
 
 srcclr {
     scope = "runtimeClasspath"

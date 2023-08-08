@@ -2,6 +2,8 @@ package bio.terra.pfb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.matchesPattern;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -36,8 +38,41 @@ class JavaPfbCommandTest {
   }
 
   @Test
+  void testVersionCommand() {
+    String[] args = new String[1];
+    args[0] = "--version";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), matchesPattern("pfb \\d+\\.\\d+\\.\\d\n"));
+  }
+
+  @Test
+  void testCorrectVersion() {
+    GitConfiguration gitConfiguration = new GitConfiguration();
+    String exepectedVersion = gitConfiguration.getCliVersion();
+    String[] args = new String[1];
+    args[0] = "--version";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), equalTo("pfb " + exepectedVersion + "\n"));
+  }
+
+  @Test
+  void testHelpCommand() {
+    String[] args = new String[1];
+    args[0] = "--help";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), containsString("Usage: pfb"));
+  }
+
+  @Test
   void helloCommand() {
     javaPfbCommand.helloCommand();
     assertThat(outContent.toString(), containsString("Hello world!"));
+  }
+
+  @Test
+  void testGetNumber5() {
+    javaPfbCommand.getNumber5();
+    assertThat(
+        outContent.toString(), containsString("Test pulling from pfb library - The number is 5"));
   }
 }

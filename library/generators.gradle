@@ -1,5 +1,3 @@
-def artifactGroup = "${group}.javapfb"
-
 // see https://github.com/n0mer/gradle-git-properties
 gitProperties {
     keys = []
