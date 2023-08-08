@@ -65,6 +65,7 @@ jobs:
           echo $RUN_PUBLISH == 'true'
       - name: Test run_PUBLISH
         if: $RUN_PUBLISH
+        run: echo 'hello'
 #      - uses: actions/checkout@v3
 #        # Needed by sonar to get the git history for the branch the PR will be merged into.
 #        with:
