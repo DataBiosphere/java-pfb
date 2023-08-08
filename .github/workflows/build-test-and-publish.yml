@@ -1,6 +1,13 @@
 name: Build, Test and Publish
 
 on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'If true, run the tag and publish jobs'
+        required: true
+        type: boolean
+        default: false
   push:
     branches: [ main ]
     paths-ignore:
@@ -73,13 +80,13 @@ jobs:
   tag:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
     uses: ./.github/workflows/tag.yml
-    if: success() && github.ref == 'refs/heads/main'
+    if: success() && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish))
     secrets: inherit
 
   publish-library:
     needs: [ tag ]
     uses: ./.github/workflows/publish.yml
-    if: success() && github.ref == 'refs/heads/main'
+    if: success() && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish))
     secrets: inherit
     with:
       tag: ${{ needs.tag.outputs.tag }}
@@ -88,7 +95,7 @@ jobs:
     needs: [ tag ]
     uses: ./.github/workflows/release-cli.yml
     secrets: inherit
-    if: success() && github.ref == 'refs/heads/main'
+    if: success() && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish))
     with:
       tag: ${{ needs.tag.outputs.tag }}
 

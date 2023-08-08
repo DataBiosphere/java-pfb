@@ -1,5 +1,11 @@
 name: Create Github Release with CLI Jar and Distribution
 on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Enter a valid tag for the release'
+        required: true
+        type: string
   workflow_call:
     inputs:
       tag:
