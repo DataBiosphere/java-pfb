@@ -5,6 +5,7 @@ on:
       tag:
         description: 'Enter a valid tag for the release'
         required: true
+        type: string
   workflow_call:
     inputs:
       tag:
