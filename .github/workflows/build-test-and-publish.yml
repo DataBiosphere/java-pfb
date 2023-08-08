@@ -17,7 +17,7 @@ on:
     branches: [ '**' ]
 
 env:
-  RUN_PUBLISH: (${{github.ref == 'refs/heads/main'}} && ${{ github.event_name != 'workflow_dispatch' }}) || (${{ github.event_name == 'workflow_dispatch'}} && ${{inputs.publish == 'true'}})
+  RUN_PUBLISH: ${{ (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish == 'true') }}
 
 jobs:
 #  build:
@@ -57,14 +57,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        if: ${{ inputs.publish }}
+        if: inputs.publish
         run: |
           echo $RUN_PUBLISH
           echo ${{ inputs.publish }}
           echo ${{inputs.publish == 'true'}}
           echo $RUN_PUBLISH == 'true'
       - name: Test run_PUBLISH
-        if: $RUN_PUBLISH
+        if: $RUN_PUBLISH == 'true'
         run: echo 'hello'
 #      - uses: actions/checkout@v3
 #        # Needed by sonar to get the git history for the branch the PR will be merged into.
