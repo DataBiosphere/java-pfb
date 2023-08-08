@@ -17,7 +17,7 @@ on:
     branches: [ '**' ]
 
 env:
-  RUN_PUBLISH: ${{ (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish == 'true') }}
+  RUN_PUBLISH: ${{ (github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish) }}
 
 jobs:
 #  build:
