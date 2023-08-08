@@ -70,10 +70,19 @@ public class PfbReader {
     return urlConnection.getInputStream();
   }
 
+  /* TODO - Remove this method.
+       Need to instead encode/decode enum typed variables
+     From docs (https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#enum):
+    "Because Avro can't store anything except alphanumeric and _ symbols
+    (https://avro.apache.org/docs/1.9.1/spec.html#Enums), all enums are encoded in
+    such a way, that all other symbols is being encoded with codepoint wrapped in
+    single underscores. For example bpm > 60 will be encoded in: bpm_32__62__32_60,
+    so space   is encoded as _32_ and greater sign > into _62_. Same for Unicode
+    characters: ä - _228_, ü - _252_. The Avro schema also doesn't allow for the
+    first character to be a number. So we encode the first character in the way if
+    the character happens to be a number."
+  */
   private String convertEnum(String schema) {
-    // TODO - figure out why we're seeing this strange case of the encoded underscore
-    // I see this in the source avro file, but not in the output of the pyPFB show schema
-    // command
     HashMap<String, String> map = new HashMap<>();
     map.put("_20_", " ");
     map.put("_21_", "!");

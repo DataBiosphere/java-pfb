@@ -1,4 +1,13 @@
 @namespace("bio.terra.pfb")
+/**
+ *  Provided by the pyPFB library
+ https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#example
+ For PFB files, the only entity which is MUST be included in the PFB file is Metadata: this
+ describes the data model linking and stores ontology references to make interoperability
+ with other systems easier.
+ */
+
+
 protocol SimplePFB {
     enum Multiplicity {
         ONE_TO_ONE,
