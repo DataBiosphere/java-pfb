@@ -41,7 +41,7 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
       - name: Publish Library Artifactory
-        run: ./gradlew --build-cache :library:artifactoryPublish
+        run: ./gradlew --build-cache artifactoryPublish
         env:
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
