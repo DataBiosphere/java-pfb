@@ -5,6 +5,13 @@ on:
       tag:
         required: true
         type: string
+    secrets:
+      BROADBOT_TOKEN:
+        required: true
+      ARTIFACTORY_USERNAME:
+        required: true
+      ARTIFACTORY_PASSWORD:
+        required: true
 
 env:
   SERVICE_NAME: ${{ github.event.repository.name }}

@@ -5,6 +5,9 @@ on:
       tag:
         required: true
         type: string
+    secrets:
+      BROADBOT_TOKEN:
+        required: true
 
 jobs:
   release-job:
