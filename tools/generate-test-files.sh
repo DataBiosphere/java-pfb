@@ -1,5 +1,5 @@
 #!/bin/bash
-# ASSUMES YOU'VE CHECKED OUT THE pypfb repo and are in the tools directory
+# ASSUMES YOU'VE CHECKED OUT THE pypfb repo and are in the tools directory of java-pfb
 
 set -eu
 

@@ -1,13 +1,18 @@
 package bio.terra.pfb;
 
+import bio.terra.pfb.exceptions.InvalidPfbException;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.DataFileStream;
+import org.apache.avro.generic.GenericDatumReader;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.specific.SpecificDatumReader;
 
@@ -23,9 +28,6 @@ public class PfbReader {
     return convertEnum(show);
   }
 
-  // List particular enum symbols
-  // schema.getField("object").schema().getTypes().get(3).getFields().get(1).schema().getTypes().stream().filter(s -> s.getType().equals(Schema.Type.ENUM)).findFirst().get().getEnumSymbols()
-
   public Schema getSchema(String fileLocation) throws IOException {
     boolean isUrl = isValidUrl(fileLocation);
     if (isUrl) {
@@ -34,11 +36,62 @@ public class PfbReader {
     return readFilePathPFBSchema(fileLocation);
   }
 
+  public String showNodes(String fileLocation) throws IOException {
+    Metadata metadata = getPFBMetadata(fileLocation);
+    return metadata.getNodes().stream().map(n -> n.getName()).collect(Collectors.joining("\n"))
+        + "\n";
+  }
+
+  public String showMetadata(String fileLocation) throws IOException {
+    Metadata metadata = getPFBMetadata(fileLocation);
+    return metadata.toString();
+  }
+
   Schema readFilePathPFBSchema(String fileLocation) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     DataFileReader<Entity> dataFileReader =
         new DataFileReader<>(new File(fileLocation), datumReader);
     return dataFileReader.getSchema();
+  }
+
+  // read generic avro data from file
+  public List<String> show(String fileLocation) throws IOException {
+    File pfbData = new File(fileLocation);
+    // Deserialize the above generated avro data file
+    GenericDatumReader datumReader = new GenericDatumReader<>();
+    DataFileReader<GenericRecord> dataFileReader = new DataFileReader<>(pfbData, datumReader);
+    GenericRecord record = null;
+    List<String> data = new ArrayList<>();
+    // Skip Metadata Object, which should always appear first
+    dataFileReader.next(record);
+    while (dataFileReader.hasNext()) {
+      record = dataFileReader.next(record);
+      data.add(convertEnum(record.toString()));
+    }
+    return data;
+  }
+
+  public Metadata getPFBMetadata(String fileLocation) throws IOException {
+    File pfbData = new File(fileLocation);
+    // Deserialize the above generated avro data file
+    DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
+    DataFileReader<Entity> dataFileReader = new DataFileReader<>(pfbData, datumReader);
+    Entity data = null;
+    Metadata result = null;
+    // A PFB Avro file consists of a list of "Entity" objects (Defined in sample.advl)
+    // One of these entities must be a "Metadata" object (Also defined in sample.advl)
+    // The rest of the entities are the data entries
+    try {
+      // Assuming the first object is the metadata object
+      data = dataFileReader.next(data);
+      result = (Metadata) data.getObject();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    if (result != null) {
+      return result;
+    }
+    throw new InvalidPfbException("Error reading PFB Metadata object");
   }
 
   Schema readUrlPFBSchema(String signedUrl) throws IOException {
@@ -54,6 +107,9 @@ public class PfbReader {
   }
 
   // Helper methods
+
+  // List particular enum symbols
+  // schema.getField("object").schema().getTypes().get(3).getFields().get(1).schema().getTypes().stream().filter(s -> s.getType().equals(Schema.Type.ENUM)).findFirst().get().getEnumSymbols()
 
   boolean isValidUrl(String fileLocation) {
     try {

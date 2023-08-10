@@ -45,3 +45,7 @@ apply from: "publishing.gradle"
 srcclr {
     scope = "runtimeClasspath"
 }
+
+sourcesJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

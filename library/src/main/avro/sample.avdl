@@ -74,8 +74,4 @@ protocol SimplePFB {
         union{Metadata,string} object;
         union{null,array<Relation>} relations;
     }
-
-    record PFB {
-        array<Entity> entities;
-    }
 }

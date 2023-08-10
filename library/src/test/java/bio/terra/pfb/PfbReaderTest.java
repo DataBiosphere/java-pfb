@@ -8,15 +8,62 @@ import org.junit.jupiter.api.Test;
 
 class PfbReaderTest {
 
+  private static final List<String> listOfTestFiles =
+      List.of("minimal_data", "minimal_schema", "test", "kf");
+
   @Test
-  void testMinimalSchemaFiles() throws IOException {
-    // "minimal_data"
-    // "minimal_schema",
-    var listOfTestFiles = List.of("kf");
+  void showSchemaTest() throws IOException {
     for (String fileName : listOfTestFiles) {
-      CompareOutputUtils.compareOutputWithPyPFB(
-          fileName, CompareOutputUtils.pfbCommandType.ShowSchema, "");
+      CompareOutputUtils.compareJavaPfbWithPyPfb(
+          fileName,
+          CompareOutputUtils.PfbCommandType.showSchema,
+          "",
+          CompareOutputUtils.FileExtension.json);
     }
+  }
+
+  @Test
+  void showNodesTest() throws IOException {
+    var listOfTestFiles = List.of("minimal_data", "minimal_schema", "test", "kf");
+    for (String fileName : listOfTestFiles) {
+      CompareOutputUtils.compareJavaPfbWithPyPfb(
+          fileName,
+          CompareOutputUtils.PfbCommandType.showNodes,
+          "",
+          CompareOutputUtils.FileExtension.txt);
+    }
+  }
+
+  @Test
+  void showMetadata() throws IOException {
+    for (String fileName : listOfTestFiles) {
+      CompareOutputUtils.compareJavaPfbWithPyPfb(
+          fileName,
+          CompareOutputUtils.PfbCommandType.showMetadata,
+          "",
+          CompareOutputUtils.FileExtension.json);
+    }
+  }
+
+  @Test
+  void showTest() throws IOException {
+    // TODO - fix case described in testLongDecimalShow() to remove the following line of code
+    var editedListOfTestFiles = listOfTestFiles.stream().filter(f -> !f.equals("test")).toList();
+    for (String fileName : editedListOfTestFiles) {
+      System.out.print("Testing file: " + fileName + "\n");
+      CompareOutputUtils.compareJSONLineByLine(
+          fileName, CompareOutputUtils.PfbCommandType.show, "");
+    }
+  }
+
+  // TODO
+  // This test fails because pyPFB returns 13 decimal places (ex: 12.1218843460083)
+  // But both the avro file and java-pfb return 6 decimal places (ex: 12.121884)
+  @Disabled(
+      "Disabled because the test file includes long numeric values that do not compare correctly between pyPFB and java-pfb.")
+  @Test
+  void testLongDecimalShow() throws IOException {
+    CompareOutputUtils.compareJSONLineByLine("test", CompareOutputUtils.PfbCommandType.show, "");
   }
 
   @Disabled("Disabled because we don't have a way to generate a signed URL for testing")
@@ -25,7 +72,10 @@ class PfbReaderTest {
     // NOTE: this is not a permanent URL, it will expire
     String signedUrl =
         "https://tdrshtikoojbfebzqfkvhyvi.blob.core.windows.net/04c9ecfe-e93d-4d92-929a-d4af7f429779/metadata/parquet/datarepo_row_ids/datarepo_row_ids.parquet/minimal_data.avro?sp=r&st=2023-08-07T17:55:54Z&se=2023-08-08T01:55:54Z&spr=https&sv=2022-11-02&sr=b&sig=LV4RkXMtXwwksYobDTuEHbdd8%2BLKJCxwtCs%2F09o1FYY%3D";
-    CompareOutputUtils.compareOutputWithPyPFB(
-        "minimal_data", CompareOutputUtils.pfbCommandType.ShowSchema, signedUrl);
+    CompareOutputUtils.compareJavaPfbWithPyPfb(
+        "minimal_data",
+        CompareOutputUtils.PfbCommandType.showSchema,
+        signedUrl,
+        CompareOutputUtils.FileExtension.json);
   }
 }
