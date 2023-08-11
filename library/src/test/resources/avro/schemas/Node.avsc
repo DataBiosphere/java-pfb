@@ -1,0 +1,12 @@
+{
+    "name": "Node",
+    "namespace": "bio.terra.pfb",
+    "type": "record",
+    "fields" : [
+        {"name" : "name", "type" : "string"},
+        {"name" : "ontology_reference", "type" : "string"},
+        {"name" : "values", "type" : "map", "values": "string"},
+        {"name" : "links", "type" : "array", "items": "Link"},
+        {"name" : "properties", "type" : "array", "items": "Property"}
+    ]
+}

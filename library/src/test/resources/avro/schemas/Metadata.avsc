@@ -1,0 +1,9 @@
+{
+    "name": "Metadata",
+    "namespace": "bio.terra.pfb",
+    "type": "record",
+    "fields" : [
+        {"name": "nodes", "type" : "array", "items": {"type": "Node"}},
+        {"name": "misc", "type" : "map", "values" : "string"}
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Entity",
+    "namespace": "bio.terra.pfb",
+    "type": "record",
+    "fields" : [
+        {"name" : "id", "type": ["string", "null"]},
+        {"name" : "name", "type" : "string"},
+        {"name" : "object", "type": ["Metadata", "Demographic"]},
+        {"name": "relations", "type" : "array", "items" : {"type": "Relation"}}
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "Link",
+    "namespace": "bio.terra.pfb",
+    "type": "record",
+    "fields" : [
+        {"name" : "multiplicity", "type" : "Multiplicity"},
+        {"name" : "dst", "type" : "string"}
+    ]
+}

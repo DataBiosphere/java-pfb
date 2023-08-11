@@ -1,0 +1,9 @@
+{
+    "name": "Relation",
+    "namespace": "bio.terra.pfb",
+    "type": "record",
+    "fields" : [
+        {"name" : "dst_id", "type" : "string"},
+        {"name" : "dst_name", "type" : "string"}
+    ]
+}

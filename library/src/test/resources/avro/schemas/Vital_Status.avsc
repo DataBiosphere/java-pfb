@@ -1,0 +1,6 @@
+{
+    "name": "Vital_Status",
+    "namespace": "bio.terra.pfb",
+    "type": "enum",
+    "symbols" : ["Alive", "Dead",  "Unknown", "Not_62_Reported"]
+}

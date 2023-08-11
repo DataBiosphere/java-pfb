@@ -1,0 +1,10 @@
+{
+    "name": "Demographic",
+    "namespace": "bio.terra.pfb",
+    "type": "record",
+    "fields" : [
+        {"name" : "project_id", "type" : "string"},
+        {"name" : "gender", "type" : "Gender"},
+        {"name" : "vital_status", "type" : "Vital_Status"}
+    ]
+}
