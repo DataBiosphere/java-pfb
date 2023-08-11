@@ -19,6 +19,7 @@ protocol SimplePFB {
     record Link {
         Multiplicity multiplicity;
         string dst;
+        string? name;
     }
 
     record Relation {
@@ -28,49 +29,53 @@ protocol SimplePFB {
 
     record Property {
         string name;
-        string ontology_reference;
-        map<string> values;
+        string? ontology_reference;
+        union{null,map<string>} values;
     }
 
     record Node {
         string name;
         string ontology_reference;
-        map<string> values;
+        union{map<string>,null} values;
         array<Link> links;
-        array<Property> properties;
+        union{null,array<Property>} properties;
     }
 
     record Metadata {
         array<Node> nodes;
-        map<string> misc;
+        union{null,map<string>} misc;
     }
+    //
+    //enum Gender {
+    //    Male,
+    //    Female,
+    //    Unknown,
+    //    Other,
+    //    Unspecified,
+    //    Not_62_Reported
+    //}
+    //
+    //enum Vital_Status {
+    //    Alive,
+    //    Dead,
+    //    Unknown,
+    //    Not_62_Reported
+    //}
 
-    enum Gender {
-        Male,
-        Female,
-        Unknown,
-        Other,
-        Unspecified,
-        Not_62_Reported
-    }
-
-    enum Vital_Status {
-        Alive,
-        Dead,
-        Unknown,
-        Not_62_Reported
-    }
-
-    record Demographic {
-        string project_id;
-        Gender gender;
-        Vital_Status vital_status;
-    }
+    //record Demographic {
+    //    string project_id;
+    //    Gender gender;
+    //    Vital_Status vital_status;
+    //}
 
     record Entity {
-        union{null, string} id;
+        string? id;
         string name;
-        union{Metadata, Demographic} object;
-        array<Relation> relations;
+        union{Metadata,string} object;
+        union{null,array<Relation>} relations;
+    }
+
+    record PFB {
+        array<Entity> entities;
     }
 }
