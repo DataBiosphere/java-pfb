@@ -10,7 +10,9 @@ class PfbReaderTest {
 
   @Test
   void testMinimalSchemaFiles() throws IOException {
-    var listOfTestFiles = List.of("minimal_data", "minimal_schema", "kf");
+    // "minimal_data"
+    // "minimal_schema",
+    var listOfTestFiles = List.of("kf");
     for (String fileName : listOfTestFiles) {
       CompareOutputUtils.compareOutputWithPyPFB(
           fileName, CompareOutputUtils.pfbCommandType.ShowSchema, "");

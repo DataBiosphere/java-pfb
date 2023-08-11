@@ -1,0 +1,3 @@
+root
+data_release
+submitted_aligned_reads
