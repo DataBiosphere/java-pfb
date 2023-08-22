@@ -18,14 +18,18 @@ import org.apache.avro.specific.SpecificDatumReader;
 
 public class PfbReader {
 
-  public String showSchema(String fileLocation) throws IOException {
-    Schema schema = getSchema(fileLocation);
-    List<Schema> pfbSchemaShow =
-        schema.getField("object").schema().getTypes().stream()
-            .filter(t -> !t.getName().equals("Metadata"))
-            .toList();
-    String show = pfbSchemaShow.stream().map(s -> s.toString()).toList().toString();
-    return convertEnum(show);
+  public String showSchema(String fileLocation) {
+    try {
+      Schema schema = getSchema(fileLocation);
+      List<Schema> pfbSchemaShow =
+          schema.getField("object").schema().getTypes().stream()
+              .filter(t -> !t.getName().equals("Metadata"))
+              .toList();
+      String show = pfbSchemaShow.stream().map(s -> s.toString()).toList().toString();
+      return convertEnum(show);
+    } catch (IOException e) {
+      return "Error: " + e.getMessage();
+    }
   }
 
   public Schema getSchema(String fileLocation) throws IOException {
@@ -36,15 +40,23 @@ public class PfbReader {
     return readFilePathPFBSchema(fileLocation);
   }
 
-  public String showNodes(String fileLocation) throws IOException {
-    Metadata metadata = getPFBMetadata(fileLocation);
-    return metadata.getNodes().stream().map(n -> n.getName()).collect(Collectors.joining("\n"))
-        + "\n";
+  public String showNodes(String fileLocation) {
+    try {
+      Metadata metadata = getPFBMetadata(fileLocation);
+      return metadata.getNodes().stream().map(n -> n.getName()).collect(Collectors.joining("\n"))
+          + "\n";
+    } catch (IOException e) {
+      return "Error: " + e.getMessage();
+    }
   }
 
-  public String showMetadata(String fileLocation) throws IOException {
-    Metadata metadata = getPFBMetadata(fileLocation);
-    return metadata.toString();
+  public String showMetadata(String fileLocation) {
+    try {
+      Metadata metadata = getPFBMetadata(fileLocation);
+      return metadata.toString();
+    } catch (Exception e) {
+      return "Error: " + e.getMessage();
+    }
   }
 
   Schema readFilePathPFBSchema(String fileLocation) throws IOException {
@@ -55,20 +67,24 @@ public class PfbReader {
   }
 
   // read generic avro data from file
-  public List<String> show(String fileLocation) throws IOException {
+  public List<String> show(String fileLocation) {
     File pfbData = new File(fileLocation);
     // Deserialize the above generated avro data file
     GenericDatumReader datumReader = new GenericDatumReader<>();
-    DataFileReader<GenericRecord> dataFileReader = new DataFileReader<>(pfbData, datumReader);
-    GenericRecord record = null;
-    List<String> data = new ArrayList<>();
-    // Skip Metadata Object, which should always appear first
-    dataFileReader.next(record);
-    while (dataFileReader.hasNext()) {
-      record = dataFileReader.next(record);
-      data.add(convertEnum(record.toString()));
+    try {
+      DataFileReader<GenericRecord> dataFileReader = new DataFileReader<>(pfbData, datumReader);
+      GenericRecord record = null;
+      List<String> data = new ArrayList<>();
+      // Skip Metadata Object, which should always appear first
+      dataFileReader.next(record);
+      while (dataFileReader.hasNext()) {
+        record = dataFileReader.next(record);
+        data.add(convertEnum(record.toString()));
+      }
+      return data;
+    } catch (IOException e) {
+      return List.of("Error: " + e.getMessage());
     }
-    return data;
   }
 
   public Metadata getPFBMetadata(String fileLocation) throws IOException {
