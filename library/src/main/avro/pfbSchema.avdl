@@ -1,6 +1,6 @@
 @namespace("bio.terra.pfb")
 /**
- *  Provided by the pyPFB library
+ *  Built based on example provided by the pyPFB library
  https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#example
  For PFB files, the only entity which is MUST be included in the PFB file is Metadata: this
  describes the data model linking and stores ontology references to make interoperability
@@ -8,7 +8,7 @@
  */
 
 
-protocol SimplePFB {
+protocol PfbSchema {
     enum Multiplicity {
         ONE_TO_ONE,
         ONE_TO_MANY,
@@ -45,28 +45,6 @@ protocol SimplePFB {
         array<Node> nodes;
         union{null,map<string>} misc;
     }
-    //
-    //enum Gender {
-    //    Male,
-    //    Female,
-    //    Unknown,
-    //    Other,
-    //    Unspecified,
-    //    Not_62_Reported
-    //}
-    //
-    //enum Vital_Status {
-    //    Alive,
-    //    Dead,
-    //    Unknown,
-    //    Not_62_Reported
-    //}
-
-    //record Demographic {
-    //    string project_id;
-    //    Gender gender;
-    //    Vital_Status vital_status;
-    //}
 
     record Entity {
         string? id;

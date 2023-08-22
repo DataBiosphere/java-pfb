@@ -34,7 +34,7 @@ spotless {
 }
 
 generateAvroJava {
-    source("library/src/main/avro") // TODO - try putting back in resources
+    source("library/src/main/avro")
     outputDir = file("build/generated-src")
 }
 compileJava.dependsOn generateAvroJava

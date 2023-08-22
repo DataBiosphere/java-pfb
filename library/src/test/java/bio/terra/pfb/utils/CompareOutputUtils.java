@@ -18,39 +18,38 @@ public class CompareOutputUtils {
       throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     PfbReader reader = new PfbReader();
-
+    String pythonOutput;
     try {
-      var pythonOutput =
+      pythonOutput =
           Files.readString(
               Paths.get(getPyPfbOutputFilePath(fileName, commandType, filePath, fileExtension)));
-
-      String avroFilePath = getAvroFilePath(fileName, filePath);
-      String javaPfbOutput = "";
-      switch (commandType) {
-        case showSchema:
-          javaPfbOutput = reader.showSchema(avroFilePath);
-          break;
-        case showMetadata:
-          javaPfbOutput = reader.showMetadata(avroFilePath);
-          break;
-        case showNodes:
-          javaPfbOutput = reader.showNodes(avroFilePath);
-          break;
-        default:
-          throw new InvalidObjectException("Invalid command type");
-      }
-
-      if (fileExtension.equals(FileExtension.json)) {
-        JsonNode pyPfbJsonOutput = mapper.readTree(pythonOutput);
-        JsonNode showSchemaOutputJson = mapper.readTree(javaPfbOutput);
-        assertThat(pyPfbJsonOutput, equalTo(showSchemaOutputJson));
-      } else if (fileExtension.equals(FileExtension.txt)) {
-        assertThat(pythonOutput, equalTo(javaPfbOutput));
-      } else {
-        throw new InvalidObjectException("Invalid file extension");
-      }
     } catch (IOException e) {
       throw new IOException("Error reading file: " + fileName, e);
+    }
+    String avroFilePath = getAvroFilePath(fileName, filePath);
+    String javaPfbOutput = "";
+    switch (commandType) {
+      case showSchema:
+        javaPfbOutput = reader.showSchema(avroFilePath);
+        break;
+      case showMetadata:
+        javaPfbOutput = reader.showMetadata(avroFilePath);
+        break;
+      case showNodes:
+        javaPfbOutput = reader.showNodes(avroFilePath);
+        break;
+      default:
+        throw new InvalidObjectException("Invalid command type");
+    }
+
+    if (fileExtension.equals(FileExtension.json)) {
+      JsonNode pyPfbJsonOutput = mapper.readTree(pythonOutput);
+      JsonNode showSchemaOutputJson = mapper.readTree(javaPfbOutput);
+      assertThat(pyPfbJsonOutput, equalTo(showSchemaOutputJson));
+    } else if (fileExtension.equals(FileExtension.txt)) {
+      assertThat(pythonOutput, equalTo(javaPfbOutput));
+    } else {
+      throw new InvalidObjectException("Invalid file extension");
     }
   }
 
