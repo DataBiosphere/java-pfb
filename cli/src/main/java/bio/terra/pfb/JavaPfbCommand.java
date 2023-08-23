@@ -1,5 +1,6 @@
 package bio.terra.pfb;
 
+import static bio.terra.pfb.JavaPfbCommand.PfbCommand.show;
 import static picocli.CommandLine.Command;
 import static picocli.CommandLine.Option;
 import static picocli.CommandLine.Parameters;
@@ -40,8 +41,7 @@ public class JavaPfbCommand implements Runnable {
   public void run() {
     System.out.println("PFB RUN");
     if (command != null && option != null) {
-      switch (command) {
-        case show:
+      if (command == show) {
           switch (option) {
             case schema:
               System.out.println("show schema");
@@ -64,7 +64,8 @@ public class JavaPfbCommand implements Runnable {
               System.out.println(Library.showNodes(filePath));
               break;
           }
-          break;
+      } else {
+        System.out.println("Unknown command: " + command);
       }
     }
   }
