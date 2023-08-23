@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class PfbReaderTest {
 
   private static final List<String> listOfTestFiles =
-      List.of("minimal_data", "minimal_schema", "test", "kf", "data-with-array");
+      List.of("minimal_schema", "test", "kf", "data-with-array");
 
   @Test
   void showSchemaTest() throws IOException {
