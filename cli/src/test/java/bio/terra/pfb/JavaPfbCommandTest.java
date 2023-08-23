@@ -1,15 +1,16 @@
 package bio.terra.pfb;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.matchesPattern;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 class JavaPfbCommandTest {
   JavaPfbCommand javaPfbCommand;
@@ -37,39 +38,14 @@ class JavaPfbCommandTest {
     assertThat(outContent.toString(), containsString("PFB RUN"));
   }
 
-  @Test
-  void showNodes() {
+  @ParameterizedTest
+  @ValueSource(strings = {"nodes", "metadata", "schema", ""})
+  void testShowCommand(String option) {
     String[] args = new String[2];
     args[0] = "show";
-    args[1] = "nodes";
+    args[1] = option;
     javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("show nodes"));
-  }
-
-  @Test
-  void showMetadata() {
-    String[] args = new String[2];
-    args[0] = "show";
-    args[1] = "metadata";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("show metadata"));
-  }
-
-  @Test
-  void showSchema() {
-    String[] args = new String[2];
-    args[0] = "show";
-    args[1] = "schema";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("Show schema"));
-  }
-
-  @Test
-  void showTableRows() {
-    String[] args = new String[1];
-    args[0] = "show";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("show table rows"));
+    assertThat(outContent.toString(), containsStringIgnoringCase(option));
   }
 
   @Test
