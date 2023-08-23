@@ -1,13 +1,11 @@
 package bio.terra.pfb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.containsStringIgnoringCase;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,45 +41,48 @@ class JavaPfbCommandTest {
   @ParameterizedTest
   @ValueSource(strings = {"nodes", "metadata", "schema", ""})
   void testShowCommand(String option) {
-    String[] args = new String[2];
-    args[0] = "show";
-    args[1] = option;
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsStringIgnoringCase(option));
+    testCommandStringMatches(List.of("show", option), option);
   }
 
   @Test
   void filePath() {
-    String[] args = new String[2];
-    args[0] = "show";
-    args[1] = "-i /path/to/file";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("path/to/file"));
+    testCommandStringMatches(List.of("show", "-i /path/to/file"), "path/to/file");
   }
 
   @Test
   void testVersionCommand() {
-    String[] args = new String[1];
-    args[0] = "--version";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), matchesPattern("pfb \\d+\\.\\d+\\.\\d\n"));
+    testCommandRegexMatches("--version", "pfb \\d+\\.\\d+\\.\\d\n");
   }
 
   @Test
   void testCorrectVersion() {
     GitConfiguration gitConfiguration = new GitConfiguration();
-    String exepectedVersion = gitConfiguration.getCliVersion();
-    String[] args = new String[1];
-    args[0] = "--version";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), equalTo("pfb " + exepectedVersion + "\n"));
+    String expectedVersion = gitConfiguration.getCliVersion();
+    testCommandStringMatches("--version", "pfb " + expectedVersion + "\n");
   }
 
   @Test
   void testHelpCommand() {
-    String[] args = new String[1];
-    args[0] = "--help";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("Usage: pfb"));
+    testCommandStringMatches("--help", "Usage: pfb");
+  }
+
+  private void testCommandStringMatches(String command, String expectedOutput) {
+    testCommandStringMatches(List.of(command), expectedOutput);
+  }
+
+  private void testCommandStringMatches(List<String> commands, String expectedOutput) {
+    executeCommand(commands, expectedOutput);
+    assertThat(outContent.toString(), containsStringIgnoringCase(expectedOutput));
+  }
+
+  private void testCommandRegexMatches(String command, String expectedOutput) {
+    executeCommand(List.of(command), expectedOutput);
+    assertThat(outContent.toString(), matchesPattern(expectedOutput));
+  }
+
+  private void executeCommand(List<String> commands, String expectedOutput) {
+    String[] args = new String[commands.size()];
+    for (int i = 0; i < commands.size(); i++) args[i] = commands.get(i);
+    JavaPfbCommand.executeCommand(args);
   }
 }
