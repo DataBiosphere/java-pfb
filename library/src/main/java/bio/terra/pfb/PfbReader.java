@@ -65,25 +65,26 @@ public class PfbReader {
 
   Schema readFilePathPFBSchema(String fileLocation) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
-    DataFileReader<Entity> dataFileReader =
-        new DataFileReader<>(new File(fileLocation), datumReader);
-    return dataFileReader.getSchema();
+    try (DataFileReader<Entity> dataFileReader =
+        new DataFileReader<>(new File(fileLocation), datumReader)) {
+      return dataFileReader.getSchema();
+    }
   }
 
   // read generic avro data from file
   public List<String> show(String fileLocation) {
     File pfbData = new File(fileLocation);
     // Deserialize the above generated avro data file
-    GenericDatumReader datumReader = new GenericDatumReader<>();
-    try {
-      DataFileReader<GenericRecord> dataFileReader = new DataFileReader<>(pfbData, datumReader);
-      GenericRecord record = null;
+    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<GenericRecord>();
+    try (DataFileReader<GenericRecord> dataFileReader =
+        new DataFileReader<>(pfbData, datumReader)) {
+      GenericRecord genericRecord = null;
       List<String> data = new ArrayList<>();
       // Skip Metadata Object, which should always appear first
-      dataFileReader.next(record);
+      dataFileReader.next(genericRecord);
       while (dataFileReader.hasNext()) {
-        record = dataFileReader.next(record);
-        data.add(convertEnum(record.toString()));
+        genericRecord = dataFileReader.next(genericRecord);
+        data.add(convertEnum(genericRecord.toString()));
       }
       return data;
     } catch (IOException e) {
@@ -95,13 +96,12 @@ public class PfbReader {
     File pfbData = new File(fileLocation);
     // Deserialize the above generated avro data file
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
-    DataFileReader<Entity> dataFileReader = new DataFileReader<>(pfbData, datumReader);
     Entity data = null;
     Metadata result = null;
-    // A PFB Avro file consists of a list of "Entity" objects (Defined in sample.advl)
-    // One of these entities must be a "Metadata" object (Also defined in sample.advl)
-    // The rest of the entities are the data entries
-    try {
+    try (DataFileReader<Entity> dataFileReader = new DataFileReader<>(pfbData, datumReader)) {
+      // A PFB Avro file consists of a list of "Entity" objects (Defined in sample.advl)
+      // One of these entities must be a "Metadata" object (Also defined in sample.advl)
+      // The rest of the entities are the data entries
       // Assuming the first object is the metadata object
       data = dataFileReader.next(data);
       result = (Metadata) data.getObject();
