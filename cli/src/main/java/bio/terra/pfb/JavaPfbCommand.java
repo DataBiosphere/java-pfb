@@ -1,6 +1,7 @@
 package bio.terra.pfb;
 
-import static bio.terra.pfb.JavaPfbCommand.PfbCommand.show;
+import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
+import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.*;
 import static picocli.CommandLine.Command;
 import static picocli.CommandLine.Option;
 import static picocli.CommandLine.Parameters;
@@ -21,7 +22,7 @@ public class JavaPfbCommand implements Runnable {
       index = "1",
       description = "option to run for given command (e.g. schema)",
       defaultValue = "tableRows")
-  private PfbCommandOption option = PfbCommandOption.tableRows;
+  private PfbCommandOption option = TABLE_ROWS;
 
   @Option(
       names = {"-i", "--input"},
@@ -41,39 +42,61 @@ public class JavaPfbCommand implements Runnable {
   public void run() {
     System.out.println("PFB RUN");
     if (command != null && option != null) {
-      if (command == show) {
-          switch (option) {
-            case schema:
-              System.out.println("Show schema for file path: " + filePath);
-              System.out.println(Library.showSchema(filePath));
-              break;
-            case tableRows:
-              System.out.println("show table rows for file path: " + filePath);
-              System.out.println(Library.showTableRows(filePath));
-              break;
-            case metadata:
-              System.out.println("show metadata for file path: " + filePath);
-              System.out.println(Library.showMetadata(filePath));
-              break;
-            case nodes:
-              System.out.println("show nodes for file path: " + filePath);
-              System.out.println(Library.showNodes(filePath));
-              break;
-          }
+      if (command.equals(SHOW)) {
+        switch (option) {
+          case SCHEMA:
+            System.out.println("Show schema for file path: " + filePath);
+            System.out.println(Library.showSchema(filePath));
+            break;
+          case TABLE_ROWS:
+            System.out.println("show table rows for file path: " + filePath);
+            System.out.println(Library.showTableRows(filePath));
+            break;
+          case METADATA:
+            System.out.println("show metadata for file path: " + filePath);
+            System.out.println(Library.showMetadata(filePath));
+            break;
+          case NODES:
+            System.out.println("show nodes for file path: " + filePath);
+            System.out.println(Library.showNodes(filePath));
+            break;
+        }
       } else {
         System.out.println("Unknown command: " + command);
       }
     }
   }
 
-  enum PfbCommand {
-    show
+  public enum PfbCommand {
+    SHOW("show");
+
+    private final String displayName;
+
+    PfbCommand(String displayName) {
+      this.displayName = displayName;
+    }
+
+    @Override
+    public String toString() {
+      return this.displayName;
+    }
   }
 
-  enum PfbCommandOption {
-    schema,
-    metadata,
-    nodes,
-    tableRows,
+  public enum PfbCommandOption {
+    SCHEMA("schema"),
+    METADATA("metadata"),
+    NODES("nodes"),
+    TABLE_ROWS("tableRows");
+
+    private final String displayName;
+
+    PfbCommandOption(String displayName) {
+      this.displayName = displayName;
+    }
+
+    @Override
+    public String toString() {
+      return this.displayName;
+    }
   }
 }
