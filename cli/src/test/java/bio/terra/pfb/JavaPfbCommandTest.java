@@ -38,6 +38,50 @@ class JavaPfbCommandTest {
   }
 
   @Test
+  void showNodes() {
+    String[] args = new String[2];
+    args[0] = "show";
+    args[1] = "nodes";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), containsString("show nodes"));
+  }
+
+  @Test
+  void showMetadata() {
+    String[] args = new String[2];
+    args[0] = "show";
+    args[1] = "metadata";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), containsString("show metadata"));
+  }
+
+  @Test
+  void showSchema() {
+    String[] args = new String[2];
+    args[0] = "show";
+    args[1] = "schema";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), containsString("Show schema"));
+  }
+
+  @Test
+  void showTableRows() {
+    String[] args = new String[1];
+    args[0] = "show";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), containsString("show table rows"));
+  }
+
+  @Test
+  void filePath() {
+    String[] args = new String[2];
+    args[0] = "show";
+    args[1] = "-i /path/to/file";
+    javaPfbCommand.executeCommand(args);
+    assertThat(outContent.toString(), containsString("path/to/file"));
+  }
+
+  @Test
   void testVersionCommand() {
     String[] args = new String[1];
     args[0] = "--version";
