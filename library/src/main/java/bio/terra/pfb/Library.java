@@ -3,27 +3,25 @@ package bio.terra.pfb;
 import java.util.stream.Collectors;
 
 public class Library {
-  private Library() {
-    // intentionally empty
+  private PfbReader pfbReader;
+
+  public Library(PfbReader pfbReader) {
+    this.pfbReader = pfbReader;
   }
 
-  public static String showSchema(String fileLocation) {
-    PfbReader pfbReader = new PfbReader();
+  public String showSchema(String fileLocation) {
     return pfbReader.showSchema(fileLocation);
   }
 
-  public static String showNodes(String fileLocation) {
-    PfbReader pfbReader = new PfbReader();
+  public String showNodes(String fileLocation) {
     return pfbReader.showNodes(fileLocation);
   }
 
-  public static String showMetadata(String fileLocation) {
-    PfbReader pfbReader = new PfbReader();
+  public String showMetadata(String fileLocation) {
     return pfbReader.showMetadata(fileLocation);
   }
 
-  public static String showTableRows(String fileLocation) {
-    PfbReader pfbReader = new PfbReader();
+  public String showTableRows(String fileLocation) {
     return pfbReader.show(fileLocation).stream().collect(Collectors.joining("\n"));
   }
 }

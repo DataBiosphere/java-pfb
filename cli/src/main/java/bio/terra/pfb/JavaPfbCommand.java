@@ -1,7 +1,7 @@
 package bio.terra.pfb;
 
 import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
-import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.*;
+import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.TABLE_ROWS;
 import static picocli.CommandLine.Command;
 import static picocli.CommandLine.Option;
 import static picocli.CommandLine.Parameters;
@@ -40,25 +40,26 @@ public class JavaPfbCommand implements Runnable {
 
   @Override
   public void run() {
+    Library library = new Library(new PfbReader());
     System.out.println("PFB RUN");
     if (command != null && option != null) {
       if (command.equals(SHOW)) {
         switch (option) {
           case SCHEMA:
             System.out.println("Show schema for file path: " + filePath);
-            System.out.println(Library.showSchema(filePath));
+            System.out.println(library.showSchema(filePath));
             break;
           case TABLE_ROWS:
             System.out.println("show table rows for file path: " + filePath);
-            System.out.println(Library.showTableRows(filePath));
+            System.out.println(library.showTableRows(filePath));
             break;
           case METADATA:
             System.out.println("show metadata for file path: " + filePath);
-            System.out.println(Library.showMetadata(filePath));
+            System.out.println(library.showMetadata(filePath));
             break;
           case NODES:
             System.out.println("show nodes for file path: " + filePath);
-            System.out.println(Library.showNodes(filePath));
+            System.out.println(library.showNodes(filePath));
             break;
         }
       } else {
