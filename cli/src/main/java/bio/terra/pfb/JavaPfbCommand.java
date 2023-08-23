@@ -44,23 +44,19 @@ public class JavaPfbCommand implements Runnable {
       if (command == show) {
           switch (option) {
             case schema:
-              System.out.println("show schema");
-              System.out.println("File: " + filePath);
+              System.out.println("Show schema for file path: " + filePath);
               System.out.println(Library.showSchema(filePath));
               break;
             case tableRows:
-              System.out.println("show table rows");
-              System.out.println("File: " + filePath);
+              System.out.println("show table rows for file path: " + filePath);
               System.out.println(Library.showTableRows(filePath));
               break;
             case metadata:
-              System.out.println("show metadata");
-              System.out.println("File: " + filePath);
+              System.out.println("show metadata for file path: " + filePath);
               System.out.println(Library.showMetadata(filePath));
               break;
             case nodes:
-              System.out.println("show nodes");
-              System.out.println("File: " + filePath);
+              System.out.println("show nodes for file path: " + filePath);
               System.out.println(Library.showNodes(filePath));
               break;
           }
