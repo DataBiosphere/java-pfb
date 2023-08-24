@@ -28,7 +28,7 @@ public class PfbReader {
           schema.getField("object").schema().getTypes().stream()
               .filter(t -> !t.getName().equals("Metadata"))
               .toList();
-      String show = pfbSchemaShow.stream().map(s -> s.toString()).toList().toString();
+      String show = pfbSchemaShow.stream().map(Schema::toString).toList().toString();
       return convertEnum(show);
     } catch (IOException e) {
       return "Error: " + e.getMessage();
