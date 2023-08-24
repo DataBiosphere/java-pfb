@@ -4,6 +4,7 @@ import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.TXT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bio.terra.pfb.PfbReader;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -47,7 +48,9 @@ public class CompareOutputUtils {
     if (fileExtension.equals(JSON)) {
       JsonNode pyPfbJsonOutput = mapper.readTree(pythonOutput);
       JsonNode showSchemaOutputJson = mapper.readTree(javaPfbOutput);
-      assertThat(pyPfbJsonOutput, equalTo(showSchemaOutputJson));
+      PfbJsonComparator cmp = new PfbJsonComparator();
+      assertTrue(pyPfbJsonOutput.equals(cmp, showSchemaOutputJson));
+      //      assertThat(pyPfbJsonOutput, equalTo(showSchemaOutputJson));
     } else if (fileExtension.equals(TXT)) {
       assertThat(pythonOutput, equalTo(javaPfbOutput));
     } else {

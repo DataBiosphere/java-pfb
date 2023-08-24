@@ -2,10 +2,7 @@ package bio.terra.pfb;
 
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.TXT;
-import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.SHOW;
-import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.SHOW_METADATA;
-import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.SHOW_NODES;
-import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.SHOW_SCHEMA;
+import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.*;
 
 import bio.terra.pfb.utils.CompareOutputUtils;
 import java.io.IOException;
@@ -16,11 +13,13 @@ import org.junit.jupiter.api.Test;
 class PfbReaderTest {
 
   private static final List<String> listOfTestFiles =
-      List.of("minimal_schema", "test", "kf", "data-with-array");
+      List.of("minimal_schema", "test", "kf", "data-with-array", "empty");
 
   @Test
   void showSchemaTest() throws IOException {
-    for (String fileName : listOfTestFiles) {
+    // TODO - remove when fix is added for AJ-1288
+    var editedListOfTestFiles = listOfTestFiles.stream().filter(f -> !f.equals("empty")).toList();
+    for (String fileName : editedListOfTestFiles) {
       CompareOutputUtils.compareJavaPfbWithPyPfb(fileName, SHOW_SCHEMA, "", JSON);
     }
   }
@@ -42,7 +41,7 @@ class PfbReaderTest {
 
   @Test
   void showTest() throws IOException {
-    // TODO - fix case described in testLongDecimalShow() to remove the following line of code
+    // TODO - remove when fix is added for AJ-1292
     var editedListOfTestFiles = listOfTestFiles.stream().filter(f -> !f.equals("test")).toList();
     for (String fileName : editedListOfTestFiles) {
       System.out.print("Testing file: " + fileName + "\n");
@@ -50,7 +49,7 @@ class PfbReaderTest {
     }
   }
 
-  // TODO
+  // TODO - fix in AJ-1292
   // This test fails because pyPFB returns 13 decimal places (ex: 12.1218843460083)
   // But both the avro file and java-pfb return 6 decimal places (ex: 12.121884)
   @Disabled(
@@ -58,6 +57,22 @@ class PfbReaderTest {
   @Test
   void testLongDecimalShow() throws IOException {
     CompareOutputUtils.compareJSONLineByLine("test", SHOW, "");
+  }
+
+  // TODO - fix in AJ-1288
+  // This test case fails because our workaround for handling enum encoding doesn't work with
+  // special cases
+  // Current workaround doesn't work for entries that contain sequential special characters and
+  // numbers
+  // Example:
+  // before decoding - ADULT_20__28_25_2e_1_2d_33cm_29_
+  // Actual decoded value - ADULT (25.1-33cm)
+  // Incorrect value returned from this method - ADULT _28%2e_1-33cm)
+  @Disabled(
+      "Disabled because the test file includes enum values that do not compare correctly between pyPFB and java-pfb.")
+  @Test
+  void testEnumEncoding() throws IOException {
+    CompareOutputUtils.compareJavaPfbWithPyPfb("empty", SHOW_SCHEMA, "", JSON);
   }
 
   @Disabled("Disabled because we don't have a way to generate a signed URL for testing")

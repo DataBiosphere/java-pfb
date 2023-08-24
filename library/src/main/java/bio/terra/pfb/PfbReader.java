@@ -176,6 +176,7 @@ public class PfbReader {
     map.put("_2c_", ",");
     map.put("_2d_", "-");
     map.put("_2f_", "/");
+    map.put("_2e_", ".");
     map.put("_30_", "0");
     map.put("_31_", "1");
     map.put("_32_", "2");
