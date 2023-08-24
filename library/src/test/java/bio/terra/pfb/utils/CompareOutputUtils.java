@@ -79,7 +79,7 @@ public class CompareOutputUtils {
       }
       fileReader.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println("Error reading file: " + fileName);
     }
   }
 

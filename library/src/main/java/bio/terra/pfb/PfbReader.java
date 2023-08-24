@@ -104,11 +104,9 @@ public class PfbReader {
       // Assuming the first object is the metadata object
       data = dataFileReader.next(data);
       result = (Metadata) data.getObject();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    if (result != null) {
-      return result;
+      if (result != null) {
+        return result;
+      }
     }
     throw new InvalidPfbException("Error reading PFB Metadata object");
   }
