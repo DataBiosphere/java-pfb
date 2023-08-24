@@ -2,10 +2,42 @@ Java PFB CLI
 ===
 
 ## Available Commands
-- hello
-- getNumber5
+- show
 - --version
 - --help
+
+Examples:
+```shell
+Usage: pfb show [OPTIONS] COMMAND [ARGS]...
+
+  Show records of the PFB file.
+
+  Specify a sub-command to show other information.
+
+Options:
+  -i, --input FILENAME  The PFB file.
+  -n, --limit INTEGER   How many records to show, ignored for sub-commands.
+                        [default: no limit]
+
+Commands:
+  metadata  Show the metadata of the PFB file.
+  nodes     Show all the node names in the PFB file.
+  schema    Show the schema of the PFB file.
+
+Examples:
+  schema:
+    pfb show -i data.avro schema
+    ./gradlew run --args="show -i data.avro schema"
+  nodes:
+    pfb show -i data.avro nodes
+    ./gradlew run --args="show -i data.avro nodes"
+  metadata:
+    pfb show -i data.avro metadata
+    ./gradlew run --args="show -i data.avro metadata"
+  records:
+    pfb show -i data.avro -n 5
+    ./gradlew run --args="show -i data.avro -n 5"
+```
 
 ## Local Run and Development
 

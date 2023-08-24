@@ -24,4 +24,8 @@ public class Library {
   public String showTableRows(String fileLocation) {
     return pfbReader.show(fileLocation).stream().collect(Collectors.joining("\n"));
   }
+
+  public String showTableRows(String fileLocation, int limit) {
+    return pfbReader.show(fileLocation).stream().limit(limit).collect(Collectors.joining("\n"));
+  }
 }
