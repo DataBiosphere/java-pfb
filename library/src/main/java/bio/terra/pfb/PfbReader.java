@@ -31,7 +31,7 @@ public class PfbReader {
       String show = pfbSchemaShow.stream().map(Schema::toString).toList().toString();
       return convertEnum(show);
     } catch (IOException e) {
-      return "Error: " + e.getMessage();
+      return getErrorMessage(e);
     }
   }
 
@@ -46,10 +46,10 @@ public class PfbReader {
   public String showNodes(String fileLocation) {
     try {
       Metadata metadata = getPFBMetadata(fileLocation);
-      return metadata.getNodes().stream().map(n -> n.getName()).collect(Collectors.joining("\n"))
+      return metadata.getNodes().stream().map(Node::getName).collect(Collectors.joining("\n"))
           + "\n";
     } catch (IOException e) {
-      return "Error: " + e.getMessage();
+      return getErrorMessage(e);
     }
   }
 
@@ -58,7 +58,7 @@ public class PfbReader {
       Metadata metadata = getPFBMetadata(fileLocation);
       return metadata.toString();
     } catch (Exception e) {
-      return "Error: " + e.getMessage();
+      return getErrorMessage(e);
     }
   }
 
@@ -74,7 +74,7 @@ public class PfbReader {
   public List<String> show(String fileLocation) {
     File pfbData = new File(fileLocation);
     // Deserialize the above generated avro data file
-    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<GenericRecord>();
+    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
     try (DataFileReader<GenericRecord> dataFileReader =
         new DataFileReader<>(pfbData, datumReader)) {
       GenericRecord genericRecord = null;
@@ -87,7 +87,7 @@ public class PfbReader {
       }
       return data;
     } catch (IOException e) {
-      return List.of("Error: " + e.getMessage());
+      return List.of(getErrorMessage(e));
     }
   }
 
@@ -125,6 +125,10 @@ public class PfbReader {
 
   // Helper methods
 
+  private String getErrorMessage(Exception e) {
+    return "Error: " + e.getMessage();
+  }
+
   // List particular enum symbols
   // schema.getField("object").schema().getTypes().get(3).getFields().get(1).schema().getTypes().stream().filter(s -> s.getType().equals(Schema.Type.ENUM)).findFirst().get().getEnumSymbols()
 
@@ -143,7 +147,7 @@ public class PfbReader {
     return urlConnection.getInputStream();
   }
 
-  /* TODO - Remove this method.
+  /* This method will be removed in AJ-1288
        Need to instead encode/decode enum typed variables
      From docs (https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#enum):
     "Because Avro can't store anything except alphanumeric and _ symbols
