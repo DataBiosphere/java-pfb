@@ -1,6 +1,0 @@
-{
-    "name": "Gender",
-    "namespace": "bio.terra.pfb",
-    "type": "enum",
-    "symbols" : ["Male", "Female",  "Unknown", "Other", "Unspecified", "Not_62_Reported"]
-}

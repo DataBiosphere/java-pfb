@@ -1,6 +1,14 @@
 package bio.terra.pfb;
 
 import bio.terra.pfb.exceptions.InvalidPfbException;
+import org.apache.avro.Schema;
+import org.apache.avro.file.DataFileReader;
+import org.apache.avro.file.DataFileStream;
+import org.apache.avro.generic.GenericDatumReader;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.io.DatumReader;
+import org.apache.avro.specific.SpecificDatumReader;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,13 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.apache.avro.Schema;
-import org.apache.avro.file.DataFileReader;
-import org.apache.avro.file.DataFileStream;
-import org.apache.avro.generic.GenericDatumReader;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.io.DatumReader;
-import org.apache.avro.specific.SpecificDatumReader;
 
 public class PfbReader {
 
@@ -128,9 +129,6 @@ public class PfbReader {
   private String getErrorMessage(Exception e) {
     return "Error: " + e.getMessage();
   }
-
-  // List particular enum symbols
-  // schema.getField("object").schema().getTypes().get(3).getFields().get(1).schema().getTypes().stream().filter(s -> s.getType().equals(Schema.Type.ENUM)).findFirst().get().getEnumSymbols()
 
   boolean isValidUrl(String fileLocation) {
     try {

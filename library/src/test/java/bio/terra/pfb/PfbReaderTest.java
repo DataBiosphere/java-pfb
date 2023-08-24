@@ -1,14 +1,15 @@
 package bio.terra.pfb;
 
+import bio.terra.pfb.utils.CompareOutputUtils;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.util.List;
+
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.TXT;
 import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.*;
-
-import bio.terra.pfb.utils.CompareOutputUtils;
-import java.io.IOException;
-import java.util.List;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 class PfbReaderTest {
 
