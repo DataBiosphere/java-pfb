@@ -1,7 +1,8 @@
 # Java-PFB
 
-A java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library that includes a CLI and a java library. 
+A Java implementation of the [pyPFB](https://github.com/uc-cdis/pypfb) library that includes a CLI and a Java library. 
 
+As discussed in the docs provided by [pyPFB](https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#introduction), PFB files are avro files with a particular required schema. Given the specific [PFB schema](library/src/main/avro/pfbSchema.avdl), the [gradle avro plugin](https://github.com/davidmc24/gradle-avro-plugin) automatically generates class files on project build. Together with the [Avro Java library](https://avro.apache.org/docs/1.11.1/getting-started-java/), we are able to deserialize the PFB files and get the relevant peices of data: The schema, metadata, nodes, and table row data. 
 
 ## Getting Started
 See the [library README](library/README.md) for more details on how to reference the lbirary in your project.
