@@ -1,7 +1,6 @@
 package bio.terra.pfb;
 
 import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
-import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.TABLE_ROWS;
 import static picocli.CommandLine.*;
 
 import org.slf4j.Logger;
@@ -16,18 +15,19 @@ import picocli.CommandLine;
 public class JavaPfbCommand implements Runnable {
   private static final Logger logger = LoggerFactory.getLogger(JavaPfbCommand.class);
 
-  @Parameters(index = "0", description = "Command to run (Options include: show)")
+  @Parameters(arity = "1", index = "0", description = "Command to run (Options include: show)")
   private PfbCommand command;
 
   // Goal is to follow the same command and option structure as pyPFB
   // In pyPFB, when there isn't a second argument for the "show" command, it defaults to display the
   // table row data. S
   @Parameters(
+      arity = "0..1",
       index = "1",
       description =
           "[OPTIONAL] Option to run for given command (Options include: schema, metadata, nodes. If not defined for the show command, the row data will be returned.)",
       defaultValue = "tableRows")
-  private PfbCommandOption option = TABLE_ROWS;
+  private PfbCommandOption option;
 
   @Option(
       names = {"-i", "--input"},
@@ -38,8 +38,9 @@ public class JavaPfbCommand implements Runnable {
       names = {"-n", "--limit"},
       description =
           "How many records to show, ignored for sub-commands.\n"
-              + "                        [default: no limit]")
-  private int limit = -1;
+              + "                        [default: no limit]",
+      defaultValue = "-1")
+  private int limit;
 
   public static void main(String[] args) {
     int exitCode = executeCommand(args);
@@ -54,34 +55,32 @@ public class JavaPfbCommand implements Runnable {
   public void run() {
     Library library = new Library(new PfbReader());
     logger.info("PFB RUN");
-    if (command != null && option != null) {
-      if (command.equals(SHOW)) {
-        switch (option) {
-          case SCHEMA:
-            logger.info("Show schema for file path: {}", filePath);
-            logger.info(library.showSchema(filePath));
-            break;
-          case TABLE_ROWS:
-            if (limit >= 0) {
-              logger.info("Show table rows for file path: {}, Limit = {}", filePath, limit);
-              logger.info(library.showTableRows(filePath, limit));
-            } else {
-              logger.info("show table rows for file path: {}", filePath);
-              logger.info(library.showTableRows(filePath));
-            }
-            break;
-          case METADATA:
-            logger.info("show metadata for file path: {}", filePath);
-            logger.info(library.showMetadata(filePath));
-            break;
-          case NODES:
-            logger.info("show nodes for file path: {}", filePath);
-            logger.info(library.showNodes(filePath));
-            break;
-        }
-      } else {
-        logger.info("Unknown command: {}", command);
+    if (command.equals(SHOW)) {
+      switch (option) {
+        case SCHEMA:
+          logger.info("Show schema for file path: {}", filePath);
+          logger.info(library.showSchema(filePath));
+          break;
+        case TABLE_ROWS:
+          if (limit >= 0) {
+            logger.info("Show table rows for file path: {}, Limit = {}", filePath, limit);
+            logger.info(library.showTableRows(filePath, limit));
+          } else {
+            logger.info("show table rows for file path: {}", filePath);
+            logger.info(library.showTableRows(filePath));
+          }
+          break;
+        case METADATA:
+          logger.info("show metadata for file path: {}", filePath);
+          logger.info(library.showMetadata(filePath));
+          break;
+        case NODES:
+          logger.info("show nodes for file path: {}", filePath);
+          logger.info(library.showNodes(filePath));
+          break;
       }
+    } else {
+      logger.info("Unknown command: {}", command);
     }
   }
 

@@ -1,7 +1,8 @@
 package bio.terra.pfb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
+import static org.hamcrest.Matchers.matchesPattern;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -30,12 +31,6 @@ class JavaPfbCommandTest {
   public void restoreStreams() {
     System.setOut(originalOut);
     System.setErr(originalErr);
-  }
-
-  @Test
-  void run() {
-    javaPfbCommand.run();
-    assertThat(outContent.toString(), containsString("PFB RUN"));
   }
 
   @ParameterizedTest
