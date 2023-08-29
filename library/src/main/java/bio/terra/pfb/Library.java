@@ -2,12 +2,7 @@ package bio.terra.pfb;
 
 import java.util.stream.Collectors;
 
-public class Library {
-  private PfbReader pfbReader;
-
-  public Library(PfbReader pfbReader) {
-    this.pfbReader = pfbReader;
-  }
+record Library(PfbReader pfbReader) {
 
   public String showSchema(String fileLocation) {
     return pfbReader.showSchema(fileLocation);
