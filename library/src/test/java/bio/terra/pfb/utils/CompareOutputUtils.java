@@ -13,8 +13,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CompareOutputUtils {
+  private static final Logger logger = LoggerFactory.getLogger(CompareOutputUtils.class);
 
   public static void compareJavaPfbWithPyPfb(
       String fileName, PfbCommandType commandType, String filePath, FileExtension fileExtension)
@@ -74,15 +77,15 @@ public class CompareOutputUtils {
       while ((line = bufferedReader.readLine()) != null) {
         JsonNode pyPfbJsonOutput = mapper.readTree(line);
         JsonNode javaPfbOutput = mapper.readTree(javaOutput.get(count));
-        System.out.println("Comparing line " + count);
-        System.out.println("pyPfbJsonOutput: " + pyPfbJsonOutput);
-        System.out.println("javaPfbOutput: " + javaPfbOutput);
+        logger.info("Comparing line {}", count);
+        logger.info("pyPfbJsonOutput: {}", pyPfbJsonOutput);
+        logger.info("javaPfbOutput: {}", javaPfbOutput);
         assertThat(pyPfbJsonOutput, equalTo(javaPfbOutput));
         count++;
       }
       fileReader.close();
     } catch (IOException e) {
-      System.out.println("Error reading file: " + fileName);
+      logger.info("Error reading file: {}", fileName);
     }
   }
 

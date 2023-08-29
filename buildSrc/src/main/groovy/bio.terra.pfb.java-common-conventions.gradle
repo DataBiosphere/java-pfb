@@ -16,6 +16,7 @@ java {
 }
 
 dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.9'
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'

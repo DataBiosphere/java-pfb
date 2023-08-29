@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class PfbReaderTest {
-
+  private static final Logger logger = LoggerFactory.getLogger(PfbReaderTest.class);
   private static final List<String> listOfTestFiles =
       List.of("minimal_schema", "test", "kf", "data-with-array", "empty");
 
@@ -44,7 +46,7 @@ class PfbReaderTest {
     // TODO - remove when fix is added for AJ-1292
     var editedListOfTestFiles = listOfTestFiles.stream().filter(f -> !f.equals("test")).toList();
     for (String fileName : editedListOfTestFiles) {
-      System.out.print("Testing file: " + fileName + "\n");
+      logger.info("Testing file: {}\n", fileName);
       CompareOutputUtils.compareJSONLineByLine(fileName, SHOW, "");
     }
   }

@@ -4,6 +4,8 @@ import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
 import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.TABLE_ROWS;
 import static picocli.CommandLine.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 @Command(
@@ -12,6 +14,7 @@ import picocli.CommandLine;
     description = "A java implementation of pyPFB",
     versionProvider = PfbVersion.class)
 public class JavaPfbCommand implements Runnable {
+  private static final Logger logger = LoggerFactory.getLogger(JavaPfbCommand.class);
 
   @Parameters(index = "0", description = "Command to run (Options include: show)")
   private PfbCommand command;
@@ -50,35 +53,34 @@ public class JavaPfbCommand implements Runnable {
   @Override
   public void run() {
     Library library = new Library(new PfbReader());
-    System.out.println("PFB RUN");
+    logger.info("PFB RUN");
     if (command != null && option != null) {
       if (command.equals(SHOW)) {
         switch (option) {
           case SCHEMA:
-            System.out.println("Show schema for file path: " + filePath);
-            System.out.println(library.showSchema(filePath));
+            logger.info("Show schema for file path: {}", filePath);
+            logger.info(library.showSchema(filePath));
             break;
           case TABLE_ROWS:
             if (limit >= 0) {
-              System.out.println(
-                  "show table rows for file path: " + filePath + ", Limit = " + limit);
-              System.out.println(library.showTableRows(filePath, limit));
+              logger.info("Show table rows for file path: {}, Limit = {}", filePath, limit);
+              logger.info(library.showTableRows(filePath, limit));
             } else {
-              System.out.println("show table rows for file path: " + filePath);
-              System.out.println(library.showTableRows(filePath));
+              logger.info("show table rows for file path: {}", filePath);
+              logger.info(library.showTableRows(filePath));
             }
             break;
           case METADATA:
-            System.out.println("show metadata for file path: " + filePath);
-            System.out.println(library.showMetadata(filePath));
+            logger.info("show metadata for file path: {}", filePath);
+            logger.info(library.showMetadata(filePath));
             break;
           case NODES:
-            System.out.println("show nodes for file path: " + filePath);
-            System.out.println(library.showNodes(filePath));
+            logger.info("show nodes for file path: {}", filePath);
+            logger.info(library.showNodes(filePath));
             break;
         }
       } else {
-        System.out.println("Unknown command: " + command);
+        logger.info("Unknown command: {}", command);
       }
     }
   }
