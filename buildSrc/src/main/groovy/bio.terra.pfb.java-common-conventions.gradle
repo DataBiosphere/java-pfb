@@ -8,6 +8,10 @@ plugins {
 }
 
 boolean isCiServer = System.getenv().containsKey("CI")
+ext {
+    junit_version = '5.10.0'
+    mockito_version = '5.5.0'
+}
 
 java {
     toolchain {
@@ -19,11 +23,11 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.9'
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-    testImplementation 'org.mockito:mockito-core:5.5.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.mockito:mockito-junit-jupiter:$mockito_version"
 }
 
 version = gradle.releaseVersion
