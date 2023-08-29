@@ -1,10 +1,10 @@
 package bio.terra.pfb;
 
+import picocli.CommandLine;
+
 import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
 import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.TABLE_ROWS;
 import static picocli.CommandLine.*;
-
-import picocli.CommandLine;
 
 @Command(
     name = "pfb",
@@ -13,13 +13,16 @@ import picocli.CommandLine;
     versionProvider = PfbVersion.class)
 public class JavaPfbCommand implements Runnable {
 
-  @Parameters(index = "0", description = "command to run (Options include: show)")
+  @Parameters(index = "0", description = "Command to run (Options include: show)")
   private PfbCommand command;
 
+  // Goal is to follow the same command and option structure as pyPFB
+  // In pyPFB, when there isn't a second argument for the "show" command, it defaults to display the
+  // table row data. S
   @Parameters(
       index = "1",
       description =
-          "optional option to run for given command (Options include: schema, metadata, nodes)",
+          "[OPTIONAL] Option to run for given command (Options include: schema, metadata, nodes. If not defined for the show command, the row data will be returned.)",
       defaultValue = "tableRows")
   private PfbCommandOption option = TABLE_ROWS;
 
