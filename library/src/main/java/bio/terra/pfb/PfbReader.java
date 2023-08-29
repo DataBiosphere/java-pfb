@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,6 +19,13 @@ import org.apache.avro.io.DatumReader;
 import org.apache.avro.specific.SpecificDatumReader;
 
 public class PfbReader {
+  private final String CHAR_LIST = " !\"_#$%&'()*+-/.0123456789:;,<=>?[\\]^`{|}~";
+  private final Map<String, String> ENCODED_ENUM_TO_CHAR_MAP =
+      CHAR_LIST
+          .chars()
+          .boxed()
+          .collect(
+              Collectors.toMap(c -> "_" + String.format("%02x", c) + "_", Character::toString));
 
   public String showSchema(String fileLocation) {
     try {
@@ -157,54 +163,8 @@ public class PfbReader {
     the character happens to be a number."
   */
   private String convertEnum(String schema) {
-    HashMap<String, String> map = new HashMap<>();
-    map.put("_20_", " ");
-    map.put("_21_", "!");
-    map.put("_22_", "\"");
-    map.put("_23_", "#");
-    map.put("_24_", "$");
-    map.put("_25_", "%");
-    map.put("_26_", "&");
-    map.put("_27_", "'");
-    map.put("_28_", "(");
-    map.put("_29_", ")");
-    map.put("_2a_", "*");
-    map.put("_2b_", "+");
-    map.put("_2c_", ",");
-    map.put("_2d_", "-");
-    map.put("_2f_", "/");
-    map.put("_2e_", ".");
-    map.put("_30_", "0");
-    map.put("_31_", "1");
-    map.put("_32_", "2");
-    map.put("_33_", "3");
-    map.put("_34_", "4");
-    map.put("_35_", "5");
-    map.put("_36_", "6");
-    map.put("_37_", "7");
-    map.put("_38_", "8");
-    map.put("_39_", "9");
-    map.put("_3a_", ":");
-    map.put("_3b_", ";");
-    map.put("_3c_", "<");
-    map.put("_3d_", "=");
-    map.put("_3e_", ">");
-    map.put("_3f_", "?");
-    map.put("_5b_", "[");
-    map.put("_5c_", "\\");
-    map.put("_5d_", "]");
-    map.put("_5e_", "^");
-    map.put("_5f_", "_");
-    map.put("_60_", "`");
-    map.put("_7b_", "{");
-    map.put("_7c_", "|");
-    map.put("_7d_", "}");
-    map.put("_7e_", "~");
-
-    for (Map.Entry<String, String> entry : map.entrySet()) {
-      if (schema.contains(entry.getKey())) {
-        schema = schema.replace(entry.getKey(), entry.getValue());
-      }
+    for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_CHAR_MAP.entrySet()) {
+      schema = schema.replace(entry.getKey(), entry.getValue());
     }
     return schema;
   }
