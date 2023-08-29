@@ -1,10 +1,10 @@
 package bio.terra.pfb;
 
-import picocli.CommandLine;
-
 import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
 import static bio.terra.pfb.JavaPfbCommand.PfbCommandOption.TABLE_ROWS;
 import static picocli.CommandLine.*;
+
+import picocli.CommandLine;
 
 @Command(
     name = "pfb",

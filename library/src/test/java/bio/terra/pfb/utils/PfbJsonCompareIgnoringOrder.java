@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.util.Comparator;
 
-class PfbJsonComparator implements Comparator<JsonNode> {
+class PfbJsonCompareIgnoringOrder implements Comparator<JsonNode> {
   @Override
   public int compare(JsonNode o1, JsonNode o2) {
     if (o1.equals(o2)) {

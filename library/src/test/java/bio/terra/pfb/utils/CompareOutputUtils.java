@@ -48,7 +48,7 @@ public class CompareOutputUtils {
     if (fileExtension.equals(JSON)) {
       JsonNode pyPfbJsonOutput = mapper.readTree(pythonOutput);
       JsonNode showSchemaOutputJson = mapper.readTree(javaPfbOutput);
-      PfbJsonComparator cmp = new PfbJsonComparator();
+      PfbJsonCompareIgnoringOrder cmp = new PfbJsonCompareIgnoringOrder();
       assertTrue(pyPfbJsonOutput.equals(cmp, showSchemaOutputJson));
       //      assertThat(pyPfbJsonOutput, equalTo(showSchemaOutputJson));
     } else if (fileExtension.equals(TXT)) {
