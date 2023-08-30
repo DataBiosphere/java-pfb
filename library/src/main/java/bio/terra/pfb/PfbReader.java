@@ -19,9 +19,9 @@ import org.apache.avro.io.DatumReader;
 import org.apache.avro.specific.SpecificDatumReader;
 
 public class PfbReader {
-  private final String CHAR_LIST = " !\"_#$%&'()*+-/.0123456789:;,<=>?[\\]^`{|}~";
-  private final Map<String, String> ENCODED_ENUM_TO_CHAR_MAP =
-      CHAR_LIST
+  private static final String SYMBOL_LIST = " !\"_#$%&'()*+-/.0123456789:;,<=>?[\\]^`{|}~";
+  private static final Map<String, String> ENCODED_ENUM_TO_SYMBOL_MAP =
+      SYMBOL_LIST
           .chars()
           .boxed()
           .collect(
@@ -158,7 +158,7 @@ public class PfbReader {
     the character happens to be a number."
   */
   private String convertEnum(String schema) {
-    for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_CHAR_MAP.entrySet()) {
+    for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_SYMBOL_MAP.entrySet()) {
       schema = schema.replace(entry.getKey(), entry.getValue());
     }
     return schema;
