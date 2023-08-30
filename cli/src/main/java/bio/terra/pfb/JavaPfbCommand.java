@@ -59,24 +59,29 @@ public class JavaPfbCommand implements Runnable {
       switch (option) {
         case SCHEMA:
           logger.info("Show schema for file path: {}", filePath);
-          logger.info(library.showSchema(filePath));
+          String schema = library.showSchema(filePath);
+          logger.info(schema);
           break;
         case TABLE_ROWS:
           if (limit >= 0) {
             logger.info("Show table rows for file path: {}, Limit = {}", filePath, limit);
-            logger.info(library.showTableRows(filePath, limit));
+            String tableRows = library.showTableRows(filePath, limit);
+            logger.info(tableRows);
           } else {
             logger.info("show table rows for file path: {}", filePath);
-            logger.info(library.showTableRows(filePath));
+            String tableRows = library.showTableRows(filePath);
+            logger.info(tableRows);
           }
           break;
         case METADATA:
           logger.info("show metadata for file path: {}", filePath);
-          logger.info(library.showMetadata(filePath));
+          String metadata = library.showMetadata(filePath);
+          logger.info(metadata);
           break;
         case NODES:
           logger.info("show nodes for file path: {}", filePath);
-          logger.info(library.showNodes(filePath));
+          String nodes = library.showNodes(filePath);
+          logger.info(nodes);
           break;
       }
     } else {
