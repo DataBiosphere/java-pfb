@@ -33,20 +33,13 @@ public class CompareOutputUtils {
       throw new IOException("Error reading file: " + fileName, e);
     }
     String avroFilePath = getAvroFilePath(fileName, filePath);
-    String javaPfbOutput = "";
-    switch (commandType) {
-      case SHOW_SCHEMA:
-        javaPfbOutput = reader.showSchema(avroFilePath);
-        break;
-      case SHOW_METADATA:
-        javaPfbOutput = reader.showMetadata(avroFilePath);
-        break;
-      case SHOW_NODES:
-        javaPfbOutput = reader.showNodes(avroFilePath);
-        break;
-      default:
-        throw new InvalidObjectException("Invalid command type");
-    }
+    String javaPfbOutput =
+        switch (commandType) {
+          case SHOW_SCHEMA -> reader.showSchema(avroFilePath);
+          case SHOW_METADATA -> reader.showMetadata(avroFilePath);
+          case SHOW_NODES -> reader.showNodes(avroFilePath);
+          default -> throw new InvalidObjectException("Invalid command type");
+        };
 
     if (fileExtension.equals(JSON)) {
       JsonNode pyPfbJsonOutput = mapper.readTree(pythonOutput);
