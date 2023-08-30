@@ -42,8 +42,8 @@ public class PfbReader {
   }
 
   public Schema getSchema(String fileLocation) throws IOException {
-    boolean isUrl = isValidUrl(fileLocation);
-    if (isUrl) {
+    URL url = isValidUrl(fileLocation);
+    if (url != null) {
       return readUrlPFBSchema(fileLocation);
     }
     return readFilePathPFBSchema(fileLocation);
@@ -135,12 +135,11 @@ public class PfbReader {
     return "Error: " + e.getMessage();
   }
 
-  boolean isValidUrl(String fileLocation) {
+  URL isValidUrl(String fileLocation) {
     try {
-      new URL(fileLocation);
-      return true;
+      return new URL(fileLocation);
     } catch (IOException e) {
-      return false;
+      return null;
     }
   }
 
