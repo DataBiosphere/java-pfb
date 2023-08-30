@@ -43,14 +43,14 @@ public class PfbReader {
   public Schema getSchema(String fileLocation) throws IOException {
     URL url = isValidUrl(fileLocation);
     if (url != null) {
-      return readUrlPFBSchema(fileLocation);
+      return readUrlPfbSchema(fileLocation);
     }
-    return readFilePathPFBSchema(fileLocation);
+    return readFilePathPfbSchema(fileLocation);
   }
 
   public String showNodes(String fileLocation) {
     try {
-      Metadata metadata = getPFBMetadata(fileLocation);
+      Metadata metadata = getPfbMetadata(fileLocation);
       return metadata.getNodes().stream().map(Node::getName).collect(Collectors.joining("\n"))
           + "\n";
     } catch (IOException e) {
@@ -60,14 +60,14 @@ public class PfbReader {
 
   public String showMetadata(String fileLocation) {
     try {
-      Metadata metadata = getPFBMetadata(fileLocation);
+      Metadata metadata = getPfbMetadata(fileLocation);
       return metadata.toString();
     } catch (Exception e) {
       return getErrorMessage(e);
     }
   }
 
-  Schema readFilePathPFBSchema(String fileLocation) throws IOException {
+  Schema readFilePathPfbSchema(String fileLocation) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     try (DataFileReader<Entity> dataFileReader =
         new DataFileReader<>(new File(fileLocation), datumReader)) {
@@ -96,7 +96,7 @@ public class PfbReader {
     }
   }
 
-  public Metadata getPFBMetadata(String fileLocation) throws IOException {
+  public Metadata getPfbMetadata(String fileLocation) throws IOException {
     File pfbData = new File(fileLocation);
     // Deserialize the above generated avro data file
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
@@ -115,7 +115,7 @@ public class PfbReader {
     throw new InvalidPfbException("Error reading PFB Metadata object");
   }
 
-  Schema readUrlPFBSchema(String signedUrl) throws IOException {
+  Schema readUrlPfbSchema(String signedUrl) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     try (InputStream in = readFromSignedUrl(signedUrl);
         DataFileStream<Entity> reader = new DataFileStream<>(in, datumReader)) {
