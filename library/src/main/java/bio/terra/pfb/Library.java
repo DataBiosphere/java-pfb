@@ -17,7 +17,7 @@ record Library(PfbReader pfbReader) {
   }
 
   public String showTableRows(String fileLocation) {
-    return pfbReader.show(fileLocation).stream().collect(Collectors.joining("\n"));
+    return String.join("\n", pfbReader.show(fileLocation));
   }
 
   public String showTableRows(String fileLocation, int limit) {
