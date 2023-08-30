@@ -29,13 +29,12 @@ public class PfbReader {
 
   public String showSchema(String fileLocation) {
     try {
-      Schema schema = getSchema(fileLocation);
-      List<Schema> pfbSchemaShow =
-          schema.getField("object").schema().getTypes().stream()
+      return convertEnum(
+          getSchema(fileLocation).getField("object").schema().getTypes().stream()
               .filter(t -> !t.getName().equals("Metadata"))
-              .toList();
-      String show = pfbSchemaShow.stream().map(Schema::toString).toList().toString();
-      return convertEnum(show);
+              .map(Schema::toString)
+              .toList()
+              .toString());
     } catch (IOException e) {
       return getErrorMessage(e);
     }
