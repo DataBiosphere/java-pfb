@@ -101,14 +101,13 @@ public class PfbReader {
     // Deserialize the above generated avro data file
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     Entity data = null;
-    Metadata result = null;
     try (DataFileReader<Entity> dataFileReader = new DataFileReader<>(pfbData, datumReader)) {
       // A PFB Avro file consists of a list of "Entity" objects (Defined in sample.advl)
       // One of these entities must be a "Metadata" object (Also defined in sample.advl)
       // The rest of the entities are the data entries
       // Assuming the first object is the metadata object
       data = dataFileReader.next(data);
-      result = (Metadata) data.getObject();
+      Metadata result = (Metadata) data.getObject();
       if (result != null) {
         return result;
       }
@@ -117,15 +116,13 @@ public class PfbReader {
   }
 
   Schema readUrlPFBSchema(String signedUrl) throws IOException {
-    Schema schema;
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     try (InputStream in = readFromSignedUrl(signedUrl);
         DataFileStream<Entity> reader = new DataFileStream<>(in, datumReader)) {
-      schema = reader.getSchema();
+      return reader.getSchema();
     } catch (IOException ex) {
       throw new IOException("Error reading PFB file from signed URL", ex);
     }
-    return schema;
   }
 
   // Helper methods
