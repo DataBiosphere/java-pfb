@@ -1,12 +1,11 @@
 package bio.terra.pfb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -59,8 +58,8 @@ class LibraryTest {
   }
 
   private void testCorrectNumberReturned(String returnedVal, int expectedNum) {
-    List<String> elements = Arrays.stream(returnedVal.split("\n")).toList();
-    assertThat("Correct number of elements returned", elements.size(), equalTo(expectedNum));
+    assertThat(
+        "Correct number of elements returned", returnedVal.split("\n"), arrayWithSize(expectedNum));
   }
 
   @Test
