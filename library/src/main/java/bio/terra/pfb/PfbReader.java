@@ -27,17 +27,13 @@ public class PfbReader {
           .collect(
               Collectors.toMap(c -> "_" + String.format("%02x", c) + "_", Character::toString));
 
-  public String showSchema(String fileLocation) {
-    try {
-      return convertEnum(
-          getSchema(fileLocation).getField("object").schema().getTypes().stream()
-              .filter(t -> !t.getName().equals("Metadata"))
-              .map(Schema::toString)
-              .toList()
-              .toString());
-    } catch (IOException e) {
-      return getErrorMessage(e);
-    }
+  public String showSchema(String fileLocation) throws IOException {
+    return convertEnum(
+        getSchema(fileLocation).getField("object").schema().getTypes().stream()
+            .filter(t -> !t.getName().equals("Metadata"))
+            .map(Schema::toString)
+            .toList()
+            .toString());
   }
 
   public Schema getSchema(String fileLocation) throws IOException {
@@ -48,23 +44,14 @@ public class PfbReader {
     return readFilePathPfbSchema(fileLocation);
   }
 
-  public String showNodes(String fileLocation) {
-    try {
-      Metadata metadata = getPfbMetadata(fileLocation);
-      return metadata.getNodes().stream().map(Node::getName).collect(Collectors.joining("\n"))
-          + "\n";
-    } catch (IOException e) {
-      return getErrorMessage(e);
-    }
+  public String showNodes(String fileLocation) throws IOException {
+    Metadata metadata = getPfbMetadata(fileLocation);
+    return metadata.getNodes().stream().map(Node::getName).collect(Collectors.joining("\n")) + "\n";
   }
 
-  public String showMetadata(String fileLocation) {
-    try {
-      Metadata metadata = getPfbMetadata(fileLocation);
-      return metadata.toString();
-    } catch (Exception e) {
-      return getErrorMessage(e);
-    }
+  public String showMetadata(String fileLocation) throws IOException {
+    Metadata metadata = getPfbMetadata(fileLocation);
+    return metadata.toString();
   }
 
   Schema readFilePathPfbSchema(String fileLocation) throws IOException {
@@ -76,7 +63,7 @@ public class PfbReader {
   }
 
   // read generic avro data from file
-  public List<String> show(String fileLocation) {
+  public List<String> show(String fileLocation) throws IOException {
     File pfbData = new File(fileLocation);
     // Deserialize the above generated avro data file
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
@@ -91,8 +78,6 @@ public class PfbReader {
         data.add(convertEnum(genericRecord.toString()));
       }
       return data;
-    } catch (IOException e) {
-      return List.of(getErrorMessage(e));
     }
   }
 
@@ -126,11 +111,6 @@ public class PfbReader {
   }
 
   // Helper methods
-
-  private String getErrorMessage(Exception e) {
-    return "Error: " + e.getMessage();
-  }
-
   URL isValidUrl(String fileLocation) {
     try {
       return new URL(fileLocation);

@@ -27,14 +27,14 @@ class LibraryTest {
   }
 
   @Test
-  void showMetadataTest() {
+  void showMetadataTest() throws IOException {
     when(pfbReader.showMetadata(TEST_FILE_LOCATION)).thenReturn(FAKE_DATA_RETURN);
     Library library = new Library(pfbReader);
     assertReturnValueMatches(library.showMetadata(TEST_FILE_LOCATION));
   }
 
   @Test
-  void showTableRowTest() {
+  void showTableRowTest() throws IOException {
     when(pfbReader.show(TEST_FILE_LOCATION))
         .thenReturn(Collections.singletonList(FAKE_DATA_RETURN));
     Library library = new Library(pfbReader);
@@ -42,7 +42,7 @@ class LibraryTest {
   }
 
   @Test
-  void showLimitedTableRowTest() {
+  void showLimitedTableRowTest() throws IOException {
     when(pfbReader.show(TEST_FILE_LOCATION))
         .thenReturn(List.of(FAKE_DATA_RETURN, FAKE_DATA_RETURN, FAKE_DATA_RETURN));
     Library library = new Library(pfbReader);
@@ -63,7 +63,7 @@ class LibraryTest {
   }
 
   @Test
-  void showNodesTest() {
+  void showNodesTest() throws IOException {
     when(pfbReader.showNodes(TEST_FILE_LOCATION)).thenReturn(FAKE_DATA_RETURN);
     Library library = new Library(pfbReader);
     assertReturnValueMatches(library.showNodes(TEST_FILE_LOCATION));

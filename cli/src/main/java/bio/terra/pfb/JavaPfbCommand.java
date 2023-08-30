@@ -1,8 +1,12 @@
 package bio.terra.pfb;
 
-import static bio.terra.pfb.JavaPfbCommand.PfbCommand.SHOW;
+import static bio.terra.pfb.models.PfbCommand.SHOW;
 import static picocli.CommandLine.*;
 
+import bio.terra.pfb.models.PfbCommand;
+import bio.terra.pfb.models.PfbCommandOption;
+import bio.terra.pfb.models.commands.*;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -54,34 +58,19 @@ public class JavaPfbCommand implements Runnable {
   @Override
   public void run() {
     Library library = new Library(new PfbReader());
-    logger.info("PFB RUN");
     if (command.equals(SHOW)) {
       switch (option) {
         case SCHEMA:
-          logger.info("Show schema for file path: {}", filePath);
-          String schema = library.showSchema(filePath);
-          logger.info(schema);
+          callPfbLibraryCommand(new ShowSchema(), library, filePath);
           break;
         case TABLE_ROWS:
-          if (limit >= 0) {
-            logger.info("Show table rows for file path: {}, Limit = {}", filePath, limit);
-            String tableRows = library.showTableRows(filePath, limit);
-            logger.info(tableRows);
-          } else {
-            logger.info("show table rows for file path: {}", filePath);
-            String tableRows = library.showTableRows(filePath);
-            logger.info(tableRows);
-          }
+          callPfbLibraryCommand(new TableRows(), library, filePath, limit);
           break;
         case METADATA:
-          logger.info("show metadata for file path: {}", filePath);
-          String metadata = library.showMetadata(filePath);
-          logger.info(metadata);
+          callPfbLibraryCommand(new ShowMetadata(), library, filePath);
           break;
         case NODES:
-          logger.info("show nodes for file path: {}", filePath);
-          String nodes = library.showNodes(filePath);
-          logger.info(nodes);
+          callPfbLibraryCommand(new ShowNodes(), library, filePath);
           break;
       }
     } else {
@@ -89,36 +78,34 @@ public class JavaPfbCommand implements Runnable {
     }
   }
 
-  public enum PfbCommand {
-    SHOW("show");
-
-    private final String displayName;
-
-    PfbCommand(String displayName) {
-      this.displayName = displayName;
-    }
-
-    @Override
-    public String toString() {
-      return this.displayName;
-    }
+  public void callPfbLibraryCommand(
+      PfbLibraryCommandInterface command, Library library, String filePath) {
+    callPfbLibraryCommand(command, library, filePath, -1);
   }
 
-  public enum PfbCommandOption {
-    SCHEMA("schema"),
-    METADATA("metadata"),
-    NODES("nodes"),
-    TABLE_ROWS("tableRows");
-
-    private final String displayName;
-
-    PfbCommandOption(String displayName) {
-      this.displayName = displayName;
-    }
-
-    @Override
-    public String toString() {
-      return this.displayName;
+  public void callPfbLibraryCommand(
+      PfbLibraryCommandInterface command, Library library, String filePath, int limit) {
+    String infoMessage;
+    if (limit >= 0) {
+      infoMessage = command.infoMessage(filePath, limit);
+      logger.info(infoMessage);
+      String result;
+      try {
+        result = command.commandWithLimit(library, filePath, limit);
+        logger.info(result);
+      } catch (IOException e) {
+        throw new PicocliException(e.getMessage(), e);
+      }
+    } else {
+      infoMessage = command.infoMessage(filePath);
+      logger.info(infoMessage);
+      String result;
+      try {
+        result = command.command(library, filePath);
+        logger.info(result);
+      } catch (IOException e) {
+        throw new PicocliException(e.getMessage(), e);
+      }
     }
   }
 }
