@@ -1,18 +1,17 @@
 package bio.terra.pfb.utils;
 
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
-import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.TXT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import bio.terra.pfb.PfbReader;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.*;
+import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +21,10 @@ public class CompareOutputUtils {
   public static void compareJavaPfbWithPyPfb(
       String fileName, PfbCommandType commandType, String filePath, FileExtension fileExtension)
       throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     PfbReader reader = new PfbReader();
     String pythonOutput;
-    try {
-      pythonOutput =
-          Files.readString(Paths.get(getPyPfbOutputFilePath(fileName, commandType, fileExtension)));
-    } catch (IOException e) {
-      throw new IOException("Error reading file: " + fileName, e);
-    }
+    pythonOutput =
+        Files.readString(Paths.get(getPyPfbOutputFilePath(fileName, commandType, fileExtension)));
     String avroFilePath = getAvroFilePath(fileName, filePath);
     String javaPfbOutput =
         switch (commandType) {
@@ -40,43 +34,23 @@ public class CompareOutputUtils {
           default -> throw new InvalidObjectException("Invalid command type");
         };
 
-    if (fileExtension.equals(JSON)) {
-      JsonNode pyPfbJsonOutput = mapper.readTree(pythonOutput);
-      JsonNode showSchemaOutputJson = mapper.readTree(javaPfbOutput);
-      PfbJsonCompareIgnoringOrder cmp = new PfbJsonCompareIgnoringOrder();
-      assertTrue(pyPfbJsonOutput.equals(cmp, showSchemaOutputJson));
-    } else if (fileExtension.equals(TXT)) {
-      assertThat(pythonOutput, equalTo(javaPfbOutput));
-    } else {
-      throw new InvalidObjectException("Invalid file extension");
+    switch (fileExtension) {
+      case JSON -> JSONAssert.assertEquals(pythonOutput, javaPfbOutput, true);
+      case TXT -> assertThat(pythonOutput, equalTo(javaPfbOutput));
+      default -> throw new InvalidObjectException("Invalid file extension");
     }
   }
 
   public static void compareJSONLineByLine(
       String fileName, PfbCommandType commandType, String filePath) throws IOException {
     PfbReader reader = new PfbReader();
-    ObjectMapper mapper = new ObjectMapper();
 
     String avroFilePath = getAvroFilePath(fileName, filePath);
     List<String> javaOutput = reader.show(avroFilePath);
-    try {
-      File file = new File(getPyPfbOutputFilePath(fileName, commandType, JSON));
-      FileReader fileReader = new FileReader(file);
-      BufferedReader bufferedReader = new BufferedReader(fileReader);
-      String line;
-      int count = 0;
-      while ((line = bufferedReader.readLine()) != null) {
-        JsonNode pyPfbJsonOutput = mapper.readTree(line);
-        JsonNode javaPfbOutput = mapper.readTree(javaOutput.get(count));
-        logger.info("Comparing line {}", count);
-        logger.info("pyPfbJsonOutput: {}", pyPfbJsonOutput);
-        logger.info("javaPfbOutput: {}", javaPfbOutput);
-        assertThat(pyPfbJsonOutput, equalTo(javaPfbOutput));
-        count++;
-      }
-      fileReader.close();
-    } catch (IOException e) {
-      logger.info("Error reading file: {}", fileName);
+    Path file = Paths.get(getPyPfbOutputFilePath(fileName, commandType, JSON));
+    List<String> lines = Files.readAllLines(file);
+    for (int i = 0; i < lines.size(); i++) {
+      JSONAssert.assertEquals(lines.get(i), javaOutput.get(i), true);
     }
   }
 

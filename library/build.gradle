@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.xerial.snappy:snappy-java:1.1.10.3'
     testImplementation 'org.json:json:20230618'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation 'org.skyscreamer:jsonassert:1.2.3'
 }
 
 sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
