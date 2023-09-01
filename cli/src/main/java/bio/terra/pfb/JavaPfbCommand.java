@@ -57,20 +57,19 @@ public class JavaPfbCommand implements Runnable {
 
   @Override
   public void run() {
-    Library library = new Library(new PfbReader());
     if (command.equals(SHOW)) {
       switch (option) {
         case SCHEMA:
-          callPfbLibraryCommand(new ShowSchema(), library, filePath);
+          callPfbLibraryCommand(new ShowSchema(), filePath);
           break;
         case TABLE_ROWS:
-          callPfbLibraryCommand(new TableRows(), library, filePath, limit);
+          callPfbLibraryCommand(new TableRows(), filePath, limit);
           break;
         case METADATA:
-          callPfbLibraryCommand(new ShowMetadata(), library, filePath);
+          callPfbLibraryCommand(new ShowMetadata(), filePath);
           break;
         case NODES:
-          callPfbLibraryCommand(new ShowNodes(), library, filePath);
+          callPfbLibraryCommand(new ShowNodes(), filePath);
           break;
       }
     } else {
@@ -78,17 +77,16 @@ public class JavaPfbCommand implements Runnable {
     }
   }
 
-  public void callPfbLibraryCommand(
-      PfbLibraryCommandInterface command, Library library, String filePath) {
-    callPfbLibraryCommand(command, library, filePath, -1);
+  public void callPfbLibraryCommand(PfbLibraryCommandInterface command, String filePath) {
+    callPfbLibraryCommand(command, filePath, -1);
   }
 
   public void callPfbLibraryCommand(
-      PfbLibraryCommandInterface command, Library library, String filePath, int limit) {
+      PfbLibraryCommandInterface command, String filePath, int limit) {
     if (limit >= 0) {
       String result;
       try {
-        result = command.commandWithLimit(library, filePath, limit);
+        result = command.commandWithLimit(filePath, limit);
         System.out.println(result);
       } catch (IOException e) {
         throw new PicocliException(e.getMessage(), e);
@@ -96,7 +94,7 @@ public class JavaPfbCommand implements Runnable {
     } else {
       String result;
       try {
-        result = command.command(library, filePath);
+        result = command.command(filePath);
         System.out.println(result);
       } catch (IOException e) {
         throw new PicocliException(e.getMessage(), e);

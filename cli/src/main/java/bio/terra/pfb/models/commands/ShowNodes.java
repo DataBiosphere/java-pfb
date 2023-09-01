@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class ShowNodes implements PfbLibraryCommandInterface {
   @Override
-  public String command(Library library, String filePath) throws IOException {
-    return library.showNodes(filePath);
+  public String command(String filePath) throws IOException {
+    return Library.showNodes(filePath);
   }
 }

@@ -3,25 +3,25 @@ package bio.terra.pfb;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-public record Library(PfbReader pfbReader) {
+public class Library {
 
-  public String showSchema(String fileLocation) throws IOException {
-    return pfbReader.showSchema(fileLocation);
+  public static String showSchema(String fileLocation) throws IOException {
+    return PfbReader.showSchema(fileLocation);
   }
 
-  public String showNodes(String fileLocation) throws IOException {
-    return pfbReader.showNodes(fileLocation);
+  public static String showNodes(String fileLocation) throws IOException {
+    return PfbReader.showNodes(fileLocation);
   }
 
-  public String showMetadata(String fileLocation) throws IOException {
-    return pfbReader.showMetadata(fileLocation);
+  public static String showMetadata(String fileLocation) throws IOException {
+    return PfbReader.showMetadata(fileLocation);
   }
 
-  public String showTableRows(String fileLocation) throws IOException {
-    return String.join("\n", pfbReader.show(fileLocation));
+  public static String showTableRows(String fileLocation) throws IOException {
+    return String.join("\n", PfbReader.show(fileLocation));
   }
 
-  public String showTableRows(String fileLocation, int limit) throws IOException {
-    return pfbReader.show(fileLocation).stream().limit(limit).collect(Collectors.joining("\n"));
+  public static String showTableRows(String fileLocation, int limit) throws IOException {
+    return PfbReader.show(fileLocation).stream().limit(limit).collect(Collectors.joining("\n"));
   }
 }

@@ -26,7 +26,7 @@ public class PfbReader {
           .collect(
               Collectors.toMap(c -> "_" + String.format("%02x", c) + "_", Character::toString));
 
-  public String showSchema(String fileLocation) throws IOException {
+  public static String showSchema(String fileLocation) throws IOException {
     return convertEnum(
         readPfbSchema(fileLocation).getField("object").schema().getTypes().stream()
             .filter(t -> !t.getName().equals("Metadata"))
@@ -35,17 +35,17 @@ public class PfbReader {
             .toString());
   }
 
-  public String showNodes(String fileLocation) throws IOException {
+  public static String showNodes(String fileLocation) throws IOException {
     Metadata metadata = getPfbMetadata(fileLocation);
     return metadata.getNodes().stream().map(Node::getName).collect(Collectors.joining("\n")) + "\n";
   }
 
-  public String showMetadata(String fileLocation) throws IOException {
+  public static String showMetadata(String fileLocation) throws IOException {
     Metadata metadata = getPfbMetadata(fileLocation);
     return metadata.toString();
   }
 
-  public List<String> show(String fileLocation) throws IOException {
+  public static List<String> show(String fileLocation) throws IOException {
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
     URL url = isValidUrl(fileLocation);
     GenericRecord genericRecord = null;
@@ -63,7 +63,7 @@ public class PfbReader {
     }
   }
 
-  public Metadata getPfbMetadata(String fileLocation) throws IOException {
+  public static Metadata getPfbMetadata(String fileLocation) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     URL url = isValidUrl(fileLocation);
     Entity data = null;
@@ -83,7 +83,7 @@ public class PfbReader {
     throw new InvalidPfbException("Error reading PFB Metadata object");
   }
 
-  Schema readPfbSchema(String fileLocation) throws IOException {
+  static Schema readPfbSchema(String fileLocation) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
     URL url = isValidUrl(fileLocation);
     try (InputStream in =
@@ -94,7 +94,7 @@ public class PfbReader {
   }
 
   // Helper methods
-  URL isValidUrl(String fileLocation) {
+  static URL isValidUrl(String fileLocation) {
     try {
       return new URL(fileLocation);
     } catch (IOException e) {
@@ -102,11 +102,11 @@ public class PfbReader {
     }
   }
 
-  InputStream readFromLocalFile(String filePath) throws IOException {
+  static InputStream readFromLocalFile(String filePath) throws IOException {
     return new FileInputStream(filePath);
   }
 
-  InputStream readFromSignedUrl(String signedUrl) throws IOException {
+  static InputStream readFromSignedUrl(String signedUrl) throws IOException {
     URL urlObject = new URL(signedUrl);
     URLConnection urlConnection = urlObject.openConnection();
     return urlConnection.getInputStream();
@@ -124,7 +124,7 @@ public class PfbReader {
     first character to be a number. So we encode the first character in the way if
     the character happens to be a number."
   */
-  private String convertEnum(String schema) {
+  private static String convertEnum(String schema) {
     for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_SYMBOL_MAP.entrySet()) {
       schema = schema.replace(entry.getKey(), entry.getValue());
     }

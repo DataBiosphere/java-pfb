@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class ShowMetadata implements PfbLibraryCommandInterface {
   @Override
-  public String command(Library library, String filePath) throws IOException {
-    return library.showMetadata(filePath);
+  public String command(String filePath) throws IOException {
+    return Library.showMetadata(filePath);
   }
 }

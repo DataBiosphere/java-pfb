@@ -1,14 +1,13 @@
 package bio.terra.pfb.models.commands;
 
-import bio.terra.pfb.Library;
 import java.io.IOException;
 
 public interface PfbLibraryCommandInterface {
-  default String command(Library library, String filePath) throws IOException {
+  default String command(String filePath) throws IOException {
     throw new UnsupportedOperationException(ERROR_MESSAGE);
   }
 
-  default String commandWithLimit(Library library, String filePath, int limit) throws IOException {
+  default String commandWithLimit(String filePath, int limit) throws IOException {
     throw new UnsupportedOperationException(ERROR_MESSAGE);
   }
 

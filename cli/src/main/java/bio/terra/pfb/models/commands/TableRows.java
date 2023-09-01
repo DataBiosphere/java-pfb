@@ -5,12 +5,12 @@ import java.io.IOException;
 
 public class TableRows implements PfbLibraryCommandInterface {
   @Override
-  public String command(Library library, String filePath) throws IOException {
-    return library.showTableRows(filePath);
+  public String command(String filePath) throws IOException {
+    return Library.showTableRows(filePath);
   }
 
   @Override
-  public String commandWithLimit(Library library, String filePath, int limit) throws IOException {
-    return library.showTableRows(filePath, limit);
+  public String commandWithLimit(String filePath, int limit) throws IOException {
+    return Library.showTableRows(filePath, limit);
   }
 }
