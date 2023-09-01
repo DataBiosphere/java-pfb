@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
-public class CommandInterfaceTest {
+class CommandInterfaceTest {
 
   @Test
   void showMetadata() throws IOException {
