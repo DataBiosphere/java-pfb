@@ -8,9 +8,4 @@ public class ShowMetadata implements PfbLibraryCommandInterface {
   public String command(Library library, String filePath) throws IOException {
     return library.showMetadata(filePath);
   }
-
-  @Override
-  public String infoMessage(String filePath) {
-    return "show metadata for file path: " + filePath;
-  }
 }

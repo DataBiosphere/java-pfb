@@ -7,8 +7,6 @@ import bio.terra.pfb.models.PfbCommand;
 import bio.terra.pfb.models.PfbCommandOption;
 import bio.terra.pfb.models.commands.*;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 @Command(
@@ -17,14 +15,13 @@ import picocli.CommandLine;
     description = "A java implementation of pyPFB",
     versionProvider = PfbVersion.class)
 public class JavaPfbCommand implements Runnable {
-  private static final Logger logger = LoggerFactory.getLogger(JavaPfbCommand.class);
 
   @Parameters(arity = "1", index = "0", description = "Command to run (Options include: show)")
   private PfbCommand command;
 
   // Goal is to follow the same command and option structure as pyPFB
   // In pyPFB, when there isn't a second argument for the "show" command, it defaults to display the
-  // table row data. S
+  // table row data.
   @Parameters(
       arity = "0..1",
       index = "1",
@@ -74,7 +71,7 @@ public class JavaPfbCommand implements Runnable {
           break;
       }
     } else {
-      logger.info("Unknown command: {}", command);
+      System.err.println("Unknown command: " + command);
     }
   }
 
@@ -85,24 +82,19 @@ public class JavaPfbCommand implements Runnable {
 
   public void callPfbLibraryCommand(
       PfbLibraryCommandInterface command, Library library, String filePath, int limit) {
-    String infoMessage;
     if (limit >= 0) {
-      infoMessage = command.infoMessage(filePath, limit);
-      logger.info(infoMessage);
       String result;
       try {
         result = command.commandWithLimit(library, filePath, limit);
-        logger.info(result);
+        System.out.println(result);
       } catch (IOException e) {
         throw new PicocliException(e.getMessage(), e);
       }
     } else {
-      infoMessage = command.infoMessage(filePath);
-      logger.info(infoMessage);
       String result;
       try {
         result = command.command(library, filePath);
-        logger.info(result);
+        System.out.println(result);
       } catch (IOException e) {
         throw new PicocliException(e.getMessage(), e);
       }

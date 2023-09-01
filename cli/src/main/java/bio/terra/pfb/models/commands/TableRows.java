@@ -13,14 +13,4 @@ public class TableRows implements PfbLibraryCommandInterface {
   public String commandWithLimit(Library library, String filePath, int limit) throws IOException {
     return library.showTableRows(filePath, limit);
   }
-
-  @Override
-  public String infoMessage(String filePath) {
-    return String.format("show table rows for file path: %s", filePath);
-  }
-
-  @Override
-  public String infoMessage(String filePath, int limit) {
-    return String.format("show table rows for file path %s and limit %d", filePath, limit);
-  }
 }

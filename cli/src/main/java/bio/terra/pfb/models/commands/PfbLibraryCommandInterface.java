@@ -12,13 +12,5 @@ public interface PfbLibraryCommandInterface {
     throw new UnsupportedOperationException(ERROR_MESSAGE);
   }
 
-  default String infoMessage(String filePath, int limit) {
-    throw new UnsupportedOperationException(ERROR_MESSAGE);
-  }
-
-  default String infoMessage(String filePath) {
-    throw new UnsupportedOperationException(ERROR_MESSAGE);
-  }
-
   String ERROR_MESSAGE = "Invalid command";
 }

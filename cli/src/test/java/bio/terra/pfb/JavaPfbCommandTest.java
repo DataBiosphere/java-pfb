@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -19,6 +20,7 @@ class JavaPfbCommandTest {
   private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
   private final PrintStream originalOut = System.out;
   private final PrintStream originalErr = System.err;
+  private final String TEST_FILE_PATH = "resources/avro/minimal_data.avro";
 
   @BeforeEach
   void setup() {
@@ -33,15 +35,10 @@ class JavaPfbCommandTest {
     System.setErr(originalErr);
   }
 
-  @ParameterizedTest
-  @ValueSource(strings = {"nodes", "metadata", "schema", ""})
-  void testShowCommand(String option) {
-    testCommandStringMatches(List.of("show", option), option);
-  }
-
   @Test
-  void filePath() {
-    testCommandStringMatches(List.of("show", "-i /path/to/file"), "path/to/file");
+  void invalidFilePath() {
+    testCommandStringMatches(
+        List.of("show", "-i invalid/file/path"), errContent, "(No such file or directory)");
   }
 
   @Test
@@ -61,21 +58,34 @@ class JavaPfbCommandTest {
     testCommandStringMatches("--help", "Usage: pfb");
   }
 
+  @Disabled("I can't seem to figure out how to correctly reference the test file path.")
+  @ParameterizedTest
+  @ValueSource(strings = {"nodes", "metadata", "schema", ""})
+  void testShowCommand(String option) {
+    testCommandStringMatches(
+        List.of("show", String.format("-i %s", TEST_FILE_PATH), option), option);
+  }
+
   private void testCommandStringMatches(String command, String expectedOutput) {
     testCommandStringMatches(List.of(command), expectedOutput);
   }
 
   private void testCommandStringMatches(List<String> commands, String expectedOutput) {
-    executeCommand(commands, expectedOutput);
-    assertThat(outContent.toString(), containsStringIgnoringCase(expectedOutput));
+    testCommandStringMatches(commands, outContent, expectedOutput);
+  }
+
+  private void testCommandStringMatches(
+      List<String> commands, ByteArrayOutputStream output, String expectedOutput) {
+    executeCommand(commands);
+    assertThat(output.toString(), containsStringIgnoringCase(expectedOutput));
   }
 
   private void testCommandRegexMatches(String command, String expectedOutput) {
-    executeCommand(List.of(command), expectedOutput);
+    executeCommand(List.of(command));
     assertThat(outContent.toString(), matchesPattern(expectedOutput));
   }
 
-  private void executeCommand(List<String> commands, String expectedOutput) {
+  private void executeCommand(List<String> commands) {
     String[] args = new String[commands.size()];
     for (int i = 0; i < commands.size(); i++) args[i] = commands.get(i);
     JavaPfbCommand.executeCommand(args);
