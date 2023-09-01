@@ -9,10 +9,7 @@ import java.io.PrintStream;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class JavaPfbCommandTest {
   JavaPfbCommand javaPfbCommand;
@@ -20,7 +17,6 @@ class JavaPfbCommandTest {
   private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
   private final PrintStream originalOut = System.out;
   private final PrintStream originalErr = System.err;
-  private final String TEST_FILE_PATH = "resources/avro/minimal_data.avro";
 
   @BeforeEach
   void setup() {
@@ -56,14 +52,6 @@ class JavaPfbCommandTest {
   @Test
   void testHelpCommand() {
     testCommandStringMatches("--help", "Usage: pfb");
-  }
-
-  @Disabled("I can't seem to figure out how to correctly reference the test file path.")
-  @ParameterizedTest
-  @ValueSource(strings = {"nodes", "metadata", "schema", ""})
-  void testShowCommand(String option) {
-    testCommandStringMatches(
-        List.of("show", String.format("-i %s", TEST_FILE_PATH), option), option);
   }
 
   private void testCommandStringMatches(String command, String expectedOutput) {
