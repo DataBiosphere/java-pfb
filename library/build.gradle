@@ -21,6 +21,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.9'
     implementation "org.apache.avro:avro:1.11.2"
     implementation 'org.xerial.snappy:snappy-java:1.1.10.3'
     testImplementation 'org.json:json:20230618'

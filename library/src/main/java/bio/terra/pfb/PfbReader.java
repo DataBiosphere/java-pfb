@@ -1,7 +1,7 @@
 package bio.terra.pfb;
 
 import bio.terra.pfb.exceptions.InvalidPfbException;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.avro.Schema;
-import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.DataFileStream;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
@@ -29,19 +28,11 @@ public class PfbReader {
 
   public String showSchema(String fileLocation) throws IOException {
     return convertEnum(
-        getSchema(fileLocation).getField("object").schema().getTypes().stream()
+        readPfbSchema(fileLocation).getField("object").schema().getTypes().stream()
             .filter(t -> !t.getName().equals("Metadata"))
             .map(Schema::toString)
             .toList()
             .toString());
-  }
-
-  public Schema getSchema(String fileLocation) throws IOException {
-    URL url = isValidUrl(fileLocation);
-    if (url != null) {
-      return readUrlPfbSchema(fileLocation);
-    }
-    return readFilePathPfbSchema(fileLocation);
   }
 
   public String showNodes(String fileLocation) throws IOException {
@@ -54,27 +45,18 @@ public class PfbReader {
     return metadata.toString();
   }
 
-  Schema readFilePathPfbSchema(String fileLocation) throws IOException {
-    DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
-    try (DataFileReader<Entity> dataFileReader =
-        new DataFileReader<>(new File(fileLocation), datumReader)) {
-      return dataFileReader.getSchema();
-    }
-  }
-
-  // read generic avro data from file
   public List<String> show(String fileLocation) throws IOException {
-    File pfbData = new File(fileLocation);
-    // Deserialize the above generated avro data file
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
-    try (DataFileReader<GenericRecord> dataFileReader =
-        new DataFileReader<>(pfbData, datumReader)) {
-      GenericRecord genericRecord = null;
-      List<String> data = new ArrayList<>();
+    URL url = isValidUrl(fileLocation);
+    GenericRecord genericRecord = null;
+    List<String> data = new ArrayList<>();
+    try (InputStream in =
+            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
+        DataFileStream<GenericRecord> reader = new DataFileStream<>(in, datumReader)) {
       // Skip Metadata Object, which should always appear first
-      dataFileReader.next(genericRecord);
-      while (dataFileReader.hasNext()) {
-        genericRecord = dataFileReader.next(genericRecord);
+      reader.next(genericRecord);
+      while (reader.hasNext()) {
+        genericRecord = reader.next(genericRecord);
         data.add(convertEnum(genericRecord.toString()));
       }
       return data;
@@ -82,16 +64,17 @@ public class PfbReader {
   }
 
   public Metadata getPfbMetadata(String fileLocation) throws IOException {
-    File pfbData = new File(fileLocation);
-    // Deserialize the above generated avro data file
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
+    URL url = isValidUrl(fileLocation);
     Entity data = null;
-    try (DataFileReader<Entity> dataFileReader = new DataFileReader<>(pfbData, datumReader)) {
+    try (InputStream in =
+            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
+        DataFileStream<Entity> reader = new DataFileStream<>(in, datumReader)) {
       // A PFB Avro file consists of a list of "Entity" objects (Defined in sample.advl)
       // One of these entities must be a "Metadata" object (Also defined in sample.advl)
       // The rest of the entities are the data entries
       // Assuming the first object is the metadata object
-      data = dataFileReader.next(data);
+      data = reader.next(data);
       Metadata result = (Metadata) data.getObject();
       if (result != null) {
         return result;
@@ -100,13 +83,13 @@ public class PfbReader {
     throw new InvalidPfbException("Error reading PFB Metadata object");
   }
 
-  Schema readUrlPfbSchema(String signedUrl) throws IOException {
+  Schema readPfbSchema(String fileLocation) throws IOException {
     DatumReader<Entity> datumReader = new SpecificDatumReader<>(Entity.class);
-    try (InputStream in = readFromSignedUrl(signedUrl);
+    URL url = isValidUrl(fileLocation);
+    try (InputStream in =
+            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
         DataFileStream<Entity> reader = new DataFileStream<>(in, datumReader)) {
       return reader.getSchema();
-    } catch (IOException ex) {
-      throw new IOException("Error reading PFB file from signed URL", ex);
     }
   }
 
@@ -117,6 +100,10 @@ public class PfbReader {
     } catch (IOException e) {
       return null;
     }
+  }
+
+  InputStream readFromLocalFile(String filePath) throws IOException {
+    return new FileInputStream(filePath);
   }
 
   InputStream readFromSignedUrl(String signedUrl) throws IOException {

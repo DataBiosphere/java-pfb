@@ -80,9 +80,14 @@ class PfbReaderTest {
   @Disabled("Disabled because we don't have a way to generate a signed URL for testing")
   @Test
   void testSignedURL() throws IOException {
+    String testFileName = "minimal_data";
     // NOTE: this is not a permanent URL, it will expire
     String signedUrl =
-        "https://tdrshtikoojbfebzqfkvhyvi.blob.core.windows.net/04c9ecfe-e93d-4d92-929a-d4af7f429779/metadata/parquet/datarepo_row_ids/datarepo_row_ids.parquet/minimal_data.avro?sp=r&st=2023-08-07T17:55:54Z&se=2023-08-08T01:55:54Z&spr=https&sv=2022-11-02&sr=b&sig=LV4RkXMtXwwksYobDTuEHbdd8%2BLKJCxwtCs%2F09o1FYY%3D";
-    CompareOutputUtils.compareJavaPfbWithPyPfb("minimal_data", SHOW_SCHEMA, signedUrl, JSON);
+        "https://tdrshtikoojbfebzqfkvhyvi.blob.core.windows.net/04c9ecfe-e93d-4d92-929a-d4af7f429779/metadata/parquet/datarepo_row_ids/datarepo_row_ids.parquet/minimal_data.avro?sp=r&st=2023-09-01T13:40:20Z&se=2023-09-01T21:40:20Z&spr=https&sv=2022-11-02&sr=b&sig=%2Bh6g%2FbsyhsFcYv%2FJYWyBH5fEwPEeTSdhwDjHnshblxQ%3D";
+
+    CompareOutputUtils.compareJavaPfbWithPyPfb(testFileName, SHOW_SCHEMA, signedUrl, JSON);
+    CompareOutputUtils.compareJavaPfbWithPyPfb(testFileName, SHOW_NODES, signedUrl, TXT);
+    CompareOutputUtils.compareJSONLineByLine(testFileName, SHOW, signedUrl);
+    CompareOutputUtils.compareJavaPfbWithPyPfb(testFileName, SHOW_METADATA, signedUrl, JSON);
   }
 }

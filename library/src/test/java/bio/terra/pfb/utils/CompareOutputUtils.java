@@ -27,8 +27,7 @@ public class CompareOutputUtils {
     String pythonOutput;
     try {
       pythonOutput =
-          Files.readString(
-              Paths.get(getPyPfbOutputFilePath(fileName, commandType, filePath, fileExtension)));
+          Files.readString(Paths.get(getPyPfbOutputFilePath(fileName, commandType, fileExtension)));
     } catch (IOException e) {
       throw new IOException("Error reading file: " + fileName, e);
     }
@@ -46,7 +45,6 @@ public class CompareOutputUtils {
       JsonNode showSchemaOutputJson = mapper.readTree(javaPfbOutput);
       PfbJsonCompareIgnoringOrder cmp = new PfbJsonCompareIgnoringOrder();
       assertTrue(pyPfbJsonOutput.equals(cmp, showSchemaOutputJson));
-      //      assertThat(pyPfbJsonOutput, equalTo(showSchemaOutputJson));
     } else if (fileExtension.equals(TXT)) {
       assertThat(pythonOutput, equalTo(javaPfbOutput));
     } else {
@@ -62,7 +60,7 @@ public class CompareOutputUtils {
     String avroFilePath = getAvroFilePath(fileName, filePath);
     List<String> javaOutput = reader.show(avroFilePath);
     try {
-      File file = new File(getPyPfbOutputFilePath(fileName, commandType, filePath, JSON));
+      File file = new File(getPyPfbOutputFilePath(fileName, commandType, JSON));
       FileReader fileReader = new FileReader(file);
       BufferedReader bufferedReader = new BufferedReader(fileReader);
       String line;
@@ -124,12 +122,8 @@ public class CompareOutputUtils {
   }
 
   private static String getPyPfbOutputFilePath(
-      String fileName, PfbCommandType commandType, String filePath, FileExtension fileExtension) {
-    if (filePath.isEmpty()) {
-      filePath =
-          String.format(
-              "src/test/resources/pyPfbOutput/%s/%s.%s", commandType, fileName, fileExtension);
-    }
-    return filePath;
+      String fileName, PfbCommandType commandType, FileExtension fileExtension) {
+    return String.format(
+        "src/test/resources/pyPfbOutput/%s/%s.%s", commandType, fileName, fileExtension);
   }
 }
