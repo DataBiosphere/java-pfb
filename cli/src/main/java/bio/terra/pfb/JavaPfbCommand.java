@@ -9,6 +9,9 @@ import bio.terra.pfb.models.commands.*;
 import java.io.IOException;
 import picocli.CommandLine;
 
+// Sonar complains about the use of System.out.println, but it seems right the right logging choice
+// for a CLI
+@SuppressWarnings("java:S106")
 @Command(
     name = "pfb",
     mixinStandardHelpOptions = true,
