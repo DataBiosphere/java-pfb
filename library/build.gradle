@@ -32,13 +32,13 @@ dependencies {
 sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
 spotless {
     java{
-        targetExclude "${buildDir}/**", "${buildDir}/generated-src/**"
+        targetExclude "${buildDir}/**", "build/generated-src/**"
     }
 }
 
 generateAvroJava {
     source("library/src/main/avro")
-    outputDir = file("${buildDir}/generated-src")
+    outputDir = file("build/generated-src")
 }
 compileJava.dependsOn generateAvroJava
 
