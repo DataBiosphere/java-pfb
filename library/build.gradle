@@ -32,6 +32,9 @@ dependencies {
 sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
 spotless {
     java{
+        // Specifically calling out the "build/generated-src" directory
+        // to avoid spotless errors on avro generated code in GHA
+        // ${buildDir}/** doesn't work in GHA
         targetExclude "${buildDir}/**", "build/generated-src/**"
     }
 }
