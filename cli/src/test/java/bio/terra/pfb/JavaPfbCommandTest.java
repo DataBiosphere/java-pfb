@@ -1,12 +1,12 @@
 package bio.terra.pfb;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.matchesPattern;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,47 +32,48 @@ class JavaPfbCommandTest {
   }
 
   @Test
-  void run() {
-    javaPfbCommand.run();
-    assertThat(outContent.toString(), containsString("PFB RUN"));
+  void invalidFilePath() {
+    testCommandStringMatches(
+        List.of("show", "-i invalid/file/path"), errContent, "(No such file or directory)");
   }
 
   @Test
   void testVersionCommand() {
-    String[] args = new String[1];
-    args[0] = "--version";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), matchesPattern("pfb \\d+\\.\\d+\\.\\d\n"));
+    testCommandRegexMatches("--version", "pfb \\d+\\.\\d+\\.\\d\n");
   }
 
   @Test
   void testCorrectVersion() {
     GitConfiguration gitConfiguration = new GitConfiguration();
-    String exepectedVersion = gitConfiguration.getCliVersion();
-    String[] args = new String[1];
-    args[0] = "--version";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), equalTo("pfb " + exepectedVersion + "\n"));
+    String expectedVersion = gitConfiguration.getCliVersion();
+    testCommandStringMatches("--version", "pfb " + expectedVersion + "\n");
   }
 
   @Test
   void testHelpCommand() {
-    String[] args = new String[1];
-    args[0] = "--help";
-    javaPfbCommand.executeCommand(args);
-    assertThat(outContent.toString(), containsString("Usage: pfb"));
+    testCommandStringMatches("--help", "Usage: pfb");
   }
 
-  @Test
-  void helloCommand() {
-    javaPfbCommand.helloCommand();
-    assertThat(outContent.toString(), containsString("Hello world!"));
+  private void testCommandStringMatches(String command, String expectedOutput) {
+    testCommandStringMatches(List.of(command), expectedOutput);
   }
 
-  @Test
-  void testGetNumber5() {
-    javaPfbCommand.getNumber5();
-    assertThat(
-        outContent.toString(), containsString("Test pulling from pfb library - The number is 5"));
+  private void testCommandStringMatches(List<String> commands, String expectedOutput) {
+    testCommandStringMatches(commands, outContent, expectedOutput);
+  }
+
+  private void testCommandStringMatches(
+      List<String> commands, ByteArrayOutputStream output, String expectedOutput) {
+    executeCommand(commands);
+    assertThat(output.toString(), containsStringIgnoringCase(expectedOutput));
+  }
+
+  private void testCommandRegexMatches(String command, String expectedOutput) {
+    executeCommand(List.of(command));
+    assertThat(outContent.toString(), matchesPattern(expectedOutput));
+  }
+
+  private void executeCommand(List<String> commands) {
+    JavaPfbCommand.executeCommand(commands.toArray(new String[0]));
   }
 }

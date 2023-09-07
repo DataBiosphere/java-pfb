@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'com.jfrog.artifactory'
     id 'bio.terra.pfb.java-library-conventions'
+    id 'com.github.davidmc24.gradle.plugin.avro' version '1.8.0'
 }
 
 repositories {
@@ -19,9 +20,45 @@ repositories {
     }
 }
 
+dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.9'
+    implementation "org.apache.avro:avro:1.11.2"
+    implementation 'org.xerial.snappy:snappy-java:1.1.10.3'
+    testImplementation 'org.json:json:20230618'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation 'org.skyscreamer:jsonassert:1.2.3'
+}
+
+sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
+spotless {
+    java{
+        // Specifically calling out the "build/generated-src" directory
+        // to avoid spotless errors on avro generated code in GHA
+        // ${buildDir}/** doesn't work in GHA
+        targetExclude "${buildDir}/**", "build/generated-src/**"
+    }
+}
+
+generateAvroJava {
+    source("library/src/main/avro")
+    outputDir = file("build/generated-src")
+}
+compileJava.dependsOn generateAvroJava
+
 apply from: 'generators.gradle'
 apply from: "publishing.gradle"
 
 srcclr {
     scope = "runtimeClasspath"
+}
+
+sourcesJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+if (hasProperty('buildScan')) {
+    buildScan {
+        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceAgree = 'yes'
+    }
 }

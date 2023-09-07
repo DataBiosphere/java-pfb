@@ -65,7 +65,7 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
       - name: Test with coverage
-        run: ./gradlew --build-cache test jacocoTestReport
+        run: ./gradlew --build-cache test jacocoTestReport --scan
       - name: SonarQube scan for library
         run: ./gradlew --build-cache :library:sonar --info
         env:
