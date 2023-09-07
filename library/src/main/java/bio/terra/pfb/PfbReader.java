@@ -37,7 +37,9 @@ public class PfbReader {
 
   public static String showNodes(String fileLocation) throws IOException {
     Metadata metadata = getPfbMetadata(fileLocation);
-    return metadata.getNodes().stream().map(Node::getName).collect(Collectors.joining("\n")) + "\n";
+    return metadata.getNodes().stream()
+        .map(Node::getName)
+        .collect(Collectors.joining("\n", "", "\n"));
   }
 
   public static String showMetadata(String fileLocation) throws IOException {

@@ -7,8 +7,12 @@ import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.*;
 import bio.terra.pfb.utils.CompareOutputUtils;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,36 +21,40 @@ class PfbReaderTest {
   private static final List<String> listOfTestFiles =
       List.of("minimal_schema", "test", "kf", "data-with-array", "empty");
 
-  @Test
-  void showSchemaTest() throws IOException {
+  public static Stream<Arguments> provideTestFiles() {
+    return listOfTestFiles.stream().map(Arguments::of);
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideTestFiles")
+  void showSchemaTest(String fileName) throws IOException {
     // TODO - remove when fix is added for AJ-1288
-    var editedListOfTestFiles = listOfTestFiles.stream().filter(f -> !f.equals("empty")).toList();
-    for (String fileName : editedListOfTestFiles) {
-      CompareOutputUtils.compareJavaPfbWithPyPfb(fileName, SHOW_SCHEMA, "", JSON);
+    if (fileName.equals("empty")) {
+      logger.error("Skipping test file: {} until fixed in AJ-1288\n", fileName);
+    } else {
+      CompareOutputUtils.assertJavaPfbIsPyPFB(fileName, SHOW_SCHEMA, "", JSON);
     }
   }
 
-  @Test
-  void showNodesTest() throws IOException {
-    var listOfTestFiles = List.of("minimal_data", "minimal_schema", "test", "kf");
-    for (String fileName : listOfTestFiles) {
-      CompareOutputUtils.compareJavaPfbWithPyPfb(fileName, SHOW_NODES, "", TXT);
-    }
+  @ParameterizedTest
+  @MethodSource("provideTestFiles")
+  void showNodesTest(String fileName) throws IOException {
+    CompareOutputUtils.assertJavaPfbIsPyPFB(fileName, SHOW_NODES, "", TXT);
   }
 
-  @Test
-  void showMetadata() throws IOException {
-    for (String fileName : listOfTestFiles) {
-      CompareOutputUtils.compareJavaPfbWithPyPfb(fileName, SHOW_METADATA, "", JSON);
-    }
+  @ParameterizedTest
+  @MethodSource("provideTestFiles")
+  void showMetadata(String fileName) throws IOException {
+    CompareOutputUtils.assertJavaPfbIsPyPFB(fileName, SHOW_METADATA, "", JSON);
   }
 
-  @Test
-  void showTest() throws IOException {
+  @ParameterizedTest
+  @MethodSource("provideTestFiles")
+  void showTest(String fileName) throws IOException {
     // TODO - remove when fix is added for AJ-1292
-    var editedListOfTestFiles = listOfTestFiles.stream().filter(f -> !f.equals("test")).toList();
-    for (String fileName : editedListOfTestFiles) {
-      logger.info("Testing file: {}\n", fileName);
+    if (fileName.equals("test")) {
+      logger.error("Skipping test file: {} until fixed in AJ-1292\n", fileName);
+    } else {
       CompareOutputUtils.compareJSONLineByLine(fileName, SHOW, "");
     }
   }
@@ -74,7 +82,7 @@ class PfbReaderTest {
       "Disabled because the test file includes enum values that do not compare correctly between pyPFB and java-pfb.")
   @Test
   void testEnumEncoding() throws IOException {
-    CompareOutputUtils.compareJavaPfbWithPyPfb("empty", SHOW_SCHEMA, "", JSON);
+    CompareOutputUtils.assertJavaPfbIsPyPFB("empty", SHOW_SCHEMA, "", JSON);
   }
 
   @Disabled("Disabled because we don't have a way to generate a signed URL for testing")
@@ -85,9 +93,9 @@ class PfbReaderTest {
     String signedUrl =
         "https://tdrshtikoojbfebzqfkvhyvi.blob.core.windows.net/04c9ecfe-e93d-4d92-929a-d4af7f429779/metadata/parquet/datarepo_row_ids/datarepo_row_ids.parquet/minimal_data.avro?sp=r&st=2023-09-01T13:40:20Z&se=2023-09-01T21:40:20Z&spr=https&sv=2022-11-02&sr=b&sig=%2Bh6g%2FbsyhsFcYv%2FJYWyBH5fEwPEeTSdhwDjHnshblxQ%3D";
 
-    CompareOutputUtils.compareJavaPfbWithPyPfb(testFileName, SHOW_SCHEMA, signedUrl, JSON);
-    CompareOutputUtils.compareJavaPfbWithPyPfb(testFileName, SHOW_NODES, signedUrl, TXT);
+    CompareOutputUtils.assertJavaPfbIsPyPFB(testFileName, SHOW_SCHEMA, signedUrl, JSON);
+    CompareOutputUtils.assertJavaPfbIsPyPFB(testFileName, SHOW_NODES, signedUrl, TXT);
     CompareOutputUtils.compareJSONLineByLine(testFileName, SHOW, signedUrl);
-    CompareOutputUtils.compareJavaPfbWithPyPfb(testFileName, SHOW_METADATA, signedUrl, JSON);
+    CompareOutputUtils.assertJavaPfbIsPyPFB(testFileName, SHOW_METADATA, signedUrl, JSON);
   }
 }

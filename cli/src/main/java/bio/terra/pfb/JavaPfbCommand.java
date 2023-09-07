@@ -5,11 +5,13 @@ import static picocli.CommandLine.*;
 
 import bio.terra.pfb.models.PfbCommand;
 import bio.terra.pfb.models.PfbCommandOption;
-import bio.terra.pfb.models.commands.*;
-import java.io.IOException;
+import bio.terra.pfb.models.commands.ShowMetadata;
+import bio.terra.pfb.models.commands.ShowNodes;
+import bio.terra.pfb.models.commands.ShowSchema;
+import bio.terra.pfb.models.commands.TableRows;
 import picocli.CommandLine;
 
-// Sonar complains about the use of System.out.println, but it seems right the right logging choice
+// Sonar complains about the use of System.out.println, but it seems like the right logging choice
 // for a CLI
 @SuppressWarnings("java:S106")
 @Command(
@@ -60,45 +62,20 @@ public class JavaPfbCommand implements Runnable {
     if (command.equals(SHOW)) {
       switch (option) {
         case SCHEMA:
-          callPfbLibraryCommand(new ShowSchema(), filePath);
+          new ShowSchema().callCommand(filePath);
           break;
         case TABLE_ROWS:
-          callPfbLibraryCommand(new TableRows(), filePath, limit);
+          new TableRows().callCommand(filePath, limit);
           break;
         case METADATA:
-          callPfbLibraryCommand(new ShowMetadata(), filePath);
+          new ShowMetadata().callCommand(filePath);
           break;
         case NODES:
-          callPfbLibraryCommand(new ShowNodes(), filePath);
+          new ShowNodes().callCommand(filePath);
           break;
       }
     } else {
       System.err.println("Unknown command: " + command);
-    }
-  }
-
-  public void callPfbLibraryCommand(PfbLibraryCommandInterface command, String filePath) {
-    callPfbLibraryCommand(command, filePath, -1);
-  }
-
-  public void callPfbLibraryCommand(
-      PfbLibraryCommandInterface command, String filePath, int limit) {
-    if (limit >= 0) {
-      String result;
-      try {
-        result = command.commandWithLimit(filePath, limit);
-        System.out.println(result);
-      } catch (IOException e) {
-        throw new PicocliException(e.getMessage(), e);
-      }
-    } else {
-      String result;
-      try {
-        result = command.command(filePath);
-        System.out.println(result);
-      } catch (IOException e) {
-        throw new PicocliException(e.getMessage(), e);
-      }
     }
   }
 }

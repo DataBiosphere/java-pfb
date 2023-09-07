@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -19,7 +18,7 @@ class LibraryTest {
 
   @Test
   void showSchemaTest() throws IOException {
-    try (MockedStatic<PfbReader> utilities = Mockito.mockStatic(PfbReader.class)) {
+    try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities.when(() -> PfbReader.showSchema(TEST_FILE_LOCATION)).thenReturn(FAKE_DATA_RETURN);
       assertReturnValueMatches(Library.showSchema(TEST_FILE_LOCATION));
     }
@@ -27,7 +26,7 @@ class LibraryTest {
 
   @Test
   void showMetadataTest() throws IOException {
-    try (MockedStatic<PfbReader> utilities = Mockito.mockStatic(PfbReader.class)) {
+    try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities.when(() -> PfbReader.showMetadata(TEST_FILE_LOCATION)).thenReturn(FAKE_DATA_RETURN);
       assertReturnValueMatches(Library.showMetadata(TEST_FILE_LOCATION));
     }
@@ -35,7 +34,7 @@ class LibraryTest {
 
   @Test
   void showTableRowTest() throws IOException {
-    try (MockedStatic<PfbReader> utilities = Mockito.mockStatic(PfbReader.class)) {
+    try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities
           .when(() -> PfbReader.show(TEST_FILE_LOCATION))
           .thenReturn(List.of(FAKE_DATA_RETURN));
@@ -45,7 +44,7 @@ class LibraryTest {
 
   @Test
   void showLimitedTableRowTest() throws IOException {
-    try (MockedStatic<PfbReader> utilities = Mockito.mockStatic(PfbReader.class)) {
+    try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities
           .when(() -> PfbReader.show(TEST_FILE_LOCATION))
           .thenReturn(List.of(FAKE_DATA_RETURN, FAKE_DATA_RETURN, FAKE_DATA_RETURN));
@@ -68,7 +67,7 @@ class LibraryTest {
 
   @Test
   void showNodesTest() throws IOException {
-    try (MockedStatic<PfbReader> utilities = Mockito.mockStatic(PfbReader.class)) {
+    try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities.when(() -> PfbReader.showNodes(TEST_FILE_LOCATION)).thenReturn(FAKE_DATA_RETURN);
       assertReturnValueMatches(Library.showNodes(TEST_FILE_LOCATION));
     }

@@ -74,8 +74,6 @@ class JavaPfbCommandTest {
   }
 
   private void executeCommand(List<String> commands) {
-    String[] args = new String[commands.size()];
-    for (int i = 0; i < commands.size(); i++) args[i] = commands.get(i);
-    JavaPfbCommand.executeCommand(args);
+    JavaPfbCommand.executeCommand(commands.toArray(new String[0]));
   }
 }

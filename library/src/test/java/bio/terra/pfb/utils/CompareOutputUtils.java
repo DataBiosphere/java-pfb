@@ -18,19 +18,18 @@ import org.slf4j.LoggerFactory;
 public class CompareOutputUtils {
   private static final Logger logger = LoggerFactory.getLogger(CompareOutputUtils.class);
 
-  public static void compareJavaPfbWithPyPfb(
+  public static void assertJavaPfbIsPyPFB(
       String fileName, PfbCommandType commandType, String filePath, FileExtension fileExtension)
       throws IOException {
-    PfbReader reader = new PfbReader();
     String pythonOutput;
     pythonOutput =
         Files.readString(Paths.get(getPyPfbOutputFilePath(fileName, commandType, fileExtension)));
     String avroFilePath = getAvroFilePath(fileName, filePath);
     String javaPfbOutput =
         switch (commandType) {
-          case SHOW_SCHEMA -> reader.showSchema(avroFilePath);
-          case SHOW_METADATA -> reader.showMetadata(avroFilePath);
-          case SHOW_NODES -> reader.showNodes(avroFilePath);
+          case SHOW_SCHEMA -> PfbReader.showSchema(avroFilePath);
+          case SHOW_METADATA -> PfbReader.showMetadata(avroFilePath);
+          case SHOW_NODES -> PfbReader.showNodes(avroFilePath);
           default -> throw new InvalidObjectException("Invalid command type");
         };
 
@@ -43,10 +42,8 @@ public class CompareOutputUtils {
 
   public static void compareJSONLineByLine(
       String fileName, PfbCommandType commandType, String filePath) throws IOException {
-    PfbReader reader = new PfbReader();
-
     String avroFilePath = getAvroFilePath(fileName, filePath);
-    List<String> javaOutput = reader.show(avroFilePath);
+    List<String> javaOutput = PfbReader.show(avroFilePath);
     Path file = Paths.get(getPyPfbOutputFilePath(fileName, commandType, JSON));
     List<String> lines = Files.readAllLines(file);
     for (int i = 0; i < lines.size(); i++) {
