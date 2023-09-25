@@ -17,7 +17,7 @@ This boils down to the following components:
 
 ### Show schema
 ```
- ./gradlew run --args="show -i ../library/src/test/resources/avro/minmal_data.avro schema"
+ ./gradlew run --args="show -i ../library/src/test/resources/avro/minimal_data.avro schema"
 ```
 This effectively returns the schema for the data specific to this PFB file (the part outlined in purple below).
 
