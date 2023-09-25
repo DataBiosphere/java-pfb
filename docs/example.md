@@ -25,7 +25,7 @@ This effectively returns the schema for the data specific to this PFB file (the 
 
 ### Show Metadata
 ```
- ./gradlew run --args="show -i ../library/src/test/resources/avro/minmal_data.avro metadata"
+ ./gradlew run --args="show -i ../library/src/test/resources/avro/minimal_data.avro metadata"
 ```
 The show metadata command returns the PFB Metadata object.
 
@@ -33,7 +33,7 @@ The show metadata command returns the PFB Metadata object.
 
 ### Show Nodes
 ```
- ./gradlew run --args="show -i ../library/src/test/resources/avro/minmal_data.avro nodes"
+ ./gradlew run --args="show -i ../library/src/test/resources/avro/minimal_data.avro nodes"
 ```
 The show nodes command returns a list of the names of the tables unique to this PFB file.
 
@@ -44,7 +44,7 @@ submitted_aligned_reads
 
 ### Show
 ```
- ./gradlew run --args="show -i ../library/src/test/resources/avro/minmal_data.avro"
+ ./gradlew run --args="show -i ../library/src/test/resources/avro/minimal_data.avro"
 ```
 The show command returns the row data.
 
