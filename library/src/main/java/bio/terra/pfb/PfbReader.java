@@ -57,9 +57,28 @@ public class PfbReader {
         DataFileStream<GenericRecord> reader = new DataFileStream<>(in, datumReader)) {
       // Skip Metadata Object, which should always appear first
       reader.next(genericRecord);
+      System.out.println("HIIIIIIIIIII!!!!!!!!!!!!!!!!!!!!");
       while (reader.hasNext()) {
         genericRecord = reader.next(genericRecord);
         data.add(convertEnum(genericRecord.toString()));
+      }
+      return data;
+    }
+  }
+
+  public static List<GenericRecord> getGenericRecords(String fileLocation) throws IOException {
+    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
+    URL url = isValidUrl(fileLocation);
+    GenericRecord genericRecord = null;
+    List<GenericRecord> data = new ArrayList<>();
+    try (InputStream in =
+            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
+        DataFileStream<GenericRecord> reader = new DataFileStream<>(in, datumReader)) {
+      // Skip Metadata Object, which should always appear first
+      reader.next(genericRecord);
+      while (reader.hasNext()) {
+        genericRecord = reader.next(genericRecord);
+        data.add(genericRecord);
       }
       return data;
     }
@@ -126,7 +145,7 @@ public class PfbReader {
     first character to be a number. So we encode the first character in the way if
     the character happens to be a number."
   */
-  private static String convertEnum(String schema) {
+  public static String convertEnum(String schema) {
     for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_SYMBOL_MAP.entrySet()) {
       schema = schema.replace(entry.getKey(), entry.getValue());
     }

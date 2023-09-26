@@ -1,6 +1,9 @@
 package bio.terra.pfb;
 
+import static bio.terra.pfb.PfbReader.convertEnum;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Library {
@@ -18,7 +21,13 @@ public class Library {
   }
 
   public static String showTableRows(String fileLocation) throws IOException {
-    return String.join("\n", PfbReader.show(fileLocation));
+    var records = PfbReader.getGenericRecords(fileLocation);
+    ArrayList<String> data = new ArrayList<>();
+    for (var record : records) {
+      data.add(convertEnum(record.toString()));
+    }
+
+    return String.join("\n", data);
   }
 
   public static String showTableRows(String fileLocation, int limit) throws IOException {
