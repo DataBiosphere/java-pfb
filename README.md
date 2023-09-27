@@ -51,3 +51,16 @@ generate a report, run using `--info`:
 ```
 
 We run the scans for two projects: [java-pfb](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb) and [java-pfb-cli](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb-cli). The results are uploaded to the sonarcloud dashbaord. 
+
+### Benchmarking
+
+[Java Microbenchmark Harness (JMH)](https://github.com/openjdk/jmh/tree/master) is a high-performance
+benchmarking tool for individual Java methods. It is integrated into this project via the
+[JMH Gradle plugin](https://plugins.gradle.org/plugin/me.champeau.jmh).
+
+To run the benchmarks manually:
+```shell
+./gradlew jmh
+```
+
+After benchmarks run, you can view the results at library/build/reports/jmh/human.txt.
