@@ -10,11 +10,11 @@ import org.openjdk.jmh.annotations.Benchmark;
  */
 public class PfbReaderBenchmarks {
 
-    private static final String ENCODED_ENUM = "ADULT_20__28_25_2e_1_2d_33cm_29_";
+  private static final String ENCODED_ENUM = "ADULT_20__28_25_2e_1_2d_33cm_29_";
 
-    // benchmark for enum decoding
-    @Benchmark
-    public void convertEnum() {
-        PfbReader.convertEnum(ENCODED_ENUM);
-    }
+  // benchmark for enum decoding
+  @Benchmark
+  public void convertEnum() {
+    PfbReader.convertEnum(ENCODED_ENUM);
+  }
 }

@@ -1,7 +1,6 @@
 package bio.terra.pfb;
 
 import java.io.IOException;
-
 import org.openjdk.jmh.annotations.Benchmark;
 
 /**
@@ -12,15 +11,15 @@ import org.openjdk.jmh.annotations.Benchmark;
  */
 public class LibraryBenchmarks {
 
-    // benchmarks for the main "show nodes" method against a small data file
-    @Benchmark
-    public void showNodesSmall() throws IOException {
-        Library.showNodes("src/jmh/resources/small.avro");
-    }
+  // benchmarks for the main "show nodes" method against a small data file
+  @Benchmark
+  public void showNodesSmall() throws IOException {
+    Library.showNodes("src/jmh/resources/small.avro");
+  }
 
-    // benchmarks for the main "show nodes" method against a medium-sized data file
-    @Benchmark
-    public void showNodesMedium() throws IOException {
-        Library.showNodes("src/jmh/resources/medium.avro");
-    }
+  // benchmarks for the main "show nodes" method against a medium-sized data file
+  @Benchmark
+  public void showNodesMedium() throws IOException {
+    Library.showNodes("src/jmh/resources/medium.avro");
+  }
 }
