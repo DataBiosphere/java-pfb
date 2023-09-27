@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1695849758892,
+  "lastUpdate": 1695849759931,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -74,6 +74,44 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 2704934.1244871514,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "DataBiosphere",
+            "username": "DataBiosphere"
+          },
+          "committer": {
+            "name": "DataBiosphere",
+            "username": "DataBiosphere"
+          },
+          "id": "59a700be0770ba6f32a64295e27bb5051df7d7c6",
+          "message": "AJ-1135: perf benchmarking",
+          "timestamp": "2023-07-20T17:21:41Z",
+          "url": "https://github.com/DataBiosphere/java-pfb/pull/10/commits/59a700be0770ba6f32a64295e27bb5051df7d7c6"
+        },
+        "date": 1695849758384,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 2034.6203479234819,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 26203.15715417898,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 2743356.7836421262,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
