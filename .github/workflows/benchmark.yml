@@ -1,10 +1,14 @@
 name: Perf Benchmarks
 
 on:
-  #  push:
-  #    paths-ignore: [ '*.md' ]
   pull_request:
-    branches: [ '**' ]
+    branches:
+      - main
+    paths-ignore: [ '**.md' ]
+  push:
+    branches:
+      - main
+    paths-ignore: [ '**.md' ]
 
 jobs:
   benchmark:
@@ -50,10 +54,10 @@ jobs:
           # Enable alert commit comment
           comment-on-alert: true
           # Save to github pages
-          auto-push: true
+          auto-push: ${{ github.event_name == 'push' }}
           gh-pages-branch: gh-pages # this is the default
 
           # benchmark graphs available at https://databiosphere.github.io/java-pfb/dev/bench/
           benchmark-data-dir-path: docs/dev/bench
 
-          save-data-file: true
+          save-data-file: ${{ github.event_name == 'push' }}
