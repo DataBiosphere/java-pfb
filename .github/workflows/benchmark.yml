@@ -30,34 +30,47 @@ jobs:
         run: |
           ./gradlew jmh
 
-      # Run `github-action-benchmark` action
-      - name: Add benchmark PR job summary
+      # Update github pages with benchmarks against the main branch
+      - name: Update benchmarks for main branch
         uses: benchmark-action/github-action-benchmark@v1.18.0
+        if: github.event_name == 'push'
         with:
           # What benchmark tool the output.txt came from
           tool: 'jmh'
           # Where the output from the benchmark tool is stored
           output-file-path: library/build/reports/jmh/results.json
+          # GitHub API token to make a commit comment or job summary
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Workflow will not fail when an alert happens
+          fail-on-alert: false
+          # Enable alert commit comment
+          comment-on-alert: true
+          # Save to github pages
+          auto-push: true
+          gh-pages-branch: gh-pages # this is the default
+          benchmark-data-dir-path: docs/dev/bench
+          save-data-file: true
 
-          # Where the previous data file is stored
-          # external-data-json-path: ./cache/benchmark-data.json
 
+      # Add commit comments and PR summaries for this PR's benchmarks
+      - name: Add benchmark PR job summary
+        uses: benchmark-action/github-action-benchmark@v1.18.0
+        if: github.event_name == 'pull_request'
+        with:
+          # What benchmark tool the output.txt came from
+          tool: 'jmh'
+          # Where the output from the benchmark tool is stored
+          output-file-path: library/build/reports/jmh/results.json
           # GitHub API token to make a commit comment or job summary
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Enable Job Summary for PRs
           summary-always: true
           comment-always: true
-          #
           alert-threshold: "150%"
-          # Workflow will fail when an alert happens
+          # Workflow will not fail when an alert happens
           fail-on-alert: false
           # Enable alert commit comment
           comment-on-alert: true
-          # Save to github pages
-          auto-push: ${{ github.event_name == 'push' }}
-          gh-pages-branch: gh-pages # this is the default
-
-          # benchmark graphs available at https://databiosphere.github.io/java-pfb/dev/bench/
-          benchmark-data-dir-path: docs/dev/bench
-
-          save-data-file: ${{ github.event_name == 'push' }}
+          # Don't persist PR benchmarks
+          auto-push: false
+          save-data-file: false
