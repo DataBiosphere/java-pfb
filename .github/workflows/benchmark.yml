@@ -64,7 +64,7 @@ jobs:
           # GitHub API token to make a commit comment or job summary
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Enable Job Summary for PRs
-          summary-always: false
+          summary-always: false # see https://github.com/benchmark-action/github-action-benchmark/issues/158
           comment-always: true
           alert-threshold: "150%"
           # Workflow will not fail when an alert happens
@@ -73,4 +73,6 @@ jobs:
           comment-on-alert: true
           # Don't persist PR benchmarks
           auto-push: false
+          gh-pages-branch: gh-pages # this is the default
+          benchmark-data-dir-path: docs/dev/bench
           save-data-file: false
