@@ -15,6 +15,7 @@ public class PfbReaderBenchmarks {
   // benchmark for enum decoding
   @Benchmark
   public void convertEnum() {
-    PfbReader.convertEnum(ENCODED_ENUM);
+    String actual = PfbReader.convertEnum(ENCODED_ENUM);
+    assert(!actual.isEmpty());
   }
 }
