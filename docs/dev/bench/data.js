@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1695849759931,
+  "lastUpdate": 1695930364318,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -150,6 +150,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 2743356.7836421262,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "davidan@broadinstitute.org",
+            "name": "David An",
+            "username": "davidangb"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26a4f39843d909458598561c4e969a20ecd50a6e",
+          "message": "AJ-1135: perf benchmarking (#10)",
+          "timestamp": "2023-09-28T15:42:20-04:00",
+          "tree_id": "5bf6dc4c89dc5a1442c96d337d6cf1932f62fce3",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/26a4f39843d909458598561c4e969a20ecd50a6e"
+        },
+        "date": 1695930363772,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 2010.4684189532438,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 26309.683363167387,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 2719980.4236861626,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
