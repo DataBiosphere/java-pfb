@@ -126,7 +126,7 @@ public class PfbReader {
     first character to be a number. So we encode the first character in the way if
     the character happens to be a number."
   */
-  private static String convertEnum(String schema) {
+  protected static String convertEnum(String schema) {
     for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_SYMBOL_MAP.entrySet()) {
       schema = schema.replace(entry.getKey(), entry.getValue());
     }
