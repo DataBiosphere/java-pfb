@@ -15,13 +15,13 @@ public class LibraryBenchmarks {
   @Benchmark
   public void showNodesSmall() throws IOException {
     String actual = Library.showNodes("src/jmh/resources/small.avro");
-    assert(!actual.isEmpty());
+    assert (!actual.isEmpty());
   }
 
   // benchmarks for the main "show nodes" method against a medium-sized data file
   @Benchmark
   public void showNodesMedium() throws IOException {
     String actual = Library.showNodes("src/jmh/resources/medium.avro");
-    assert(!actual.isEmpty());
+    assert (!actual.isEmpty());
   }
 }
