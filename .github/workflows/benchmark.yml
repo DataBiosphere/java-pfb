@@ -30,7 +30,7 @@ jobs:
         run: |
           ./gradlew jmh
 
-      # Update github pages with benchmarks against the main branch
+      # For merges to main, update github pages with benchmarks against the main branch
       - name: Update benchmarks for main branch
         uses: benchmark-action/github-action-benchmark@v1.18.0
         if: github.event_name == 'push'
@@ -52,7 +52,7 @@ jobs:
           save-data-file: true
 
 
-      # Add commit comments and PR summaries for this PR's benchmarks
+      # For PRs, add commit comments for the PR branch's benchmarks
       - name: Add benchmark PR job summary
         uses: benchmark-action/github-action-benchmark@v1.18.0
         if: github.event_name == 'pull_request'
@@ -64,7 +64,7 @@ jobs:
           # GitHub API token to make a commit comment or job summary
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Enable Job Summary for PRs
-          summary-always: true
+          summary-always: false
           comment-always: true
           alert-threshold: "150%"
           # Workflow will not fail when an alert happens
