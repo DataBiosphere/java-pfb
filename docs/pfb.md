@@ -9,7 +9,7 @@ PFB files are Avro files with a particular required schema designed for biomedic
 ## Building Blocks
 
 ### Avro
-PFB format is built on [Avro](https://avro.apache.org/docs/), a data serilziation system. When the avro file is deserialized, you'll find the data's schema alongside the row data, all in one compact file. 
+PFB format is built on [Avro](https://avro.apache.org/docs/), a data serialization system. When the avro file is deserialized, you'll find the data's schema alongside the row data, all in one compact file. 
 
 ![An Avro file consists of both a schema and row data.](diagrams/avro.png)
 
