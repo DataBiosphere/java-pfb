@@ -7,7 +7,7 @@ As discussed in the docs provided by [pyPFB](https://github.com/uc-cdis/pypfb/bl
 To learn more about PFBs, see [pfb.md](docs/pfb.md).
 
 ## Getting Started
-See the [library README](library/README.md) for more details on how to reference the lbirary in your project.
+See the [library README](library/README.md) for more details on how to reference the library in your project.
 
 The CLI is a wrapper around the library. See the [CLI README](cli/README.md) for more information.
 
@@ -50,7 +50,7 @@ generate a report, run using `--info`:
 ./gradlew sonar --info
 ```
 
-We run the scans for two projects: [java-pfb](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb) and [java-pfb-cli](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb-cli). The results are uploaded to the sonarcloud dashbaord. 
+We run the scans for two projects: [java-pfb](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb) and [java-pfb-cli](https://sonarcloud.io/project/overview?id=DataBiosphere_java-pfb-cli). The results are uploaded to the sonarcloud dashboard. 
 
 ### Benchmarking
 
