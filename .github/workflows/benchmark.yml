@@ -1,0 +1,60 @@
+name: Perf Benchmarks
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore: [ '**.md' ]
+  push:
+    branches:
+      - main
+    paths-ignore: [ '**.md' ]
+
+jobs:
+  benchmark:
+    name: Relative performance benchmarking
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      # Run benchmark via JMH gradle plugin https://github.com/melix/jmh-gradle-plugin
+      - name: Run benchmark
+        run: |
+          ./gradlew jmh
+
+      # Handle the benchmark results
+      - name: Publish benchmarks to github pages (main) or commit comment (PRs)
+        uses: benchmark-action/github-action-benchmark@v1.18.0
+        with:
+          # What benchmark tool we're using
+          tool: 'jmh'
+          # Where the output from the benchmark tool is stored
+          output-file-path: library/build/reports/jmh/results.json
+          # GitHub API token, necessary for gh pages and commit comments
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # PR job summary, always off
+          summary-always: false # see https://github.com/benchmark-action/github-action-benchmark/issues/158
+          # Commit comment, always on
+          comment-always: true
+          # Commit comment when benchmarks are above threshold
+          comment-on-alert: true
+          # Set a fairly high alert threshold, since GHA runners are variable
+          alert-threshold: "150%"
+          # Workflow will not fail when an alert happens
+          fail-on-alert: false
+          # Where to find previous benchmarks in github pages
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: docs/dev/bench
+          # On merge to main, publish benchmarks to gh pages and persist the benchmark.
+          # On PRs, don't publish to gh pages and don't persist the benchmark.
+          #    Thus, PRs will always compare their benchmarks against the last-run benchmark from the main branch.
+          auto-push:  ${{ github.event_name == 'push' }}
+          save-data-file: ${{ github.event_name == 'push' }}
