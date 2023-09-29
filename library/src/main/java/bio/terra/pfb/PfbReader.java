@@ -65,13 +65,16 @@ public class PfbReader {
       throws IOException {
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
     URL url = isValidUrl(fileLocation);
-
-    InputStream in =
-        url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
-    var reader = new DataFileStream<>(in, datumReader);
-    // advance past metadata
-    reader.next();
-    return reader;
+    try {
+      InputStream in =
+          url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
+      var reader = new DataFileStream<>(in, datumReader);
+      // advance past metadata
+      reader.next();
+      return reader;
+    } catch (Exception e) {
+      throw new InvalidPfbException("Error reading PFB Value object");
+    }
   }
 
   public static Metadata getPfbMetadata(String fileLocation) throws IOException {
