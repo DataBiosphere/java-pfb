@@ -43,11 +43,12 @@ public class CompareOutputUtils {
   public static void compareJSONLineByLine(
       String fileName, PfbCommandType commandType, String filePath) throws IOException {
     String avroFilePath = getAvroFilePath(fileName, filePath);
-    List<String> javaOutput = PfbReader.show(avroFilePath);
+    String javaOutput = PfbReader.show(avroFilePath, -1);
     Path file = Paths.get(getPyPfbOutputFilePath(fileName, commandType, JSON));
     List<String> lines = Files.readAllLines(file);
+    String[] linesToTest = javaOutput.split("\n");
     for (int i = 0; i < lines.size(); i++) {
-      JSONAssert.assertEquals(lines.get(i), javaOutput.get(i), true);
+      JSONAssert.assertEquals(lines.get(i), linesToTest[i], true);
     }
   }
 

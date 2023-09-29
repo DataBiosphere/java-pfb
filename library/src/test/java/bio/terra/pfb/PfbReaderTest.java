@@ -52,11 +52,8 @@ class PfbReaderTest {
   @MethodSource("provideTestFiles")
   void showTest(String fileName) throws IOException {
     // TODO - remove when fix is added for AJ-1292
-    if (fileName.equals("test")) {
-      logger.error("Skipping test file: {} until fixed in AJ-1292\n", fileName);
-    } else {
-      CompareOutputUtils.compareJSONLineByLine(fileName, SHOW, "");
-    }
+
+    CompareOutputUtils.compareJSONLineByLine(fileName, SHOW, "");
   }
 
   // TODO - fix in AJ-1292

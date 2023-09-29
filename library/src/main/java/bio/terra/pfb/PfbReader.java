@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.avro.Schema;
@@ -25,6 +23,8 @@ public class PfbReader {
           .boxed()
           .collect(
               Collectors.toMap(c -> "_" + String.format("%02x", c) + "_", Character::toString));
+
+  private DataFileStream<GenericRecord> stream;
 
   public static String showSchema(String fileLocation) throws IOException {
     return convertEnum(
@@ -47,41 +47,33 @@ public class PfbReader {
     return metadata.toString();
   }
 
-  public static List<String> show(String fileLocation) throws IOException {
-    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
-    URL url = isValidUrl(fileLocation);
-    GenericRecord genericRecord = null;
-    List<String> data = new ArrayList<>();
-    try (InputStream in =
-            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
-        DataFileStream<GenericRecord> reader = new DataFileStream<>(in, datumReader)) {
-      // Skip Metadata Object, which should always appear first
-      reader.next(genericRecord);
-      System.out.println("HIIIIIIIIIII!!!!!!!!!!!!!!!!!!!!");
-      while (reader.hasNext()) {
-        genericRecord = reader.next(genericRecord);
-        data.add(convertEnum(genericRecord.toString()));
+  public static String show(String fileLocation, int limit) throws IOException {
+    StringBuilder data = new StringBuilder();
+    try {
+      DataFileStream<GenericRecord> records = PfbReader.getGenericRecords(fileLocation);
+
+      while (records.hasNext()) {
+        data.append(convertEnum(records.next().toString()) + "\n");
+        if (limit == 0) break;
+        limit--;
       }
-      return data;
+      return data.toString();
+    } catch (IOException e) {
+      throw new InvalidPfbException("Error reading PFB Value object");
     }
   }
 
-  public static List<GenericRecord> getGenericRecords(String fileLocation) throws IOException {
+  public static DataFileStream<GenericRecord> getGenericRecords(String fileLocation)
+      throws IOException {
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
     URL url = isValidUrl(fileLocation);
-    GenericRecord genericRecord = null;
-    List<GenericRecord> data = new ArrayList<>();
-    try (InputStream in =
-            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
-        DataFileStream<GenericRecord> reader = new DataFileStream<>(in, datumReader)) {
-      // Skip Metadata Object, which should always appear first
-      reader.next(genericRecord);
-      while (reader.hasNext()) {
-        genericRecord = reader.next(genericRecord);
-        data.add(genericRecord);
-      }
-      return data;
-    }
+
+    InputStream in =
+        url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
+    var reader = new DataFileStream<>(in, datumReader);
+    // advance past metadata
+    reader.next();
+    return reader;
   }
 
   public static Metadata getPfbMetadata(String fileLocation) throws IOException {
@@ -147,7 +139,7 @@ public class PfbReader {
   */
   public static String convertEnum(String schema) {
     for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_SYMBOL_MAP.entrySet()) {
-      schema = schema.replace(entry.getKey(), entry.getValue());
+      schema = schema.replace(entry.getKey(), entry.getValue().toString());
     }
     return schema;
   }

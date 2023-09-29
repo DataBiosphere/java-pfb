@@ -36,7 +36,7 @@ class LibraryTest {
   void showTableRowTest() throws IOException {
     try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities
-          .when(() -> PfbReader.show(TEST_FILE_LOCATION))
+          .when(() -> PfbReader.show(TEST_FILE_LOCATION, -1))
           .thenReturn(List.of(FAKE_DATA_RETURN));
       assertReturnValueMatches(Library.showTableRows(TEST_FILE_LOCATION));
     }
@@ -46,7 +46,7 @@ class LibraryTest {
   void showLimitedTableRowTest() throws IOException {
     try (var utilities = Mockito.mockStatic(PfbReader.class)) {
       utilities
-          .when(() -> PfbReader.show(TEST_FILE_LOCATION))
+          .when(() -> PfbReader.show(TEST_FILE_LOCATION, -1))
           .thenReturn(List.of(FAKE_DATA_RETURN, FAKE_DATA_RETURN, FAKE_DATA_RETURN));
 
       String limitedShow = Library.showTableRows(TEST_FILE_LOCATION, 2);
