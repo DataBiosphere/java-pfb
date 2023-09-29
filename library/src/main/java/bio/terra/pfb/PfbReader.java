@@ -26,8 +26,6 @@ public class PfbReader {
           .collect(
               Collectors.toMap(c -> "_" + String.format("%02x", c) + "_", Character::toString));
 
-  private DataFileStream<GenericRecord> stream;
-
   public static String showSchema(String fileLocation) throws IOException {
     return convertEnum(
         readPfbSchema(fileLocation).getField("object").schema().getTypes().stream()
@@ -55,7 +53,7 @@ public class PfbReader {
       DataFileStream<GenericRecord> records = PfbReader.getGenericRecords(fileLocation);
 
       while (records.hasNext()) {
-        data.add(convertEnum(records.next().toString()) + "\n");
+        data.add(convertEnum(records.next().toString()));
       }
       return data;
     } catch (IOException e) {
