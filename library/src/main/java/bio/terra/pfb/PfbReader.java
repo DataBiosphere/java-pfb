@@ -50,7 +50,7 @@ public class PfbReader {
   public static List<String> show(String fileLocation) throws IOException {
     List<String> data = new ArrayList<>();
     try {
-      DataFileStream<GenericRecord> records = PfbReader.getGenericRecords(fileLocation);
+      DataFileStream<GenericRecord> records = PfbReader.getGenericRecordsStream(fileLocation);
 
       while (records.hasNext()) {
         data.add(convertEnum(records.next().toString()));
@@ -61,7 +61,7 @@ public class PfbReader {
     }
   }
 
-  public static DataFileStream<GenericRecord> getGenericRecords(String fileLocation)
+  public static DataFileStream<GenericRecord> getGenericRecordsStream(String fileLocation)
       throws IOException {
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
     URL url = isValidUrl(fileLocation);
