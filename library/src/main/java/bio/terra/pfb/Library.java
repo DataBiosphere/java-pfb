@@ -1,6 +1,7 @@
 package bio.terra.pfb;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class Library {
 
@@ -17,10 +18,10 @@ public class Library {
   }
 
   public static String showTableRows(String fileLocation) throws IOException {
-    return PfbReader.show(fileLocation, -1);
+    return String.join("\n", PfbReader.show(fileLocation));
   }
 
   public static String showTableRows(String fileLocation, int limit) throws IOException {
-    return PfbReader.show(fileLocation, limit);
+    return PfbReader.show(fileLocation).stream().limit(limit).collect(Collectors.joining("\n"));
   }
 }

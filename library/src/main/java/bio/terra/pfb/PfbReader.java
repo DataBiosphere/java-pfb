@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.avro.Schema;
@@ -47,17 +49,15 @@ public class PfbReader {
     return metadata.toString();
   }
 
-  public static String show(String fileLocation, int limit) throws IOException {
-    StringBuilder data = new StringBuilder();
+  public static List<String> show(String fileLocation) throws IOException {
+    List<String> data = new ArrayList<>();
     try {
       DataFileStream<GenericRecord> records = PfbReader.getGenericRecords(fileLocation);
 
       while (records.hasNext()) {
-        data.append(convertEnum(records.next().toString()) + "\n");
-        if (limit == 0) break;
-        limit--;
+        data.add(convertEnum(records.next().toString()) + "\n");
       }
-      return data.toString();
+      return data;
     } catch (IOException e) {
       throw new InvalidPfbException("Error reading PFB Value object");
     }
