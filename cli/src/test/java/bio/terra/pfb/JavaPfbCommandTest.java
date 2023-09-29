@@ -34,7 +34,7 @@ class JavaPfbCommandTest {
   @Test
   void invalidFilePath() {
     testCommandStringMatches(
-        List.of("show", "-i invalid/file/path"), errContent, "(No such file or directory)");
+        List.of("show", "-i invalid/file/path"), errContent, "Error reading PFB Value object");
   }
 
   @Test
