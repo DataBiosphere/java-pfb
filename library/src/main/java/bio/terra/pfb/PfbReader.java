@@ -60,9 +60,7 @@ public class PfbReader {
     }
   }
 
-  /**
-   * DataFileStream implements Closeable and must be closed by the client code.
-   **/
+  /** DataFileStream implements Closeable and must be closed by the client code. */
   public static DataFileStream<GenericRecord> getGenericRecordsStream(String fileLocation)
       throws IOException {
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
