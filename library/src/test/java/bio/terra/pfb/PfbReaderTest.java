@@ -3,7 +3,9 @@ package bio.terra.pfb;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.TXT;
 import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import bio.terra.pfb.exceptions.InvalidPfbException;
 import bio.terra.pfb.utils.CompareOutputUtils;
 import java.io.IOException;
 import java.util.List;
@@ -46,6 +48,21 @@ class PfbReaderTest {
   @MethodSource("provideTestFiles")
   void showMetadata(String fileName) throws IOException {
     CompareOutputUtils.assertJavaPfbIsPyPFB(fileName, SHOW_METADATA, "", JSON);
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideTestFiles")
+  void getGenericRecordsStream(String fileName) throws IOException {
+    CompareOutputUtils.testDataStream(fileName);
+  }
+
+  @Test
+  @MethodSource("provideTestFiles")
+  void getGenericRecordsStreamError() throws IOException {
+    assertThrows(
+        InvalidPfbException.class,
+        () -> CompareOutputUtils.testDataStream("noFile.txt"),
+        "Error reading PFB Value object");
   }
 
   @ParameterizedTest

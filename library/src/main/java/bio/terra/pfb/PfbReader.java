@@ -48,20 +48,32 @@ public class PfbReader {
   }
 
   public static List<String> show(String fileLocation) throws IOException {
-    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
-    URL url = isValidUrl(fileLocation);
-    GenericRecord genericRecord = null;
     List<String> data = new ArrayList<>();
-    try (InputStream in =
-            url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
-        DataFileStream<GenericRecord> reader = new DataFileStream<>(in, datumReader)) {
-      // Skip Metadata Object, which should always appear first
-      reader.next(genericRecord);
-      while (reader.hasNext()) {
-        genericRecord = reader.next(genericRecord);
-        data.add(convertEnum(genericRecord.toString()));
+
+    try (DataFileStream<GenericRecord> records = PfbReader.getGenericRecordsStream(fileLocation)) {
+      while (records.hasNext()) {
+        data.add(convertEnum(records.next().toString()));
       }
       return data;
+    } catch (IOException e) {
+      throw new InvalidPfbException("Error reading PFB Value object");
+    }
+  }
+
+  /** DataFileStream implements Closeable and must be closed by the client code. */
+  public static DataFileStream<GenericRecord> getGenericRecordsStream(String fileLocation)
+      throws IOException {
+    GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
+    URL url = isValidUrl(fileLocation);
+    try {
+      InputStream in =
+          url != null ? readFromSignedUrl(url.toString()) : readFromLocalFile(fileLocation);
+      var reader = new DataFileStream<>(in, datumReader);
+      // advance past metadata
+      reader.next();
+      return reader;
+    } catch (Exception e) {
+      throw new InvalidPfbException("Error reading PFB Value object");
     }
   }
 

@@ -3,6 +3,7 @@ package bio.terra.pfb.utils;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import bio.terra.pfb.PfbReader;
 import java.io.IOException;
@@ -49,6 +50,11 @@ public class CompareOutputUtils {
     for (int i = 0; i < lines.size(); i++) {
       JSONAssert.assertEquals(lines.get(i), javaOutput.get(i), true);
     }
+  }
+
+  public static void testDataStream(String fileName) throws IOException {
+    String avroFilePath = getAvroFilePath(fileName, "");
+    assertNotNull(PfbReader.getGenericRecordsStream(avroFilePath));
   }
 
   public enum PfbCommandType {
