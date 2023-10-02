@@ -49,9 +49,8 @@ public class PfbReader {
 
   public static List<String> show(String fileLocation) throws IOException {
     List<String> data = new ArrayList<>();
-    try {
-      DataFileStream<GenericRecord> records = PfbReader.getGenericRecordsStream(fileLocation);
 
+    try (DataFileStream<GenericRecord> records = PfbReader.getGenericRecordsStream(fileLocation)) {
       while (records.hasNext()) {
         data.add(convertEnum(records.next().toString()));
       }
@@ -61,6 +60,9 @@ public class PfbReader {
     }
   }
 
+  /**
+   * DataFileStream implements Closeable and must be closed by the client code.
+   **/
   public static DataFileStream<GenericRecord> getGenericRecordsStream(String fileLocation)
       throws IOException {
     GenericDatumReader<GenericRecord> datumReader = new GenericDatumReader<>();
