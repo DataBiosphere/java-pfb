@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1696009089341,
+  "lastUpdate": 1696280433284,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -272,6 +272,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 2721827.3417450287,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "yuliadub@users.noreply.github.com",
+            "name": "Yulia Dubinina",
+            "username": "yuliadub"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e5d034b7795d00c53ba659fd3739fcfcd72361dc",
+          "message": "Merge pull request #12 from DataBiosphere/aj-1327-get-objects",
+          "timestamp": "2023-10-02T13:57:34-07:00",
+          "tree_id": "a85297356171c553cb3f3059732ddd3fa16a0c21",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/e5d034b7795d00c53ba659fd3739fcfcd72361dc"
+        },
+        "date": 1696280432701,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1983.5806123909756,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 26733.106856162412,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 2752026.437316768,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
