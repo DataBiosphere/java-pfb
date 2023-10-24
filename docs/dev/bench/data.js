@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1696280707826,
+  "lastUpdate": 1698182487572,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -354,6 +354,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 2170453.682770149,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "davidan@broadinstitute.org",
+            "name": "David An",
+            "username": "davidangb"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6bd7bc82a8a4f92c868ca65dc11e88e9e5d4c71b",
+          "message": "avro library is an api dependency (#13)",
+          "timestamp": "2023-10-24T17:17:17-04:00",
+          "tree_id": "2d188db135c05e9c0544f387feb52deaad53a05c",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/6bd7bc82a8a4f92c868ca65dc11e88e9e5d4c71b"
+        },
+        "date": 1698182486990,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1644.9394051366048,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 17855.79760946782,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 2319260.8695181548,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
