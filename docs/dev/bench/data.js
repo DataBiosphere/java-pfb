@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1698182754684,
+  "lastUpdate": 1698243028103,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -436,6 +436,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 2622066.380997806,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "calypsomatic@gmail.com",
+            "name": "Bria Morgan",
+            "username": "calypsomatic"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac35dab300f83db56af4d6b3d453d2a30e86f1f8",
+          "message": "Merge pull request #14 from DataBiosphere/update-snappy\n\nAJ-1396 remove snappy to fix security vulnerability",
+          "timestamp": "2023-10-25T10:06:22-04:00",
+          "tree_id": "685ed41b971413bc79456f28d5fc6a3c59a8e18a",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/ac35dab300f83db56af4d6b3d453d2a30e86f1f8"
+        },
+        "date": 1698243027594,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 2115.6580393277977,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 29949.767980719014,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 2889933.7917737,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
