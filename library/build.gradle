@@ -24,7 +24,6 @@ repositories {
 dependencies {
     api "org.apache.avro:avro:1.11.3"
     implementation 'ch.qos.logback:logback-classic:1.2.9'
-    implementation 'org.xerial.snappy:snappy-java:1.1.10.3'
     testImplementation 'org.json:json:20230618'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     testImplementation 'org.skyscreamer:jsonassert:1.2.3'
