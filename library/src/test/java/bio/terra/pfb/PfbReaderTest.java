@@ -3,13 +3,20 @@ package bio.terra.pfb;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.JSON;
 import static bio.terra.pfb.utils.CompareOutputUtils.FileExtension.TXT;
 import static bio.terra.pfb.utils.CompareOutputUtils.PfbCommandType.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import bio.terra.pfb.exceptions.InvalidPfbException;
 import bio.terra.pfb.utils.CompareOutputUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+import org.apache.avro.Schema;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,6 +42,38 @@ class PfbReaderTest {
       logger.error("Skipping test file: {} until fixed in AJ-1288\n", fileName);
     } else {
       CompareOutputUtils.assertJavaPfbIsPyPFB(fileName, SHOW_SCHEMA, "", JSON);
+    }
+  }
+
+  // this test validates behavior of the PfbReader.getPfbSchema() method. This method is
+  // used internally by PfbReader.showSchema, which is thoroughly tested above; therefore,
+  // this test only performs cursory correctness checks.
+  @ParameterizedTest
+  @MethodSource("provideTestFiles")
+  void getPfbSchemaTest(String fileName) throws IOException {
+    // TODO - remove when fix is added for AJ-1288
+    if (fileName.equals("empty")) {
+      logger.error("Skipping test file: {} until fixed in AJ-1288\n", fileName);
+    } else {
+      // read the pypfb output for this file
+      String expectedStr = CompareOutputUtils.getPyPfbOutput(fileName, SHOW_SCHEMA, JSON);
+      // parse the pypfb output for this file
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode expected = mapper.readTree(expectedStr);
+      // find the names of all top-level types from the pypfb output
+      List<String> expectedNames =
+          StreamSupport.stream(
+                  Spliterators.spliteratorUnknownSize(expected.elements(), Spliterator.ORDERED),
+                  false)
+              .map(typeNode -> typeNode.get("name").asText())
+              .toList();
+      // get the PfbReader-calculated schema for this file from PfbReader
+      List<Schema> actualSchema =
+          PfbReader.getPfbSchema(CompareOutputUtils.getAvroFilePath(fileName, ""));
+      // find the names of all top-level types in the actual schema
+      List<String> actualNames = actualSchema.stream().map(Schema::getName).toList();
+
+      assertEquals(expectedNames, actualNames);
     }
   }
 

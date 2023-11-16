@@ -28,11 +28,7 @@ public class PfbReader {
 
   public static String showSchema(String fileLocation) throws IOException {
     return convertEnum(
-        readPfbSchema(fileLocation).getField("object").schema().getTypes().stream()
-            .filter(t -> !t.getName().equals("Metadata"))
-            .map(Schema::toString)
-            .toList()
-            .toString());
+        getPfbSchema(fileLocation).stream().map(Schema::toString).toList().toString());
   }
 
   public static String showNodes(String fileLocation) throws IOException {
@@ -95,6 +91,14 @@ public class PfbReader {
       }
     }
     throw new InvalidPfbException("Error reading PFB Metadata object");
+  }
+
+  // note that this does not decode enum values via convertEnum. WDS does not need decoding;
+  // if other clients do need it we should add it in here.
+  public static List<Schema> getPfbSchema(String fileLocation) throws IOException {
+    return readPfbSchema(fileLocation).getField("object").schema().getTypes().stream()
+        .filter(t -> !t.getName().equals("Metadata"))
+        .toList();
   }
 
   static Schema readPfbSchema(String fileLocation) throws IOException {
