@@ -46,7 +46,8 @@ class PfbReaderTest {
   }
 
   // this test validates behavior of the PfbReader.getPfbSchema() method. This method is
-  // used internally by PfbReader.showSchema, which is thoroughly tested by {@link #showsSchemaTest()} therefore,
+  // used internally by PfbReader.showSchema, which is thoroughly tested by {@link
+  // #showsSchemaTest()} therefore,
   // this test only performs cursory correctness checks.
   @ParameterizedTest
   @MethodSource("provideTestFiles")
