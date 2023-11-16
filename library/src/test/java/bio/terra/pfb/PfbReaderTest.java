@@ -96,8 +96,7 @@ class PfbReaderTest {
   }
 
   @Test
-  @MethodSource("provideTestFiles")
-  void getGenericRecordsStreamError() throws IOException {
+  void getGenericRecordsStreamError() {
     assertThrows(
         InvalidPfbException.class,
         () -> CompareOutputUtils.testDataStream("noFile.txt"),
