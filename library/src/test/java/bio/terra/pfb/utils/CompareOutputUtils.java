@@ -22,9 +22,7 @@ public class CompareOutputUtils {
   public static void assertJavaPfbIsPyPFB(
       String fileName, PfbCommandType commandType, String filePath, FileExtension fileExtension)
       throws IOException {
-    String pythonOutput;
-    pythonOutput =
-        Files.readString(Paths.get(getPyPfbOutputFilePath(fileName, commandType, fileExtension)));
+    String pythonOutput = getPyPfbOutput(fileName, commandType, fileExtension);
     String avroFilePath = getAvroFilePath(fileName, filePath);
     String javaPfbOutput =
         switch (commandType) {
@@ -91,14 +89,20 @@ public class CompareOutputUtils {
     }
   }
 
-  private static String getAvroFilePath(String fileName, String filePath) {
+  public static String getPyPfbOutput(
+      String fileName, PfbCommandType commandType, FileExtension fileExtension) throws IOException {
+    return Files.readString(
+        Paths.get(getPyPfbOutputFilePath(fileName, commandType, fileExtension)));
+  }
+
+  public static String getAvroFilePath(String fileName, String filePath) {
     if (filePath.isEmpty()) {
       filePath = String.format("src/test/resources/avro/%s.avro", fileName);
     }
     return filePath;
   }
 
-  private static String getPyPfbOutputFilePath(
+  public static String getPyPfbOutputFilePath(
       String fileName, PfbCommandType commandType, FileExtension fileExtension) {
     return String.format(
         "src/test/resources/pyPfbOutput/%s/%s.%s", commandType, fileName, fileExtension);
