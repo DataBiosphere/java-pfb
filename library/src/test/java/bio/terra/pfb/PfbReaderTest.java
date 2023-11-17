@@ -158,13 +158,19 @@ class PfbReaderTest {
   // arguments for the convertEnum test: pairs of input, expected.
   static Stream<Arguments> provideConvertEnumArguments() {
     return Stream.of(
-        Arguments.of("bpm_32__62__32_60", "bpm > 60"),
-        Arguments.of("_48_1234", "01234"), // leading numbers are encoded
-        Arguments.of("_00__07__27_", "_00__07__27_"), // don't decode control characters
-        Arguments.of("email_64_domain_46_tld", "email@domain.tld"),
-        Arguments.of("a_47_path_47_", "a/path/"),
-        Arguments.of("open_123_brace_125_close", "open{brace}close") // 3-digit controls
-        );
+        // "bpm > 60" is the example from
+        // https://github.com/uc-cdis/pypfb/blob/master/docs/detailed_pfb_doc.md#enum,
+        // but I am convinced that example is incorrect
+        Arguments.of("bpm_20__3E__20_60", "bpm > 60"),
+        // leading numbers are encoded
+        Arguments.of("_30_1234", "01234"),
+        // don't decode control characters
+        Arguments.of("_00__07__1B__1F_", "_00__07__1B__1F_"),
+        Arguments.of("email_40_domain_2E_tld", "email@domain.tld"),
+        Arguments.of("a_2F_path_2F_", "a/path/"),
+        Arguments.of("open_7B_brace_7D_close", "open{brace}close"),
+        // 3-digit chars
+        Arguments.of("zz_1B5_ligature_152_", "zzƵligatureŒ"));
   }
 
   @ParameterizedTest(name = "for input [{0}], should decode to [{1}]")

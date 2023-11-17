@@ -154,7 +154,7 @@ public class PfbReader {
 
     return matcher.replaceAll(
         capture -> {
-          int codepoint = Integer.parseInt(capture.group(1));
+          int codepoint = Integer.parseInt(capture.group(1), 16);
           // don't decode control characters
           if (codepoint > 31) {
             return new String(Character.toChars(codepoint));
