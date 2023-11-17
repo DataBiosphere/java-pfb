@@ -8,7 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileStream;
@@ -18,13 +19,9 @@ import org.apache.avro.io.DatumReader;
 import org.apache.avro.specific.SpecificDatumReader;
 
 public class PfbReader {
-  private static final String SYMBOL_LIST = " !\"_#$%&'()*+-/.0123456789:;,<=>?[\\]^`{|}~";
-  private static final Map<String, String> ENCODED_ENUM_TO_SYMBOL_MAP =
-      SYMBOL_LIST
-          .chars()
-          .boxed()
-          .collect(
-              Collectors.toMap(c -> "_" + String.format("%02x", c) + "_", Character::toString));
+
+  // regex for decoding enums. See convertEnum().
+  private static final Pattern ENUM_PATTERN = Pattern.compile("_([A-Fa-f0-9]{2,})_");
 
   public static String showSchema(String fileLocation) throws IOException {
     return convertEnum(
@@ -130,22 +127,41 @@ public class PfbReader {
     return urlConnection.getInputStream();
   }
 
-  /* This method will be removed in AJ-1288
-       Need to instead encode/decode enum typed variables
-     From docs (https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#enum):
-    "Because Avro can't store anything except alphanumeric and _ symbols
-    (https://avro.apache.org/docs/1.9.1/spec.html#Enums), all enums are encoded in
-    such a way, that all other symbols is being encoded with codepoint wrapped in
-    single underscores. For example bpm > 60 will be encoded in: bpm_32__62__32_60,
-    so space   is encoded as _32_ and greater sign > into _62_. Same for Unicode
-    characters: ä - _228_, ü - _252_. The Avro schema also doesn't allow for the
-    first character to be a number. So we encode the first character in the way if
-    the character happens to be a number."
+  /*
+
   */
-  protected static String convertEnum(String schema) {
-    for (Map.Entry<String, String> entry : ENCODED_ENUM_TO_SYMBOL_MAP.entrySet()) {
-      schema = schema.replace(entry.getKey(), entry.getValue());
-    }
-    return schema;
+
+  /**
+   * Need to instead encode/decode enum typed variables From docs (<a
+   * href="https://github.com/uc-cdis/pypfb/blob/master/docs/index.md#enum">...</a>): "Because Avro
+   * can't store anything except alphanumeric and _ symbols (<a
+   * href="https://avro.apache.org/docs/1.9.1/spec.html#Enums">...</a>), all enums are encoded in
+   * such a way, that all other symbols is being encoded with codepoint wrapped in single
+   * underscores. For example bpm > 60 will be encoded in: bpm_32__62__32_60, so space is encoded as
+   * _32_ and greater sign > into _62_. Same for Unicode characters: ä - _228_, ü - _252_. The Avro
+   * schema also doesn't allow for the first character to be a number. So we encode the first
+   * character in the way if the character happens to be a number."
+   *
+   * <p>This method has slightly different behavior than pypfb: this method does not decode any
+   * characters below codepoint 32, as those are control characters and deemed unsafe.
+   *
+   * @param enumValue the input that needs decoding
+   * @return the decoded value
+   */
+  public static String convertEnum(String enumValue) {
+    // get matcher for this input
+    Matcher matcher = ENUM_PATTERN.matcher(enumValue);
+
+    return matcher.replaceAll(
+        capture -> {
+          int codepoint = Integer.parseInt(capture.group(1));
+          // don't decode control characters
+          if (codepoint > 31) {
+            return new String(Character.toChars(codepoint));
+          } else {
+            // this is a control character; don't replace anything
+            return capture.group(0);
+          }
+        });
   }
 }

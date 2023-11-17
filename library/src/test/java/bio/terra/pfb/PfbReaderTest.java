@@ -154,4 +154,23 @@ class PfbReaderTest {
     CompareOutputUtils.compareJSONLineByLine(testFileName, SHOW, signedUrl);
     CompareOutputUtils.assertJavaPfbIsPyPFB(testFileName, SHOW_METADATA, signedUrl, JSON);
   }
+
+  // arguments for the convertEnum test: pairs of input, expected.
+  static Stream<Arguments> provideConvertEnumArguments() {
+    return Stream.of(
+        Arguments.of("bpm_32__62__32_60", "bpm > 60"),
+        Arguments.of("_48_1234", "01234"), // leading numbers are encoded
+        Arguments.of("_00__07__27_", "_00__07__27_"), // don't decode control characters
+        Arguments.of("email_64_domain_46_tld", "email@domain.tld"),
+        Arguments.of("a_47_path_47_", "a/path/"),
+        Arguments.of("open_123_brace_125_close", "open{brace}close") // 3-digit controls
+        );
+  }
+
+  @ParameterizedTest(name = "for input [{0}], should decode to [{1}]")
+  @MethodSource("provideConvertEnumArguments")
+  void convertEnum(String input, String expected) {
+    String actual = PfbReader.convertEnum(input);
+    assertEquals(expected, actual);
+  }
 }
