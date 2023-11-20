@@ -24,9 +24,9 @@ public class PfbReader {
   private static final Pattern ENUM_PATTERN = Pattern.compile("_([A-Fa-f0-9]{2,3})_");
 
   public static String showSchema(String fileLocation) throws IOException {
-    // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the entire string output of
-    //    the schema. Instead, it should only perform decoding on the individual values of ENUM fields within
-    //    schemas.
+    // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the entire
+    //     string output of the schema. Instead, it should only perform decoding on the individual
+    //     values of ENUM fields within schemas.
     return convertEnum(
         getPfbSchema(fileLocation).stream().map(Schema::toString).toList().toString());
   }
@@ -48,9 +48,9 @@ public class PfbReader {
 
     try (DataFileStream<GenericRecord> records = PfbReader.getGenericRecordsStream(fileLocation)) {
       while (records.hasNext()) {
-        // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the entire string output of
-        //    a record. Instead, it should only perform decoding on the individual values of ENUM fields within
-        //    that record.
+        // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the
+        //     entire string output of a record. Instead, it should only perform decoding on the
+        //     individual values of ENUM fields within that record.
         data.add(convertEnum(records.next().toString()));
       }
       return data;
@@ -147,6 +147,9 @@ public class PfbReader {
    * _32_ and greater sign > into _62_. Same for Unicode characters: ä - _228_, ü - _252_. The Avro
    * schema also doesn't allow for the first character to be a number. So we encode the first
    * character in the way if the character happens to be a number."
+   *
+   * <p>IMPORTANT: the above quote from the pypfb repo is incorrect - "bpm > 60" will actually be
+   * encoded as "bpm_20__3e__20_60", because encoding uses hex instead of decimal codepoints.
    *
    * <p>This method has slightly different behavior than pypfb: this method does not decode any
    * characters below codepoint 32, as those are control characters and deemed unsafe.
