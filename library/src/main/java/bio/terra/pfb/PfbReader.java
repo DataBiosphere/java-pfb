@@ -21,9 +21,12 @@ import org.apache.avro.specific.SpecificDatumReader;
 public class PfbReader {
 
   // regex for decoding enums. See convertEnum().
-  private static final Pattern ENUM_PATTERN = Pattern.compile("_([A-Fa-f0-9]{2,})_");
+  private static final Pattern ENUM_PATTERN = Pattern.compile("_([A-Fa-f0-9]{2,3})_");
 
   public static String showSchema(String fileLocation) throws IOException {
+    // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the entire string output of
+    //    the schema. Instead, it should only perform decoding on the individual values of ENUM fields within
+    //    schemas.
     return convertEnum(
         getPfbSchema(fileLocation).stream().map(Schema::toString).toList().toString());
   }
@@ -45,6 +48,9 @@ public class PfbReader {
 
     try (DataFileStream<GenericRecord> records = PfbReader.getGenericRecordsStream(fileLocation)) {
       while (records.hasNext()) {
+        // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the entire string output of
+        //    a record. Instead, it should only perform decoding on the individual values of ENUM fields within
+        //    that record.
         data.add(convertEnum(records.next().toString()));
       }
       return data;
