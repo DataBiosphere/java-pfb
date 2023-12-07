@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1700515715738,
+  "lastUpdate": 1701975345071,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -682,6 +682,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5207406.5542758,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1156625+nawatts@users.noreply.github.com",
+            "name": "Nick Watts",
+            "username": "nawatts"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a9633f86c7463e441cec7ae4233bcf941b589c6b",
+          "message": "Merge pull request #17 from DataBiosphere/aj-1415-submit-dependencies-workflow\n\n[AJ-1415] Add submit dependencies workflow",
+          "timestamp": "2023-12-07T13:52:20-05:00",
+          "tree_id": "7aaecf4f7b2fc870f0796fcfb0866bfe505aebc3",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/a9633f86c7463e441cec7ae4233bcf941b589c6b"
+        },
+        "date": 1701975344633,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3333.6960996722637,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 39045.829318744705,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5111548.24149968,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
