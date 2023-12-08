@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1701975573304,
+  "lastUpdate": 1702049712874,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -764,6 +764,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5096561.818312753,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1156625+nawatts@users.noreply.github.com",
+            "name": "Nick Watts",
+            "username": "nawatts"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3346092e668bfd7e16267c5cdd9df0467aece201",
+          "message": "[AJ-1415] Configure Dependabot to update dependencies (#18)",
+          "timestamp": "2023-12-08T10:32:07-05:00",
+          "tree_id": "758567b0de288d32493fb17cf4e4780ad9ba43f4",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/3346092e668bfd7e16267c5cdd9df0467aece201"
+        },
+        "date": 1702049711842,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3256.061193054011,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 37871.08642954596,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5078467.442229511,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
