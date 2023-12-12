@@ -43,9 +43,9 @@ jobs:
           # PR job summary, always off
           summary-always: false # see https://github.com/benchmark-action/github-action-benchmark/issues/158
           # Commit comment, always on
-          comment-always: true
+          comment-always: ${{ github.event_name == 'push' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]') }}
           # Commit comment when benchmarks are above threshold
-          comment-on-alert: true
+          comment-on-alert: ${{ github.event_name == 'push' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]') }}
           # Set a fairly high alert threshold, since GHA runners are variable
           alert-threshold: "150%"
           # Workflow will not fail when an alert happens
