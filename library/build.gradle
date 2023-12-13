@@ -3,8 +3,8 @@ plugins {
     id 'maven-publish'
     id 'com.jfrog.artifactory'
     id 'bio.terra.pfb.java-library-conventions'
-    id 'com.github.davidmc24.gradle.plugin.avro' version '1.8.0'
-    id 'me.champeau.jmh' version '0.7.1'
+    id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
+    id 'me.champeau.jmh' version '0.7.2'
 }
 
 repositories {
@@ -23,10 +23,10 @@ repositories {
 
 dependencies {
     api "org.apache.avro:avro:1.11.3"
-    implementation 'ch.qos.logback:logback-classic:1.2.9'
-    testImplementation 'org.json:json:20230618'
-    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
-    testImplementation 'org.skyscreamer:jsonassert:1.2.3'
+    implementation 'ch.qos.logback:logback-classic:1.3.14'
+    testImplementation 'org.json:json:20231013'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
+    testImplementation 'org.skyscreamer:jsonassert:1.5.1'
 }
 
 sourceSets.main.java.srcDirs += ["${buildDir}/generated-src"]
