@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'info.picocli:picocli:4.7.4'
+    implementation 'info.picocli:picocli:4.7.5'
     implementation project(':library')
 }
 
