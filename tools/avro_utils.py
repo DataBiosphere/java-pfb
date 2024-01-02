@@ -15,6 +15,11 @@ fake = Faker()
 # For usage, run without any args:
 #
 # python avro_utils.py
+#
+# Note: input/output file paths will be relative from the script
+#      location, not from the current working directory.  Thus
+#      it is recommended to provide fully qualified file paths
+#      if running the script from a different location.
 
 """
     Read the Avro schema from the given Avro file path.
@@ -120,6 +125,8 @@ def main():
         print("Usage:")
         for command, details in command_hints.items():
             print(get_command_hint(command))
+        print()
+        print("Note: file paths are interpreted relative to the script, so use fully qualified paths if running from a different location.")
         sys.exit(1)
 
     command = sys.argv[1]
