@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1702921796545,
+  "lastUpdate": 1704205061638,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -1174,6 +1174,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5118939.841246379,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ffed170bebd5d2f41fbb3a7e09d6a6222405b42b",
+          "message": "Bump org.jfrog.buildinfo:build-info-extractor-gradle from 5.1.12 to 5.1.13 (#35)\n\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2024-01-02T09:14:04-05:00",
+          "tree_id": "1ed8935b6604f61151c0efdfd4b59b45643c94e0",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/ffed170bebd5d2f41fbb3a7e09d6a6222405b42b"
+        },
+        "date": 1704205061249,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3264.2245610028913,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 37224.21377841722,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 4959801.218320449,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
