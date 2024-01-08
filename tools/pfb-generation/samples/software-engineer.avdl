@@ -1,0 +1,69 @@
+protocol PFB {
+	enum Multiplicity {
+		ONE_TO_ONE,
+		ONE_TO_MANY,
+		MANY_TO_ONE,
+		MANY_TO_MANY
+	}
+
+	record Link {
+		Multiplicity multiplicity;
+		string dst;
+	}
+
+	record Relation {
+		string dst_id;
+		string dst_name;
+	}
+
+	record Property {
+		string name;
+		string ontology_reference;
+		map<string> values;
+	}
+
+	record Node {
+		string name;
+		string ontology_reference;
+		map<string> values;
+		array<Link> links;
+		array<Property> properties;
+	}
+
+	record Metadata {
+		array<Node> nodes;
+		map<string> misc;
+	}
+
+	enum CodingLanguage {
+		C,
+		C_43_43,
+		C_45_45,
+		C_35,
+		COBOL,
+		Clojure,
+		CoffeeScript,
+		Go,
+		HTML,
+		Java,
+		JavaScript,
+		PHP,
+		Python,
+		Ruby,
+		Rust,
+		Scala,
+		TypeScript
+	}
+
+	record SoftwareEngineer {
+		string name;
+		array<CodingLanguage> coding_languages;
+	}
+
+	record Entity {
+		union{null, string} id;
+		string name;
+		union{Metadata, SoftwareEngineer} object;
+		array<Relation> relations;
+	}
+}
