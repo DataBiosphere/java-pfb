@@ -1,6 +1,10 @@
 #!/bin/bash
 # Script: java-pfb/tools/generate-test-files.sh
-
+#
+# By default: This script scans library/src/test/resources/avro for Avro files and generates the output of
+# running various pfb commands on it.  The output is written into library/src/test/resources/pyPfbOutput
+#
+# An optional single argument can be provided to specify a single Avro file to generate test files for.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
