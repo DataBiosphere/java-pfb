@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1704205927705,
+  "lastUpdate": 1704985772392,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -1338,6 +1338,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5016103.944327281,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "111856+jladieu@users.noreply.github.com",
+            "name": "Josh Ladieu",
+            "username": "jladieu"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "88862f3c79a422353c139733fea1c69f024bc8ea",
+          "message": "Tweak `generate-test-files.sh` (#36)\n\nThis change is in support of working with avro/pfb files for [AJ-1512](https://broadworkbench.atlassian.net/browse/AJ-1512).\r\n\r\n* Expect a fully qualified path to an .avro file, but don't assume it's in a particular directory.\r\n* If the file arg isn't provided, just regenerate from everything found in `$AVRO_DIR`.",
+          "timestamp": "2024-01-11T10:06:32-05:00",
+          "tree_id": "c69b45dd941178ee9669d2d5f62add36ed3aa9df",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/88862f3c79a422353c139733fea1c69f024bc8ea"
+        },
+        "date": 1704985771819,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3216.022511622691,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 37540.746892597024,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5113665.915552408,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
