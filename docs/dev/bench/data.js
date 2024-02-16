@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1708025394038,
+  "lastUpdate": 1708098247789,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -1748,6 +1748,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5344736.10044492,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1156625+nawatts@users.noreply.github.com",
+            "name": "Nick Watts",
+            "username": "nawatts"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "479665f69d29de4047b4a927778290bbca336d10",
+          "message": "[AJ-1556] Update action used to submit dependency graph (#41)",
+          "timestamp": "2024-02-16T10:41:17-05:00",
+          "tree_id": "a034d1eacfcc03eba46ae2a6e8f247719c05dad5",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/479665f69d29de4047b4a927778290bbca336d10"
+        },
+        "date": 1708098247392,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3302.2435679607233,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 37790.768405078765,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5297552.025177095,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
