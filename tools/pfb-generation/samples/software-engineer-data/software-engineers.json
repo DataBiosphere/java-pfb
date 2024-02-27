@@ -1,0 +1,27 @@
+[
+  {
+    "type": "SoftwareEngineer",
+    "name": "Alice",
+    "coding_languages": [
+      "python",
+      "javascript",
+      "c++"
+    ]
+  },
+  {
+    "type": "SoftwareEngineer",
+    "name": "Bob",
+    "coding_languages": [
+      "java",
+      "ruby"
+    ]
+  },
+  {
+    "type": "SoftwareEngineer",
+    "name": "Cara",
+    "coding_languages": [
+      "html",
+      "javascript"
+    ]
+  }
+]

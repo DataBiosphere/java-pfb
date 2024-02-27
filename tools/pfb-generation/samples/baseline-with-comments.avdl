@@ -1,0 +1,59 @@
+/* Baseline PFB schema, based on https://github.com/uc-cdis/pypfb/blob/master/docs/sample.avdl */
+protocol PFB {
+	/** Do not modify: Required by PFB schema. */
+	enum Multiplicity {
+		ONE_TO_ONE,
+		ONE_TO_MANY,
+		MANY_TO_ONE,
+		MANY_TO_MANY
+	}
+
+	/** Do not modify: Required by PFB schema. */
+	record Link {
+		Multiplicity multiplicity;
+		string dst;
+	}
+
+	/** Do not modify: Required by PFB schema. */
+	record Relation {
+		string dst_id;
+		string dst_name;
+	}
+
+	/** Do not modify: Required by PFB schema. */
+	record Property {
+		string name;
+		string ontology_reference;
+		map<string> values;
+	}
+
+	/** Do not modify: Required by PFB schema. */
+	record Node {
+		string name;
+		string ontology_reference;
+		map<string> values;
+		array<Link> links;
+		array<Property> properties;
+	}
+
+	/** Do not modify: Required by PFB schema. */
+	record Metadata {
+		array<Node> nodes;
+		map<string> misc;
+	}
+
+	/** Replace this with a real type */
+	record Placeholder {
+
+
+	}
+
+	/** Do not modify: Required by PFB schema, except to adjust the `object` to include your custom entity types. */
+	record Entity {
+		union{null, string} id;
+		string name;
+		// update the type of object to include your entity type(s) but otherwise leave Entity unchanged
+		union{Metadata, Placeholder} object;
+		array<Relation> relations;
+	}
+}
