@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1710768889369,
+  "lastUpdate": 1710782497113,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -2242,6 +2242,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5253876.1711716,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "1156625+nawatts@users.noreply.github.com",
+            "name": "Nick Watts",
+            "username": "nawatts"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed7e01e724ef9006879e80d23d4fc3549e78b40d",
+          "message": "[AJ-1415] Group Dependabot updates (#48)",
+          "timestamp": "2024-03-18T13:18:34-04:00",
+          "tree_id": "939a5ea72bd689dc920ec4eb115840b71c77fd7a",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/ed7e01e724ef9006879e80d23d4fc3549e78b40d"
+        },
+        "date": 1710782496708,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3140.009077184797,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 37313.14705811258,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5251510.349850371,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
