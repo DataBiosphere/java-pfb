@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1715001014994,
+  "lastUpdate": 1715001260268,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -3066,6 +3066,46 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5294814.095869554,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robot@terra.team",
+            "name": "bumptagbot"
+          },
+          "committer": {
+            "email": "robot@terra.team",
+            "name": "bumptagbot"
+          },
+          "distinct": true,
+          "id": "b1a686a7601b2901a353c908e7e414bc86609985",
+          "message": "bump 0.42.0",
+          "timestamp": "2024-05-06T13:10:45Z",
+          "tree_id": "56b4e5587090c47f94a1f0c0db41ee5b8a0cfdb8",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/b1a686a7601b2901a353c908e7e414bc86609985"
+        },
+        "date": 1715001259268,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 3278.1519373451088,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 37369.47976617234,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5399737.19803796,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
