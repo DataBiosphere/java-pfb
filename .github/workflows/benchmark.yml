@@ -32,7 +32,7 @@ jobs:
 
       # Handle the benchmark results
       - name: Publish benchmarks to github pages (main) or commit comment (PRs)
-        uses: benchmark-action/github-action-benchmark@v1.20.1
+        uses: benchmark-action/github-action-benchmark@v1.20.3
         with:
           # What benchmark tool we're using
           tool: 'jmh'
