@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1727712527943,
+  "lastUpdate": 1729002716869,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -4172,6 +4172,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5149289.872848882,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "calypsomatic@gmail.com",
+            "name": "Bria Morgan",
+            "username": "calypsomatic"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a1f991ed4debf8a7f7a872c84aec245d3fcde0ea",
+          "message": "[CORE-69] Move dependabot updates from AJ to CORE (#75)",
+          "timestamp": "2024-10-15T10:28:29-04:00",
+          "tree_id": "cf06c544ea21d71f4f0d26b99b6b959a538262e4",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/a1f991ed4debf8a7f7a872c84aec245d3fcde0ea"
+        },
+        "date": 1729002716445,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1927.5436596182312,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24863.679121097688,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5220860.399378628,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
