@@ -9,7 +9,7 @@ updates:
     reviewers:
       - "@DataBiosphere/broad-core-services"
     commit-message:
-      prefix: "[CORE-71]"
+      prefix: "[CORE-69]"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -30,7 +30,7 @@ updates:
     reviewers:
       - "@DataBiosphere/broad-core-services"
     commit-message:
-      prefix: "[CORE-71]"
+      prefix: "[CORE-69]"
     schedule:
       interval: "weekly"
       day: "monday"
