@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730732273832,
+  "lastUpdate": 1731021815233,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -4582,6 +4582,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5223001.544577628,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "sehsan@broadinstitute.org",
+            "name": "Saman Ehsan",
+            "username": "samanehsan"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "36ace3a7b9b23e8f1616520157507acdda7d42f2",
+          "message": "[CORE-147] Add codeowners (#80)",
+          "timestamp": "2024-11-07T18:20:32-05:00",
+          "tree_id": "6230f927e37ec3e112acd5c45f09297a6ce5c8b2",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/36ace3a7b9b23e8f1616520157507acdda7d42f2"
+        },
+        "date": 1731021814687,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1929.0257819390729,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24681.759871835493,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5196233.021989908,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
