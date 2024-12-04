@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1733170034734,
+  "lastUpdate": 1733346834732,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -4746,6 +4746,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5256141.2115673125,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "davidan@broadinstitute.org",
+            "name": "David An",
+            "username": "davidangb"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a9169fc26161fd62f5a1a3593451f6e2848de161",
+          "message": "CORE-208: include stack traces in InvalidPfbExceptions (#82)",
+          "timestamp": "2024-12-04T16:10:40-05:00",
+          "tree_id": "374eaf96e3abd38d23c28e7d1bee08e0d9ad684f",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/a9169fc26161fd62f5a1a3593451f6e2848de161"
+        },
+        "date": 1733346833803,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1925.7299446523089,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24198.572397269,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5188282.278576981,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
