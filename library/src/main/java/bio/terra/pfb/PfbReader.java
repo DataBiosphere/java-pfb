@@ -55,7 +55,7 @@ public class PfbReader {
       }
       return data;
     } catch (IOException e) {
-      throw new InvalidPfbException("Error reading PFB Value object");
+      throw new InvalidPfbException("Error reading PFB Value object", e);
     }
   }
 
@@ -72,7 +72,7 @@ public class PfbReader {
       reader.next();
       return reader;
     } catch (Exception e) {
-      throw new InvalidPfbException("Error reading PFB Value object");
+      throw new InvalidPfbException("Error reading PFB Value object", e);
     }
   }
 
