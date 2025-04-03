@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1742824646588,
+  "lastUpdate": 1743688397427,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -5402,6 +5402,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5173990.494349589,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "sehsan@broadinstitute.org",
+            "name": "Saman Ehsan",
+            "username": "samanehsan"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "567ca6c0dea2f7ade8d29453f39e3252c7cf2680",
+          "message": "[CORE-418] Update dependabot.yml to run monthly (#91)",
+          "timestamp": "2025-04-03T09:49:29-04:00",
+          "tree_id": "435b07bccae1461cda01f7e117760fa80c785e79",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/567ca6c0dea2f7ade8d29453f39e3252c7cf2680"
+        },
+        "date": 1743688397055,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1900.7274199406838,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24410.26160568864,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5237213.668903932,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
