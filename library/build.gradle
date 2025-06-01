@@ -10,14 +10,11 @@ plugins {
 repositories {
     maven {
         // Terra proxy for maven central
-        url 'https://broadinstitute.jfrog.io/broadinstitute/maven-central/'
+        url 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/maven-central/'
     }
     mavenCentral()
     maven {
-        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release/'
-    }
-    maven {
-        url 'https://broadinstitute.jfrog.io/broadinstitute/libs-release-local/'
+        url 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/libs-release/'
     }
 }
 
