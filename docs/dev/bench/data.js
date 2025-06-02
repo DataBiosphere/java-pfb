@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1748869495406,
+  "lastUpdate": 1748895565415,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -5690,6 +5690,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5305296.193032701,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "63610971+ungwudik@users.noreply.github.com",
+            "name": "UC Ngwudike",
+            "username": "ungwudik"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d2b2a6ab0f6469dc10ca40162c2fc215967c8a3a",
+          "message": "DDO-4131 read from google artifact registry (#93)",
+          "timestamp": "2025-06-02T15:15:25-05:00",
+          "tree_id": "6dcc17a0a3dd38fdb3ddab30ba96769e46f54fee",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/d2b2a6ab0f6469dc10ca40162c2fc215967c8a3a"
+        },
+        "date": 1748895564996,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1896.4171503195303,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 25012.313932653462,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5306396.521854263,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
