@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1748895811400,
+  "lastUpdate": 1751376664899,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -5772,6 +5772,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5158723.689426106,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "29f9fb46b05f56e60ee9f579ee23c574f03d7284",
+          "message": "[CORE-69]: Bump com.fasterxml.jackson.core:jackson-databind from 2.19.0 to 2.19.1 in the minor-and-patch-updates group (#96)\n\nSigned-off-by: dependabot[bot] <support@github.com>\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2025-07-01T09:27:14-04:00",
+          "tree_id": "bd986fdcefd8514be6ad08e6ad5a27a9dc511584",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/29f9fb46b05f56e60ee9f579ee23c574f03d7284"
+        },
+        "date": 1751376664382,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1882.1953987124343,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24726.305681437098,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5292712.561990261,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
