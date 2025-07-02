@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1751376897774,
+  "lastUpdate": 1751482506956,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -5854,6 +5854,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5326014.7701450735,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "calypsomatic@gmail.com",
+            "name": "Bria Morgan",
+            "username": "calypsomatic"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e951099a911737bfc433d8e87e8ae1918a839a4f",
+          "message": "[CORE-567] Remove reviewers from dependabot.yml (#97)",
+          "timestamp": "2025-07-02T14:51:36-04:00",
+          "tree_id": "6a9ec8df28fe30977eadb65fc98f09fa1f8ac882",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/e951099a911737bfc433d8e87e8ae1918a839a4f"
+        },
+        "date": 1751482506445,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1879.2743186227199,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 25308.420454466203,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5294005.49035771,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
