@@ -27,8 +27,6 @@ updates:
       - "dependencies"
       - "github-actions"
     open-pull-requests-limit: 10
-    reviewers:
-      - "@DataBiosphere/broad-core-services"
     commit-message:
       prefix: "[CORE-69]"
     schedule:
