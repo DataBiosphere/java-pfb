@@ -33,7 +33,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag }}
+          # ref: ${{ inputs.tag }}
+          ref: core-593-jfrog-to-gar
           token: ${{ secrets.BROADBOT_TOKEN }}
       - name: Set up JDK
         uses: actions/setup-java@v4
