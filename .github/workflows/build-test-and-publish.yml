@@ -86,7 +86,8 @@ jobs:
   publish-library:
     needs: [ tag ]
     uses: ./.github/workflows/publish.yml
-    if: success() && ((github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish))
+    # if: success() && ((github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish))
+    if: success()
     secrets: inherit
     with:
       tag: ${{ needs.tag.outputs.tag }}
