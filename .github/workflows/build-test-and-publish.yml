@@ -80,7 +80,8 @@ jobs:
   tag:
     needs: [ build, unit-tests-and-sonarqube, source-clear ]
     uses: ./.github/workflows/tag.yml
-    if: success() && ((github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish))
+    # if: success() && ((github.ref == 'refs/heads/main' && github.event_name != 'workflow_dispatch') || (github.event_name == 'workflow_dispatch' && inputs.publish))
+    if: success()
     secrets: inherit
 
   publish-library:
