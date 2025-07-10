@@ -1,10 +1,10 @@
 plugins {
     id 'com.srcclr.gradle'
     id 'maven-publish'
-    id 'com.jfrog.artifactory'
     id 'bio.terra.pfb.java-library-conventions'
     id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
     id 'me.champeau.jmh' version '0.7.3'
+    id 'com.google.cloud.artifactregistry.gradle-plugin' version '2.1.5'
 }
 
 repositories {
