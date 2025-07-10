@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1751482749496,
+  "lastUpdate": 1752152618765,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -5936,6 +5936,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5125484.502485042,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "calypsomatic@gmail.com",
+            "name": "Bria Morgan",
+            "username": "calypsomatic"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef954b880dea5a1f5a48757a9f961f76a2e6b884",
+          "message": "[CORE-593] update jfrog to gar (#98)",
+          "timestamp": "2025-07-10T08:59:44-04:00",
+          "tree_id": "a1767da3bb1d063682cb66937ff3c08c4dd6a86b",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/ef954b880dea5a1f5a48757a9f961f76a2e6b884"
+        },
+        "date": 1752152618334,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1883.2048514160717,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24694.875037885693,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5282370.965348877,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
