@@ -4,7 +4,7 @@ plugins {
     id 'bio.terra.pfb.java-library-conventions'
     id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
     id 'me.champeau.jmh' version '0.7.3'
-    id 'com.google.cloud.artifactregistry.gradle-plugin' version '2.1.5'
+    id 'com.google.cloud.artifactregistry.gradle-plugin' version '2.2.5'
 }
 
 repositories {
@@ -22,7 +22,7 @@ dependencies {
     api "org.apache.avro:avro:1.12.0"
     implementation 'ch.qos.logback:logback-classic:1.5.18'
     testImplementation 'org.json:json:20250517'
-    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.19.1'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.19.2'
     testImplementation 'org.skyscreamer:jsonassert:1.5.3'
 }
 
