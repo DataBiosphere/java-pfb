@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1752152819854,
+  "lastUpdate": 1754080090836,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -6018,6 +6018,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5405086.4361311905,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "davidan@broadinstitute.org",
+            "name": "David An",
+            "username": "davidangb"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eea784835e1a2ea0f8d3d974acc1dc4eb6f89ea7",
+          "message": "CORE-69: update to latest 8.x gradle (#101)",
+          "timestamp": "2025-08-01T16:23:59-04:00",
+          "tree_id": "c4d26e878296d0a4828a470778767358f5c15d61",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/eea784835e1a2ea0f8d3d974acc1dc4eb6f89ea7"
+        },
+        "date": 1754080090263,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1886.8791065981686,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 24506.249978089963,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5226938.630815915,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
