@@ -33,7 +33,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.tag }}
+          ref: refs/tags/${{ inputs.tag }}
           token: ${{ secrets.BROADBOT_TOKEN }}
       - name: Set up JDK
         uses: actions/setup-java@v5
