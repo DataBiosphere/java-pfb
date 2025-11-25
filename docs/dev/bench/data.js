@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1764012152521,
+  "lastUpdate": 1764079558157,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -7044,6 +7044,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5326011.237498397,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "calypsomatic@gmail.com",
+            "name": "Bria Morgan",
+            "username": "calypsomatic"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "87f755e512eb62e0bf25418a4ec551b50ff5b221",
+          "message": "[CTM-260] Update CODEOWNERS to jade (#113)",
+          "timestamp": "2025-11-25T09:02:23-05:00",
+          "tree_id": "621f3b8b01d8589764e376488793ef874c37b88f",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/87f755e512eb62e0bf25418a4ec551b50ff5b221"
+        },
+        "date": 1764079557134,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1289.0080668513106,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 21418.248288360614,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5285764.102587242,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
