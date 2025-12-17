@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1764612648543,
+  "lastUpdate": 1765990456709,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -7208,6 +7208,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5293171.269888209,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "sholden@broadinstitute.org",
+            "name": "Shelby Holden",
+            "username": "snf2ye"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "25bac3a247143fe7fb7d74ffa778af84834455f0",
+          "message": "CTM-275: Update CODEOWNERS to new team (#116)",
+          "timestamp": "2025-12-17T11:50:42-05:00",
+          "tree_id": "73176a7c35b42ab163af5a8a61a06f2ac8e18d36",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/25bac3a247143fe7fb7d74ffa778af84834455f0"
+        },
+        "date": 1765990456174,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1472.681250160084,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 21648.307308480096,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5334161.031895726,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
