@@ -11,6 +11,6 @@ dependencies {
     implementation 'com.srcclr.gradle:com.srcclr.gradle.gradle.plugin:3.1.12'
     implementation 'org.sonarqube:org.sonarqube.gradle.plugin:4.4.1.3373'
     implementation 'info.picocli:picocli:4.7.7'
-    implementation 'com.gorylenko.gradle-git-properties:gradle-git-properties:2.4.1'
+    implementation 'com.gorylenko.gradle-git-properties:gradle-git-properties:2.5.4'
     implementation 'org.jfrog.buildinfo:build-info-extractor-gradle:6.0.4'
 }
