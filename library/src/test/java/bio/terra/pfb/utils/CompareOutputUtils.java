@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CompareOutputUtils {
-  private static final Logger logger = LoggerFactory.getLogger(CompareOutputUtils.class);
 
   public static void assertJavaPfbIsPyPFB(
       String fileName, PfbCommandType commandType, String filePath, FileExtension fileExtension)
