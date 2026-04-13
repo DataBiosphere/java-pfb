@@ -10,11 +10,11 @@ plugins {
 repositories {
     maven {
         // Terra proxy for maven central
-        url 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/maven-central/'
+        url = 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/maven-central/'
     }
     mavenCentral()
     maven {
-        url 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/libs-release/'
+        url = 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/libs-release/'
     }
 }
 
