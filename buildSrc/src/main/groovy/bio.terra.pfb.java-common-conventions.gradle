@@ -9,7 +9,7 @@ plugins {
 
 boolean isCiServer = System.getenv().containsKey("CI")
 ext {
-    junit_version = '5.10.0'
+    junit_version = '5.14.3'
     mockito_version = '5.5.0'
 }
 
@@ -22,9 +22,9 @@ java {
 dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testImplementation("org.junit.jupiter:junit-jupiter:$junit_version")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "org.mockito:mockito-junit-jupiter:$mockito_version"
 }
