@@ -9,7 +9,7 @@ repositories {
 dependencies {
     implementation 'com.diffplug.spotless:spotless-plugin-gradle:8.4.0'
     implementation 'com.srcclr.gradle:com.srcclr.gradle.gradle.plugin:3.1.12'
-    implementation 'org.sonarqube:org.sonarqube.gradle.plugin:7.2.3.7755'
+    implementation 'org.sonarqube:org.sonarqube.gradle.plugin:6.3.1.5724'
     implementation 'info.picocli:picocli:4.7.7'
     implementation 'com.gorylenko.gradle-git-properties:gradle-git-properties:2.5.7'
     implementation 'org.jfrog.buildinfo:build-info-extractor-gradle:6.0.4'
