@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776085489750,
+  "lastUpdate": 1777296751173,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -7864,6 +7864,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5247821.09902036,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d5c810a5832e8d7795d5a4a8dfc8541e66d96fee",
+          "message": "[CORE-69]: Bump gradle/actions from 5 to 6 (#124)\n\nSigned-off-by: dependabot[bot] <support@github.com>\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nCo-authored-by: David An <davidan@broadinstitute.org>",
+          "timestamp": "2026-04-27T09:28:35-04:00",
+          "tree_id": "7d2fada146cbae8392ccd794d2c66c635d26bc2b",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/d5c810a5832e8d7795d5a4a8dfc8541e66d96fee"
+        },
+        "date": 1777296750560,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1470.340146167035,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 23268.820630119473,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5415349.6426922195,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
