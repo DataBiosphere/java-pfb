@@ -4,17 +4,17 @@ plugins {
     id 'bio.terra.pfb.java-library-conventions'
     id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
     id 'me.champeau.jmh' version '0.7.3'
-    id 'com.google.cloud.artifactregistry.gradle-plugin' version '2.1.5'
+    id 'com.google.cloud.artifactregistry.gradle-plugin' version '2.2.5'
 }
 
 repositories {
     maven {
         // Terra proxy for maven central
-        url 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/maven-central/'
+        url = 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/maven-central/'
     }
     mavenCentral()
     maven {
-        url 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/libs-release/'
+        url = 'https://us-central1-maven.pkg.dev/dsp-artifact-registry/libs-release/'
     }
 }
 

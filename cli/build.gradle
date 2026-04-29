@@ -6,7 +6,7 @@ application {
     mainClass = 'bio.terra.pfb.JavaPfbCommand'
 }
 
-version gradle.releaseVersion
+version = gradle.releaseVersion
 apply from: "generators.gradle"
 
 repositories {

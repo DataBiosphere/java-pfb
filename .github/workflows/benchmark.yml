@@ -15,6 +15,10 @@ jobs:
     name: Relative performance benchmarking
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - uses: actions/checkout@v6
 
@@ -24,6 +28,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v3
+        with:
+          token_format: access_token
+          workload_identity_provider: 'projects/1038484894585/locations/global/workloadIdentityPools/github-wi-pool/providers/github-wi-provider'
+          service_account: 'dsp-artifact-registry-push@dsp-artifact-registry.iam.gserviceaccount.com'
 
       # Run benchmark via JMH gradle plugin https://github.com/melix/jmh-gradle-plugin
       - name: Run benchmark
