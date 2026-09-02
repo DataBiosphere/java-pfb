@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1785419777436,
+  "lastUpdate": 1788358203384,
   "repoUrl": "https://github.com/DataBiosphere/java-pfb",
   "entries": {
     "Benchmark": [
@@ -8234,6 +8234,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
             "value": 5178382.502453218,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "davidan@broadinstitute.org",
+            "name": "David An",
+            "username": "davidangb"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cdf0600053b3c1edc8562a75434b0aa9432ea4fc",
+          "message": "CORE=69: bump sonar plugin to gain JRE auto-provisioning (#141)",
+          "timestamp": "2026-09-02T10:05:45-04:00",
+          "tree_id": "4ae6fc3cf00e5fd2da1fe3811c7e2061de6ba088",
+          "url": "https://github.com/DataBiosphere/java-pfb/commit/cdf0600053b3c1edc8562a75434b0aa9432ea4fc"
+        },
+        "date": 1788358201996,
+        "tool": "jmh",
+        "benches": [
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesMedium",
+            "value": 1492.643598195702,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.LibraryBenchmarks.showNodesSmall",
+            "value": 21013.180833161234,
+            "unit": "ops/s",
+            "extra": "iterations: 2\nforks: 2\nthreads: 1"
+          },
+          {
+            "name": "bio.terra.pfb.PfbReaderBenchmarks.convertEnum",
+            "value": 5185369.5143697895,
             "unit": "ops/s",
             "extra": "iterations: 2\nforks: 2\nthreads: 1"
           }
