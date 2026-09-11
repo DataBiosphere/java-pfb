@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    api "org.apache.avro:avro:1.12.1"
+    api "org.apache.avro:avro:1.12.2"
     implementation 'ch.qos.logback:logback-classic:1.5.32'
     testImplementation 'org.json:json:20260522'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.21.3'
