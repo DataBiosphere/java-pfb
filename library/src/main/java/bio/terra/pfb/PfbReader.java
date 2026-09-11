@@ -23,6 +23,12 @@ public class PfbReader {
   // regex for decoding enums. See convertEnum().
   private static final Pattern ENUM_PATTERN = Pattern.compile("_([A-Fa-f0-9]{2,3})_");
 
+  static {
+    // Avro will not instantiate our generated types until they are allowlisted.
+    // See PfbClassSecurity.
+    PfbClassSecurity.register();
+  }
+
   public static String showSchema(String fileLocation) throws IOException {
     // TODO AJ-1288: the use of convertEnum here is incorrect. It performs decoding on the entire
     //     string output of the schema. Instead, it should only perform decoding on the individual
